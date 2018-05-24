@@ -14,7 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "cover_image")
+@Table(name = "cover_images")
 public class CoverImage {
 	public CoverImage() {
 	}

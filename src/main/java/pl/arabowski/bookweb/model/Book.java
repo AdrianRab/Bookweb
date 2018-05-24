@@ -37,6 +37,7 @@ public class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="book_id")
 	private long id;
 	
 	@NotBlank
@@ -58,6 +59,7 @@ public class Book {
 	
 	@NotNull
 	@ManyToOne
+	@JoinColumn(name="publisher_id", nullable = false)
 	private Publisher publisher;
 	
 	@NotBlank
