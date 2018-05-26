@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,10 +20,8 @@ public class CoverImage {
 	public CoverImage() {
 	}
 
-	public CoverImage(long id, String name, String type, byte[] pic) {
-		this.id = id;
+	public CoverImage(String name, byte[] pic) {
 		this.name = name;
-		this.type = type;
 		this.pic = pic;
 	}
 
@@ -32,14 +31,13 @@ public class CoverImage {
 
 	private String name;
 
-	private String type;
-
+	@Lob
 	private byte[] pic;
 
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
-	
+
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
@@ -58,14 +56,6 @@ public class CoverImage {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public byte[] getPic() {

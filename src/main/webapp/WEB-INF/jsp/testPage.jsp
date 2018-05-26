@@ -13,7 +13,13 @@
 <body>
 	Witaj na stronie <c:out value="${pageContext.request.remoteUser}"></c:out>
 	
+	Add author: <a href="${contextPath}/author/add"><button>Add new author</button></a>
+	<br>
+	All authors: <a href="${contextPath}/author/all"><button>All authors</button></a>
 	
+	Add publisher:<a href="${contextPath}/publ/add"><button>Add new publisher</button></a>
+	<br>
+	All publishers: <a href="${contextPath}/publ/all"><button>List of publishers</button></a> 
 	
 		<form action="/logout" method="post">
 			<input type="submit" value="Sign Out" /> 

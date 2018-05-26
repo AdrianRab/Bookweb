@@ -16,4 +16,5 @@ public interface AuthorRepository extends JpaRepository<Author,	Long>	{
 	@Query("select a from Author a where a.lastName like ?1%")
 	List<Author> findByLastNameStartsWith(String lastName);
 	
+	Author findById(long id);
 }

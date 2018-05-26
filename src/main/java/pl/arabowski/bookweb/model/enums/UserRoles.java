@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.model;
+package pl.arabowski.bookweb.model.enums;
 
 public enum UserRoles {
 	USER{

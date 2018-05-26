@@ -12,5 +12,6 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	@Query("select a.books from Author a where a.lastName = ?1")
 	List<Book> findAllBooksByAuthorLastName(String lastName);
 	
+	Book findById(long id);
 	
 }

@@ -46,6 +46,7 @@ public class Author {
 	)
 	private Set<Book> books = new HashSet<>();
 	
+	@Size(max= 2000)
 	private String biography;
 	
 	@CreationTimestamp
