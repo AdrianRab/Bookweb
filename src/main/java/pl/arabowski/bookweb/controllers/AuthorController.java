@@ -42,7 +42,7 @@ public class AuthorController {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {
 			authorRepo.saveAndFlush(author);
-			mav.addObject("author", authorRepo);
+			mav.addObject("author", author);
 			mav.setViewName("redirect:http://localhost:8090/author/all");
 			return mav;
 		} else {

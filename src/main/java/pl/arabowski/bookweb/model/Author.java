@@ -38,12 +38,7 @@ public class Author {
 	@Size(min=1, max = 40)
 	private String lastName;
 	
-	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(
-		name = "Author_Book",
-		joinColumns = {@JoinColumn(name="author_id")},
-		inverseJoinColumns = {@JoinColumn(name="book_id")}
-	)
+	@ManyToMany(cascade = {CascadeType.ALL} , mappedBy="authors")
 	private Set<Book> books = new HashSet<>();
 	
 	@Size(max= 2000)

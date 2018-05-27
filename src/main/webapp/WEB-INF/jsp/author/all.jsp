@@ -8,8 +8,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>All authors</title>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+	<div  style="background-color: hsl(150, 100%, 65%)">
+		<%@ include file="header.jsp"%>
+	</div>
+	
+
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 	<h2>Available authors</h2>
 	<br>
@@ -28,17 +34,17 @@
 				<td>${author.id}</td>
 				<td>${author.firstName} ${author.lastName}</td>
 				<td>${author.biography}</td>
-				<td><a href="${contextPath}/author/all-books/${author.id}"><button>Books</button></a></td>
+				<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-dark">Books</button></a></td>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<td><a href="${contextPath}/admin/edit-auth/${author.id}"><button>Edit</button></a>
-					<a href="${contextPath}/admin/detele-auth/${author.id}"><button>Delete</button></a></td>
+				<td><a href="${contextPath}/admin/edit-auth/${author.id}"><button type="button" class="btn btn-dark">Edit</button></a>
+					<a href="${contextPath}/admin/delete-auth/${author.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
 				</sec:authorize>
 			</tr>
 		</c:forEach>
 	</table>
 	<br>
-	<a href="${contextPath}/author/add"><button>Add new author</button></a>
+	<a href="${contextPath}/author/add"><button type="button" class="btn btn-dark">Add new author</button></a>
 	<br>
-	<a href="${contextPath}/"><button>Home</button></a>
+	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
 </body>
 </html>

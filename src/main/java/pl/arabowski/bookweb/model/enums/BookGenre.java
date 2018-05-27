@@ -67,5 +67,5 @@ public enum BookGenre {
 		public String toString() {
 			return "science fiction";
 		}
-	},
+},
 }

@@ -8,8 +8,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${author.firstName} ${author.lastName}</title>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+	<div  style="background-color: hsl(150, 100%, 65%)">
+		<%@ include file="header.jsp"%>
+	</div>
 
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
 	<h3>Books by ${author.firstName} ${author.lastName}</h3>
@@ -33,16 +38,16 @@
 					</c:forEach>
 				</td>
 				<td>${book.publisher.name}</td>
-				<td>${book.ISBN}</td>
-				<td><a href="${contextPath}/book/details/${book.id}"><button>Details</button></a></td>
+				<td>${book.isbn}</td>
+				<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-dark">Details</button></a></td>
 			</tr>
 		</c:forEach>
 		</table>
 		
 <%-- 	<a href="${contextPath}/author/add-new-book/${author.id}"><button>Add new book to author</button></a> --%>
 	<br>
-	<a href="${contextPath}/author/all"><button>Back</button></a>
+	<a href="${contextPath}/author/all"><button type="button" class="btn btn-dark">Back</button></a>
 	<br>
-	<a href="${contextPath}/"><button>Home</button></a>
+	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
 </body>
 </html>

@@ -9,6 +9,9 @@
 <title>Add new publisher</title>
 </head>
 <body>
+	<div  style="background-color: hsl(150, 100%, 65%)">
+		<%@ include file="header.jsp"%>
+	</div>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 	
 	<h2>Add new publisher</h2>

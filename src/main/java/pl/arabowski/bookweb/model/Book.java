@@ -1,7 +1,9 @@
 package pl.arabowski.bookweb.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -18,8 +21,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.ISBN;
 
 @Entity
 @Table(name = "books")
@@ -48,13 +50,19 @@ public class Book {
 	@ElementCollection
 	private Set<String> genre  = new HashSet<>();
 	
-	@DecimalMin(value = "1", message = "{rating.error.message.min}")
-	@DecimalMax(value = "10", message = "{rating.error.message.max}")
+	@ElementCollection
+	private List<Double> rating = new ArrayList<>();
+
 	@Column(scale = 2, precision = 4)
-	private double rating;
+	private double rate;
 	
-	@NotEmpty
-	@ManyToMany(mappedBy = "books")
+//	@NotEmpty
+	@ManyToMany
+	@JoinTable(
+			name = "Author_Book",
+			joinColumns = @JoinColumn(name="book_id"),
+			inverseJoinColumns = @JoinColumn(name="author_id")
+		)
 	private Set<Author> authors = new HashSet<>();
 	
 	@NotNull
@@ -62,7 +70,7 @@ public class Book {
 	@JoinColumn(name="publisher_id", nullable = false)
 	private Publisher publisher;
 	
-	@NotBlank
+	@ISBN
 	private String isbn;
 
 	@Lob
@@ -102,11 +110,12 @@ public class Book {
 		this.genre = genre;
 	}
 
-	public double getRating() {
+
+	public List<Double> getRating() {
 		return rating;
 	}
 
-	public void setRating(double rating) {
+	public void setRating(List<Double> rating) {
 		this.rating = rating;
 	}
 
@@ -156,6 +165,15 @@ public class Book {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+	
+	
+	public double getRate() {
+		return rate;
+	}
+
+	public void setRate(double rate) {
+		this.rate = rate;
 	}
 
 }
