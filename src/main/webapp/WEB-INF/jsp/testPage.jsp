@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<div align=center>
 	<div  style="background-color: hsl(150, 100%, 65%)">
 		<%@ include file="header.jsp"%>
 	</div>
@@ -33,9 +34,12 @@
 	Top 20 books <a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">List of top 20 books</button></a>
 	<br>
 	
+	<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
 		<form action="/logout" method="post">
 			<input type="submit" value="Sign Out" /> 
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		</form>
+	</sec:authorize>
+	</div>
 </body>
 </html>

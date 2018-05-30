@@ -8,13 +8,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<c:out value="${pageContext.request.remoteUser}"></c:out>
+	<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
+		Logged as: <c:out value="${pageContext.request.remoteUser}"></c:out>
+	</sec:authorize>
 	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+	
 	<div class="container">
 	  <div class="page-header">
 	    <h1>Bookweb</h1> 

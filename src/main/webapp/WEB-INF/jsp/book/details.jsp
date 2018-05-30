@@ -9,20 +9,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${book.title}</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
+	<div align=center>
 	<div  style="background-color: hsl(150, 100%, 65%)">
 		<%@ include file="header.jsp"%>
 	</div>
-	<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-	
-	<h2>Book ${book.title} details</h2>
+
+	<h1>Book ${book.title} details</h1>
 	<br>
 	
-	<div>
-		${book.cover}
-	</div>	
+	<div align=right style="background-color:yellow">
+		<h2>User's rate: <fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></h2>
+	</div>
+	
 		<table class="table table-dark">
 		<tr>
 			<th>Id</th>
@@ -52,20 +56,27 @@
 				</c:forEach>
 			</td>
 			<td>${book.publisher.name}</td>
-			<td><a href="${contextPath}/book/edit/${book.id}"><button type="button" class="btn btn-dark">Edit</button></a></td>
+			<td><a href="${contextPath}/book/edit/${book.id}"><button type="button" class="btn btn-warning">Edit</button></a></td>
 			<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-					<a href="${contextPath}/admin/delete-book/${book.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+				<td><a href="${contextPath}/admin/delete-book/${book.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
 			</sec:authorize>
 		</tr>
 	</table>
+	<br>
+	<br>
+	<c:if test="${book.cover != null}">
+		<div>
+			<img src="http://localhost:8090/cover/image-display/${book.id}"/>
+		</div>
+	</c:if>
 		
 	<br>
+	<hr>
 	<c:if test="${confirmation == null}">
 			<h3>Rate ${book.title}</h3>
 		
 		<form action="${contextPath}/book/details/${book.id}/rating" method="get">
-			Your evaluation: 
+			Evaluate: 
 			<select id="grade" name="rateParam">
 				<c:forEach items="${listOfRates}" var="rate">
 					<option value="${rate}">${rate}</option>
@@ -80,14 +91,17 @@
 		<c:out value="${confirmation}"/>
 	</c:if>
 
-		
+	<hr>
 	<br>
-	<a href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a>
+	 <div class="btn-group btn-group-lg">
+			<a href="${contextPath}/cover/add/${book.id}"><button type="button" class="btn btn-warning">Add cover page</button></a>
+			<a href="${contextPath}/cover/delete/${book.id}"><button type="button" class="btn btn-warning">Delete cover</button></a>
+			<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
+			<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
+			<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
+	</div>
 	<br>
-	<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">Top 20 books</button></a>
-	<br>
-	<a href="${contextPath}/book/all"><button type="button" class="btn btn-dark">All books</button></a>
-	<br>
-	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+	<a href="${contextPath}/"><button type="button" class="btn btn-primary">Home</button></a>
+</div>
 </body>
 </html>

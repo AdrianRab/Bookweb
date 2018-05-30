@@ -9,15 +9,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Top 20 books</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+	 <div align=center>
 	<div  style="background-color: hsl(150, 100%, 65%)">
 		<%@ include file="header.jsp"%>
 	</div>
 	
 
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
+
 	<h2>20 top rated books</h2>
 	<br>
 	<table class="table table-dark">
@@ -50,19 +53,20 @@
 					</c:forEach>
 				</td>
 				<td>${book.publisher.name}</td>
-				<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-dark">Details</button></a></td>
+				<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
-					<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-						<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+					<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-warning">Edit</button></a>
+						<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
 				</sec:authorize>
 			</tr>
 		</c:forEach>
 	</table>
 	<br>
-	<a href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a>
-	<br>
-	<a href="${contextPath}/book/all"><button type="button" class="btn btn-dark">All books</button></a>
-	<br>
-	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+	 <div class="btn-group btn-group-lg">
+		<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
+		<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
+		<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+	</div>
+ </div>
 </body>
 </html>

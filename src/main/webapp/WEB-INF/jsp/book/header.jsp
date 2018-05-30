@@ -8,11 +8,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	<c:out value="${pageContext.request.remoteUser}"></c:out>
+	Logged as: <c:out value="${pageContext.request.remoteUser}"></c:out>
 	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 	<div class="container">

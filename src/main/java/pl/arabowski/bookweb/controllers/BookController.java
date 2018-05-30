@@ -1,8 +1,11 @@
 package pl.arabowski.bookweb.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +52,12 @@ public class BookController {
 	}
 
 	@PostMapping("/add")
-	public ModelAndView addBook(@Valid Book book, BindingResult result) {
+	public ModelAndView addBook(@Valid Book book, BindingResult result, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {
 			bookService.countRating(book);
 			bookRepo.saveAndFlush(book);
+			session.setAttribute("book", book);
 			mav.addObject("book", book);
 			mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
 			return mav;
@@ -107,6 +111,8 @@ public class BookController {
 	public ModelAndView bookDetails(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
+		Date createdDate = book.getCreated();
+		book.setCreated(createdDate);
 		mav.addObject("book", book);
 		mav.setViewName("book/details");
 		return mav;

@@ -9,60 +9,64 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>All books</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div  style="background-color: hsl(150, 100%, 65%)">
-		<%@ include file="header.jsp"%>
-	</div>
+	<div align=center>
+		<div  style="background-color: hsl(150, 100%, 65%)">
+			<%@ include file="header.jsp"%>
+		</div>
 	
 
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-	<h2>Available books</h2>
-	<br>
-	<table>
-		<tr>
-			<th>Id</th>
-			<th>Title</th>
-			<th>Genre</th>
-			<th>Rate</th>
-			<th>Authors</th>
-			<th>Publisher</th>
-			<th>Details</th>
-			<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<th>Action</th>
-			</sec:authorize>
-		</tr>
-		<c:forEach items="${booksList}" var="book">
+
+		<h2>Available books</h2>
+		<br>
+		<table class="table table-dark">
 			<tr>
-				<td>${book.id}</td>
-				<td>${book.title}</td>
-				<td>
-					<c:forEach items="${book.genre}" var="genre">
-						${genre} 
-					</c:forEach>
-				
-				</td>
-				<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></td>
-				<td>
-					<c:forEach items="${book.authors}" var="author">
-						${author.firstName} ${author.lastName };
-					</c:forEach>
-				</td>
-				<td>${book.publisher.name}</td>
-				<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-dark">Details</button></a></td>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Genre</th>
+				<th>Rate</th>
+				<th>Authors</th>
+				<th>Publisher</th>
+				<th>Details</th>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
-					<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-						<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+					<th>Action</th>
 				</sec:authorize>
 			</tr>
-		</c:forEach>
-	</table>
-	<br>
-	<a href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a>
-	<br>
-	<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">Top 20 books</button></a>
-	<br>
-	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+			<c:forEach items="${booksList}" var="book">
+				<tr>
+					<td>${book.id}</td>
+					<td>${book.title}</td>
+					<td>
+						<c:forEach items="${book.genre}" var="genre">
+							${genre} 
+						</c:forEach>
+					
+					</td>
+					<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></td>
+					<td>
+						<c:forEach items="${book.authors}" var="author">
+							${author.firstName} ${author.lastName };
+						</c:forEach>
+					</td>
+					<td>${book.publisher.name}</td>
+					<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+					<sec:authorize access ="hasRole('ROLE_ADMIN')">
+						<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-warning">Edit</button></a>
+							<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+					</sec:authorize>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+		 <div class="btn-group btn-group-lg">
+			<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
+			<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
+			<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+		</div>
+	</div>
 </body>
 </html>
