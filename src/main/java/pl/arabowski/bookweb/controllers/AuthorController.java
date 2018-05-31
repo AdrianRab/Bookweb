@@ -61,7 +61,7 @@ public class AuthorController {
 	}
 	
 	@GetMapping("/all-books/{id}")
-	public ModelAndView allAuthors(@PathVariable long id) {
+	public ModelAndView allAuthorsBooks(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView();
 		Author author = authorRepo.findById(id);
 		Set<Book> books = authorServImpl.findAuthorBooks(id);

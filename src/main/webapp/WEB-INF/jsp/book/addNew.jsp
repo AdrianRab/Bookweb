@@ -22,7 +22,7 @@
 	<h2>Add new book</h2>
 	
 	<form:form method="POST" modelAttribute="book">
-		<table>
+		<table class="table table-dark">
 			<tr>
 				<td>Title: <form:input path="title"/></td>
 				<td><form:errors path="title" cssClass="error" element="div"/></td>

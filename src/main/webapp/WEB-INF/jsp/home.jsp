@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Spring Security Example - ProgrammingFree</title>
+<title>Bookweb home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -15,6 +15,11 @@
 			<%@ include file="header.jsp"%>
 		</div>
 	
+	<c:if test="${pageContext.request.remoteUser == null}">
+		<div>
+			<a href="${contextPath}/register"><button type="button" class="btn btn-success">Register</button></a><br>
+		</div>
+	</c:if>
 
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 			<h1>Welcome!</h1>

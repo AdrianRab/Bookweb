@@ -26,7 +26,13 @@
 	<div align=right style="background-color:yellow">
 		<h2>User's rate: <fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></h2>
 	</div>
-	
+		<div class="btn-group btn-group-lg" align="left">
+			<a href="${contextPath}/user/add-to-owned/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
+			<a href="${contextPath}/user/add-to-reading/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
+			<a href="${contextPath}/user/add-read/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
+			<a href="${contextPath}/user/add-to-read/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to books to read</button></a>
+		</div>
+		<br>
 		<table class="table table-dark">
 		<tr>
 			<th>Id</th>
@@ -52,7 +58,7 @@
 			<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></td>
 			<td>
 				<c:forEach items="${book.authors}" var="author">
-					${author.firstName} ${author.lastName };
+					<a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-warning">${author.firstName} ${author.lastName}</button></a>;
 				</c:forEach>
 			</td>
 			<td>${book.publisher.name}</td>
@@ -82,8 +88,7 @@
 					<option value="${rate}">${rate}</option>
 				</c:forEach>
 			</select>
-			<p>	<input type="submit" value="Add" />
-				<input type="reset" value="Reset the form"/></p>
+			<p>	<input type="submit" value="Add" /></p>
 		</form>	
 	</c:if>
 	

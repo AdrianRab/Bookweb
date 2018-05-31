@@ -53,7 +53,7 @@
 					</c:forEach>
 				</td>
 				<td>${book.publisher.name}</td>
-				<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+				<td><a href="${contextPath}/book/details/${book.id}/${user.id}"><button type="button" class="btn btn-info">Details</button></a></td>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
 					<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-warning">Edit</button></a>
 						<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>

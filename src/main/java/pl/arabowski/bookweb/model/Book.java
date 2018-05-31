@@ -59,7 +59,7 @@ public class Book {
 	@Column(scale = 2, precision = 4)
 	private double rate;
 	
-//	@NotEmpty
+	@NotEmpty
 	@ManyToMany
 	@JoinTable(
 			name = "Author_Book",

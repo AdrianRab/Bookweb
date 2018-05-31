@@ -1,6 +1,5 @@
 package pl.arabowski.bookweb.controllers;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.Publisher;
+import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.BookRepository;
+import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.service.book.BookServiceImpl;
 import pl.arabowski.bookweb.service.publisher.PublisherServiceImpl;
 
@@ -42,6 +43,10 @@ public class BookController {
 	
 	@Autowired
 	private AuthorRepository authorRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
 
 	@GetMapping("/add")
 	public ModelAndView addBook() {
@@ -107,26 +112,29 @@ public class BookController {
 		}
 	}
 
-	@GetMapping("/details/{id}")
-	public ModelAndView bookDetails(@PathVariable long id) {
+	@GetMapping("/details/{id}/{userId}")
+	public ModelAndView bookDetails(@PathVariable long id, @PathVariable long userId) {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
+		User user = userRepo.findById(id);
 		Date createdDate = book.getCreated();
 		book.setCreated(createdDate);
 		mav.addObject("book", book);
+		mav.addObject("user", user);
 		mav.setViewName("book/details");
 		return mav;
 	}
 
-	@GetMapping("/details/{id}/rating")
-	public ModelAndView rateBook(@PathVariable long id, @RequestParam String rateParam) {
+	@GetMapping("/details/{id}/{userId}/rating")
+	public ModelAndView rateBook(@PathVariable long id, @PathVariable long userId, @RequestParam String rateParam) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(rateParam);
 		Book book = bookRepo.findById(id);
+		User user = userRepo.findById(id);
 		bookService.rateBook(book, Double.valueOf(rateParam));
 		mav.addObject("confirmation", "Book has been succesfully rated.");
 		mav.addObject("book", book);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
+		mav.addObject("user", user);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
 		return mav;
 	}
 

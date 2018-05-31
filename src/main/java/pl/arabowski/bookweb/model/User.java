@@ -1,11 +1,14 @@
 package pl.arabowski.bookweb.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +25,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -49,7 +54,6 @@ public class User {
 	@NotNull
 	private String email;
 
-	@NotNull
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private UserRole role;
 
@@ -65,7 +69,11 @@ public class User {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<Book> wannaRead = new HashSet<>();
 
+	@ElementCollection
+	private Map<Long, Integer> rating = new HashMap<>();
+
 	@CreationTimestamp
+	@DateTimeFormat(iso=ISO.DATE)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 
@@ -178,6 +186,14 @@ public class User {
 
 	public void setOwned(Set<Book> owned) {
 		this.owned = owned;
+	}
+
+	public Map<Long, Integer> getRating() {
+		return rating;
+	}
+
+	public void setRating(Map<Long, Integer> rating) {
+		this.rating = rating;
 	}
 
 }

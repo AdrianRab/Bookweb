@@ -1,0 +1,181 @@
+package pl.arabowski.bookweb.controllers;
+
+import java.util.Set;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import pl.arabowski.bookweb.model.Book;
+import pl.arabowski.bookweb.model.User;
+import pl.arabowski.bookweb.repositories.BookRepository;
+import pl.arabowski.bookweb.repositories.UserRepository;
+import pl.arabowski.bookweb.service.user.UserServiceImpl;
+
+@Controller
+@RequestMapping("/user")
+public class UserController {
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private BookRepository bookRepo;
+	
+	@GetMapping("/owned/{id}")
+	public ModelAndView userOwnedBooks(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Set<Book>owned = user.getOwned();
+		mav.addObject("user",user);
+		mav.addObject("ownedBooks", owned);
+		mav.setViewName("user/ownedBooks");
+		return mav;
+	}
+	
+	@GetMapping("/read/{id}")
+	public ModelAndView userReadBooks(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Set<Book>read = user.getOwned();
+		mav.addObject("user",user);
+		mav.addObject("readBooks", read);
+		mav.setViewName("user/readBooks");
+		return mav;
+	}
+	
+	@GetMapping("/reading/{id}")
+	public ModelAndView userReadingBooks(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Set<Book>reading = user.getOwned();
+		mav.addObject("user",user);
+		mav.addObject("readingBooks", reading);
+		mav.setViewName("user/readingBooks");
+		return mav;
+	}
+	
+	@GetMapping("/to-read/{id}")
+	public ModelAndView userToReadBooks(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Set<Book>wannaRead = user.getOwned();
+		mav.addObject("user",user);
+		mav.addObject("wannaReadBooks", wannaRead);
+		mav.setViewName("user/toRead");
+		return mav;
+	}
+	
+	@GetMapping("/edit/{id}")
+	public ModelAndView editUser(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		mav.addObject("user", user);
+		mav.setViewName("user/edit");
+		return mav;
+	}
+
+	@PostMapping("/edit/{id}")
+	public ModelAndView editUser(@Valid User user, BindingResult result) {
+		ModelAndView mav = new ModelAndView();
+		if (!result.hasErrors()) {
+			userRepo.saveAndFlush(user);
+			mav.addObject("user", user);
+			mav.setViewName("user/profile");
+			return mav;
+		} else {
+			mav.setViewName("user/edit");
+			return mav;
+		}
+	}
+
+	@GetMapping("/detele-account/{id}")
+	public ModelAndView removeUser(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		mav.addObject("user", user);
+		mav.setViewName("user/confirmation");
+		return mav;
+	}
+	
+	@GetMapping("/confirmation/{id}/{decision}")
+	public ModelAndView removeUserConfirmation(@PathVariable long id, @PathVariable boolean decision) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		if(decision) {
+			userRepo.delete(user);
+			mav.setViewName("redirect:http://localhost:8090/home");
+		}
+		mav.addObject("user", user);
+		mav.setViewName("redirect:http://localhost:8090/user/my-page/"+user.getId());
+		return mav;
+	}
+	
+	@GetMapping("/my-page/{id}")
+	public ModelAndView userProfile(@PathVariable long id) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		mav.addObject("readingBooks", user.getReading());
+		mav.addObject("user", user);
+		mav.setViewName("user/profile");
+		return mav;
+	}
+	
+	@GetMapping("/add-to-owned/{id}/{bookId}")
+	public ModelAndView addToOwnedBooks(@PathVariable long id, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.addBookToOwned(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		return mav;
+	}
+	
+	@GetMapping("/add-to-reading/{id}/{bookId}")
+	public ModelAndView addToReadingBooks(@PathVariable long id, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.addBookToReading(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		return mav;
+	}
+	
+	@GetMapping("/add-read/{id}/{bookId}")
+	public ModelAndView addToRead(@PathVariable long id, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.addBookToRead(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		return mav;
+	}
+	
+	@GetMapping("/add-to-read/{id}/{bookId}")
+	public ModelAndView addBookToRead(@PathVariable long id, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findById(id);
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.addBookToWannaRead(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		return mav;
+	}
+
+}
