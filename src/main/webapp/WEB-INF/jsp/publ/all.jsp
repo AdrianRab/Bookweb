@@ -13,35 +13,36 @@
 <title>All publishers</title>
 </head>
 <body>
-
-	<div  style="background-color: hsl(150, 100%, 65%)">
-		<%@ include file="header.jsp"%>
-	</div>
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-	<h2>Available publishers</h2>
-	<br>
-	<table>
-		<tr>
-			<th>Id</th>
-			<th>Name</th>
-			<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<th>Action</th>
-			</sec:authorize>
-		</tr>
-		<c:forEach items="${publishersList}" var="publisher">
+	<div align=center>
+		<div  style="background-color: hsl(150, 100%, 65%)">
+			<%@ include file="header.jsp"%>
+		</div>
+			<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
+		<h2>Available publishers</h2>
+		<br>
+		<table class="table table-dark">
 			<tr>
-				<td>${publisher.id}</td>
-				<td>${publisher.name}</td>
+				<th>Id</th>
+				<th>Name</th>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<td><a href="${contextPath}/admin/edit-publ/${publisher.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-					<a href="${contextPath}/admin/delete-publ/${publisher.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+					<th>Action</th>
 				</sec:authorize>
 			</tr>
-		</c:forEach>
-	</table>
-	<br>
-	<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
-	<br>
-	<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
+			<c:forEach items="${publishersList}" var="publisher">
+				<tr>
+					<td>${publisher.id}</td>
+					<td>${publisher.name}</td>
+					<sec:authorize access ="hasRole('ROLE_ADMIN')">
+					<td><a href="${contextPath}/admin/edit-publ/${publisher.id}"><button type="button" class="btn btn-dark">Edit</button></a>
+						<a href="${contextPath}/admin/delete-publ/${publisher.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+					</sec:authorize>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+		<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
+		<br>
+		<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a><
+	</div>
 </body>
 </html>

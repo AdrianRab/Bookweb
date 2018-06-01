@@ -5,6 +5,8 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -120,61 +122,61 @@ public class UserController {
 		return mav;
 	}
 	
-	@GetMapping("/my-page/{id}")
-	public ModelAndView userProfile(@PathVariable long id) {
+	@GetMapping("/my-page")
+	public ModelAndView userProfile(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		mav.addObject("readingBooks", user.getReading());
 		mav.addObject("user", user);
 		mav.setViewName("user/profile");
 		return mav;
 	}
 	
-	@GetMapping("/add-to-owned/{id}/{bookId}")
-	public ModelAndView addToOwnedBooks(@PathVariable long id, @PathVariable long bookId) {
+	@GetMapping("/add-to-owned/{bookId}")
+	public ModelAndView addToOwnedBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToOwned(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
 		return mav;
 	}
 	
-	@GetMapping("/add-to-reading/{id}/{bookId}")
-	public ModelAndView addToReadingBooks(@PathVariable long id, @PathVariable long bookId) {
+	@GetMapping("/add-to-reading/{bookId}")
+	public ModelAndView addToReadingBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToReading(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
 		return mav;
 	}
 	
-	@GetMapping("/add-read/{id}/{bookId}")
-	public ModelAndView addToRead(@PathVariable long id, @PathVariable long bookId) {
+	@GetMapping("/add-read/{bookId}")
+	public ModelAndView addToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToRead(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
 		return mav;
 	}
 	
-	@GetMapping("/add-to-read/{id}/{bookId}")
-	public ModelAndView addBookToRead(@PathVariable long id, @PathVariable long bookId) {
+	@GetMapping("/add-to-read/{bookId}")
+	public ModelAndView addBookToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToWannaRead(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
 		return mav;
 	}
 

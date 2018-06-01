@@ -23,14 +23,18 @@
 	<h1>Book ${book.title} details</h1>
 	<br>
 	
-	<div align=right style="background-color:yellow">
-		<h2>User's rate: <fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></h2>
+	<div align=right>
+		<p><span style="background-color:yellow;font-size:160%">User's rate:
+		 <fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></span></p>
+	</div>
+	<div align=left>
+		<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
 	</div>
 		<div class="btn-group btn-group-lg" align="left">
-			<a href="${contextPath}/user/add-to-owned/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
-			<a href="${contextPath}/user/add-to-reading/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
-			<a href="${contextPath}/user/add-read/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
-			<a href="${contextPath}/user/add-to-read/${user.id}/${book.id}"><button type="button" class="btn btn-success">Add to books to read</button></a>
+			<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
+			<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
+			<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
+			<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-success">Add to books to read</button></a>
 		</div>
 		<br>
 		<table class="table table-dark">

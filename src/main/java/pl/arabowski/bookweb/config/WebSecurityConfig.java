@@ -11,16 +11,10 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-	// @Bean(name="passwordEncoder")
-	// public PasswordEncoder passwordencoder(){
-	// return new BCryptPasswordEncoder();
-	// }
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -71,9 +65,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/hello", "/publ/**", "/author/**", "/book/**", "/cover/**", "/user/**")
-				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')").antMatchers("/admin/**")
-				.access("hasRole('ROLE_ADMIN')").anyRequest().permitAll().and().formLogin().usernameParameter("email")
-				.passwordParameter("password").and().logout().logoutSuccessUrl("/home").and().csrf().disable(); // bez
+				.access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+				.antMatchers("/admin/**")
+				.access("hasRole('ROLE_ADMIN')")
+				.anyRequest().permitAll()
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.usernameParameter("email")
+				.passwordParameter("password")
+				.and().logout()
+				.logoutSuccessUrl("/home")
+				.and()
+				.csrf().disable(); // bez
 																												// disable
 																												// 403
 																												// przy

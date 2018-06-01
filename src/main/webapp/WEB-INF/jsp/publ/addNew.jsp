@@ -11,21 +11,23 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div  style="background-color: hsl(150, 100%, 65%)">
-		<%@ include file="header.jsp"%>
+	<div align=center>
+		<div  style="background-color: hsl(150, 100%, 65%)">
+			<%@ include file="header.jsp"%>
+		</div>
+		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+		
+		<h2>Add new publisher</h2>
+		
+		<form:form method="POST" modelAttribute="publisher">
+			Name: <form:input path="name"/><br>
+			<form:errors path="name" cssClass="error" element="div"/>
+			<input type="submit" value="Add" />
+			<input type="reset" value="Reset the form" />
+		</form:form>
+		<br>
+		<a href="${contextPath}/publ/all"><button>List of publishers</button></a> 
+		<a href="${contextPath}/home"><button>Main page</button></a> 
 	</div>
-	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-	
-	<h2>Add new publisher</h2>
-	
-	<form:form method="POST" modelAttribute="publisher">
-		Name: <form:input path="name"/><br>
-		<form:errors path="name" cssClass="error" element="div"/>
-		<input type="submit" value="Add" />
-		<input type="reset" value="Reset the form" />
-	</form:form>
-	<br>
-	<a href="${contextPath}/publ/all"><button>List of publishers</button></a> 
-	<a href="${contextPath}/home"><button>Main page</button></a> 
 </body>
 </html>

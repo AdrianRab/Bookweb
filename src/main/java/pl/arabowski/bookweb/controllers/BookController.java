@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,13 +42,12 @@ public class BookController {
 
 	@Autowired
 	private PublisherServiceImpl publService;
-	
+
 	@Autowired
 	private AuthorRepository authorRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
 
 	@GetMapping("/add")
 	public ModelAndView addBook() {
@@ -112,29 +113,28 @@ public class BookController {
 		}
 	}
 
-	@GetMapping("/details/{id}/{userId}")
-	public ModelAndView bookDetails(@PathVariable long id, @PathVariable long userId) {
+	@GetMapping("/details/{id}")
+	public ModelAndView bookDetails(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
-		User user = userRepo.findById(id);
-		Date createdDate = book.getCreated();
-		book.setCreated(createdDate);
+		// Date createdDate = book.getCreated();
+		// book.setCreated(createdDate);
 		mav.addObject("book", book);
-		mav.addObject("user", user);
 		mav.setViewName("book/details");
 		return mav;
 	}
 
-	@GetMapping("/details/{id}/{userId}/rating")
-	public ModelAndView rateBook(@PathVariable long id, @PathVariable long userId, @RequestParam String rateParam) {
+	@GetMapping("/details/{id}/rating")
+	public ModelAndView rateBook(@PathVariable long id, @AuthenticationPrincipal UserDetails currentUser,
+			@RequestParam String rateParam) {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		bookService.rateBook(book, Double.valueOf(rateParam));
 		mav.addObject("confirmation", "Book has been succesfully rated.");
 		mav.addObject("book", book);
 		mav.addObject("user", user);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId()+"/"+user.getId());
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId() + "/" + user.getId());
 		return mav;
 	}
 
@@ -157,7 +157,7 @@ public class BookController {
 	List<Publisher> allPublishers() {
 		return (List<Publisher>) publService.listAllPublishers();
 	}
-	
+
 	@ModelAttribute("listOfAuthors")
 	List<Author> allAuthors() {
 		return authorRepo.findAll();
