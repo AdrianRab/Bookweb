@@ -7,16 +7,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.username}'s books</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
-	<div align=center>	
-			<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-			<div  style="background-color: hsl(150, 100%, 65%)">
-				<%@ include file="header.jsp"%>
-			</div>
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+	<div class="container-fluid">	
+		<%@ include file="../header.jsp"%>
+
 		<div align=left>
 			<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
 		</div>

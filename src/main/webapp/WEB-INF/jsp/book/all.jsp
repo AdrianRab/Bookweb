@@ -14,9 +14,7 @@
 </head>
 <body>
 	<div align=center>
-		<div  style="background-color: hsl(150, 100%, 65%)">
-			<%@ include file="header.jsp"%>
-		</div>
+		<%@ include file="../header.jsp"%>
 	
 
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>

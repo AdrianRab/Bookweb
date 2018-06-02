@@ -7,44 +7,113 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Edit your profile</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.registerbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.cancelbtn {
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+</style> 
 </head>
 <body>
-
-	<div align=center>	
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		<div  style="background-color: hsl(150, 100%, 65%)">
-			<%@ include file="header.jsp"%>
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+	<div class="container-fluid">	
+		<%@ include file="../header.jsp"%>
+		<div class="container">
+			<p class="h2 text-muted" >Edit profile</p>
 		</div>
-		<h2>Edit profile</h2>
-		<table class="table">
 			<form:form method="POST" modelAttribute="user">
-				<tr>
-					<td>Username: <form:input path="username"/><br></td>
-					<td><form:errors path="username" cssClass="error" element="div"/></td>
-				</tr>
-				<tr>
-					<td>E-mail address: <form:input path="email"/></td>
-					<td><form:errors path="email" cssClass="error" element="div"/></td>
-				</tr>
-				<tr>	
-					<td>Password: <form:password path="password"/></td>
-					<td><form:errors path="password" cssClass="error" element="div"/></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Save changes" />
-					<input type="reset" value="Reset the form" /></td>
-				</tr>
-			</form:form>
-		</table>
-		<br>
-	<div class="btn-group btn-group-lg">
-		<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-warning">My books</button></a>
-		<a href="${contextPath}/home"><button type="button" class="btn btn-warning">Main page</button></a> 
-	</div>
+				<div class="container">
+					Username: <form:input path="username"/>
+					<form:errors path="username" cssClass="error" element="div"/>
+			
+				
+					E-mail address: <form:input path="email"/>
+					<form:errors path="email" cssClass="error" element="div"/>
 		
-	
+				
+					Password: <form:password path="password"/>
+					<form:errors path="password" cssClass="error" element="div"/>
+				</div>
+				<div class="container">
+					<input class="btn btn-success"  type="submit" value="Save changes" />
+					<input class="btn btn-danger"  type="reset" value="Reset the form" />
+				</div>
+			</form:form>
+
+		<br>
+		<div class="container">
+			<div class="row">
+			    <div class="col">
+			    </div>
+			   	<div class="col">
+					<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-warning">My page</button></a>
+						<a href="${contextPath}/home"><button type="button" class="btn btn-warning">Main page</button></a> 
+					</div>	   		
+			    </div>
+			    <div class="col">
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

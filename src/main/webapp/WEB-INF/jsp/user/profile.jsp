@@ -7,57 +7,126 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.username} profile</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<style>
+.custom {
+    width: 78px !important;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url("img_girl.jpg");
+
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+btn-md{
+	width: 150px !important;
+	
+}
+</style>
 </head>
 <body>
-	<div class="jumbotron text-center">	
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		<div  style="background-color: hsl(150, 100%, 65%)">
-			<%@ include file="header.jsp"%>
-		</div>
-		
-		<h1>Welcome ${user.username}</h1>
-	 <div class="btn-group btn-group-lg">
-			<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">My books</button></a>
-			<a href="${contextPath}/user/read"><button type="button" class="btn btn-warning">Read books</button></a>
-			<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Want to read</button></a>
-	</div>
-		<div class="container">
-			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reading">Currently reading books</button>
-			  <div id="reading" class="collapse">
-				<table class="table">
-					<tr class="info">
-						<th>Title</th>
-						<th>Authors</th>
-						<th>Genre</th>
-						<th>Details</th>
-					</tr>
-					<c:forEach items="${readingBooks}" var="book">
-						<tr class="active">
-							<td>${book.title}</td>
-							<c:forEach items="${book.authors}" var="author">
-								<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-info">
-									${author.firstName} ${author.lastName}</button></a></td>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+		<div class="container-fluid"">	
+			<%@ include file="../header.jsp"%>
+			<div class="container">
+			  <div class="row">
+			    <div class="col">
+			    	<p class="h2 text-muted">Welcome ${user.username}</p>
+			    	<br>
+			    	<br>
+			    </div>
+			    </div>
+			 </div>
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-auto">
+				<div  class="btn-group-vertical">
+					<p align="left"><a href="${contextPath}/user/owned"><button type="button" class="btn btn-md btn-warning">My books</button></a></p>				
+					<p align="left"><a href="${contextPath}/user/read"><button type="button" class="btn btn-md btn-warning">Read books</button></a></p>
+					<p align="left"><a href="${contextPath}/user/to-read"><button type="button" class="btn btn-md btn-warning">Want to read</button></a></p>
+				</div>
+			</div>
+			<div class="col">
+				<div class="container">
+					<button type="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#reading">Currently reading books</button>
+					  <div id="reading" class="collapse">
+						<table class="table">
+							<tr class="info">
+								<th>Title</th>
+								<th>Authors</th>
+								<th>Genre</th>
+								<th>Details</th>
+							</tr>
+							<c:forEach items="${readingBooks}" var="book">
+								<tr class="active">
+									<td>${book.title}</td>
+									<c:forEach items="${book.authors}" var="author">
+										<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-info">
+											${author.firstName} ${author.lastName}</button></a></td>
+									</c:forEach>
+									<td><c:forEach items="${book.genre}" var="genre">
+										 ${genre} 
+									</c:forEach></td>
+									<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+								</tr>
 							</c:forEach>
-							<td><c:forEach items="${book.genre}" var="genre">
-								 ${genre} 
-							</c:forEach></td>
-							<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
-						</tr>
-					</c:forEach>
-				</table>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="col col-lg-2">
+				<div class="btn-group" role="group">
+					<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						My menu
+					</button>
+					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+						<a class="dropdown-item" href="${contextPath}/user/edit"><button type="button" class="btn btn-dark">Edit your data</button></a>
+						<a class="dropdown-item" href="${contextPath}/user/detele-account"><button type="button" class="btn btn-dark">Remove account</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br>
+		<div class="container">
+			<div class="row">
+			    <div class="col">
+			    </div>
+			    <div class="col-6">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
+						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
+					</div>
+			    </div>
+			    <div class="col">
+			    </div>
 			</div>
 		</div>
 	<br>
-	 <div class="btn-group btn-group-lg">
-			<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
-			<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
-	</div>
-	<br>
-	<a href="${contextPath}/"><button type="button" class="btn btn-primary">Home</button></a>
-		
+		<div class="container">
+			<div class="row">
+			    <div class="col">
+			    </div>
+			    <div class="col-6">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
+			    <div class="col">
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

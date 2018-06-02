@@ -7,8 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 form {border: 3px solid #f1f1f1;}
@@ -21,25 +23,8 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
-
 button:hover {
     opacity: 0.8;
-}
-
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
 }
 
 .imgcontainer {
@@ -66,20 +51,16 @@ span.psw {
        display: block;
        float: none;
     }
-    .cancelbtn {
-       width: 100%;
-    }
 }
 </style>
 </head>
 <body>	
-		<div  style="background-color: hsl(150, 100%, 65%)" align="center">
-			<%@ include file="header.jsp"%>
-		</div>
+	<div class="container-fluid">
+		<%@ include file="header.jsp"%>
 		
 		 <form action="#" method= post>
 			  <div class="imgcontainer">
-			    <img src="/images/login_picture.jpg" alt="Avatar" class="avatar">
+			    <img src="/jsp/login_picture.jpg" alt="Avatar" class="avatar">
 			  </div>
 	
 		  <div class="container">
@@ -91,12 +72,21 @@ span.psw {
 			
 			 <input type="hidden" 
 	                     name="${_csrf.parameterName}" value="${_csrf.token}" />
-		    <button type="submit">Login</button>
+		    <button class="btn btn-success" type="submit">Login</button>
+		    <button type="reset" class="btn btn-danger">Cancel</button>
 		  </div>
-	
-	  <div class="container" style="background-color:#f1f1f1">
-	    <button type="button" class="cancelbtn">Cancel</button>
-	  </div>
-	</form> 
+		</form> 
+		<div class="container">
+			<div class="row">
+			    <div class="col">
+			    </div>
+			   	<div class="col">
+					<a href="${contextPath}/home"><button type="button" class="btn btn-info">Main page</button></a>		   		
+			    </div>
+			    <div class="col">
+			    </div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

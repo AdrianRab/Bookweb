@@ -7,27 +7,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Add new publisher</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
 </head>
 <body>
-	<div align=center>
-		<div  style="background-color: hsl(150, 100%, 65%)">
-			<%@ include file="header.jsp"%>
-		</div>
+	<div class="container-fluid">
+			<%@ include file="../header.jsp"%>
+
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		
-		<h2>Add new publisher</h2>
-		
+		<div class="container">
+			<div class="row">
+			    <div class="col">
+			    </div>
+			    <div class="col-6">
+			      	<h3 class="text-muted">Add new publisher</h3	>
+			    </div>
+			    <div class="col">
+			    </div>
+			</div>
+		</div>
+			
 		<form:form method="POST" modelAttribute="publisher">
+		<div class="container" align="center">
 			Name: <form:input path="name"/><br>
 			<form:errors path="name" cssClass="error" element="div"/>
-			<input type="submit" value="Add" />
-			<input type="reset" value="Reset the form" />
+		</div>
+		<div class="container" align="center">
+			<input class="btn btn-success" type="submit" value="Add" />
+			<input class="btn btn-danger" type="reset" value="Reset the form" />
+		</div>
 		</form:form>
 		<br>
-		<a href="${contextPath}/publ/all"><button>List of publishers</button></a> 
-		<a href="${contextPath}/home"><button>Main page</button></a> 
+		<div class="container">
+			 <div class="row">
+			 <div class="col-lg">
+			 	</div>
+			 	<div class="col-lg">
+					<a href="${contextPath}/publ/all"><button class="btn btn-info">List of publishers</button></a> 
+					<a href="${contextPath}/home"><button class="btn btn-info">Main page</button></a> 
+				</div>
+				<div class="col-lg">
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

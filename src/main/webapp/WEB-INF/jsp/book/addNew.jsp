@@ -14,9 +14,7 @@
 
 <div align=center>	
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-	<div  style="background-color: hsl(150, 100%, 65%)">
-		<%@ include file="header.jsp"%>
-	</div>
+	<%@ include file="../header.jsp"%>
 
 
 	<h2>Add new book</h2>

@@ -6,58 +6,129 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bookweb home</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <style>
 .custom {
     width: 78px !important;
 }
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url("img_girl.jpg");
+
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 </style>
 </head>
 <body>
-	<div align=center>
-		<div  style="background-color: hsl(150, 100%, 65%)">
-			<%@ include file="header.jsp"%>
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+	<div class="container-fluid">
+		<%@ include file="header.jsp"%>
+		<div class="container">
+		  <div class="row">
+		    <div class="col">
+		    </div>
+		    <div class="col-6">
+		      <h1 class="text-muted">Welcome on Bookweb!</h1>
+		      <br>
+		      <br>
+		      <c:if test="${pageContext.request.remoteUser == null}">
+				<div class="container">
+					<table class="table">
+						<tr>
+							<td><p class="h2 text-muted">Login to enjoy all features</p></td>
+							<td><a href="${contextPath}/login"><button type="button" class="btn btn-success custom">Login</button></a></td>
+						</tr>
+						<tr>
+							<td><p class="h2 text-muted">Don't have account yet?</p></td>
+							<td><a href="${contextPath}/register"><button type="button" class="btn btn-danger custom">Register</button></a></td>
+						</tr>
+					</table>
+				</div>
+			</c:if>
+		    </div>
+		    <div class="col">
+		    </div>
+		  </div>
 		</div>
-	
-	<h1>Welcome on Bookweb!</h1>
-	<c:if test="${pageContext.request.remoteUser == null}">
-		<div>
-			<a href="${contextPath}/login"><button type="button" class="btn btn-success custom">Login</button></a><br>
-			<p>Does not have account yet?</p>
-			<a href="${contextPath}/register"><button type="button" class="btn btn-danger custom">Register</button></a><br>
+		<div class="container">
+			  <div class="row">
+			    <div class="col">
+			    </div>
+			    <div class="col-6">
+			    	<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
+						<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+						 <sec:authorize access ="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+							<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
+						</sec:authorize>	
+						  <div class="btn-group" role="group">
+						    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Book menu
+						    </button>
+						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+						     	<a class="dropdown-item" href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a>
+								<a class="dropdown-item" href="${contextPath}/book/all"><button type="button" class="btn btn-dark">List of books</button></a>
+								<a class="dropdown-item" href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">List of top 20 books</button></a>
+						    </div>
+						  </div>
+						  <div class="btn-group" role="group">
+						    <button id="btnGroupDrop2" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Author menu
+						    </button>
+						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+						     	<a class="dropdown-item" href="${contextPath}/author/add"><button type="button" class="btn btn-dark" >Add new author</button></a>
+								<a class="dropdown-item" href="${contextPath}/author/all"><button type="button" class="btn btn-dark">All authors</button></a>
+						    </div>
+						  </div>
+						  <div class="btn-group" role="group">
+						    <button id="btnGroupDrop3" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						      Publisher menu
+						    </button>
+						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+								<a class="dropdown-item" href="${contextPath}/publ/all"><button type="button" class="btn btn-dark">List of publishers</button></a>
+								<a class="dropdown-item" href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
+						    </div>
+						  </div>
+						</div>
+					</sec:authorize>
+			    </div>
+			    <div class="col">
+					
+			    </div>
+			  </div>
+			  <div class="row">
+			    <div class="col">
+
+			    </div>
+			    <div class="col-5">
+					<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
+						<br>
+			  			<br>
+						<form action="/logout" method="post">
+							 <div class="form-group">
+								<input class="btn btn-danger" type="submit" value="Sign Out" /> 
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+							</div>
+						</form>
+					</sec:authorize>
+			    </div>
+			    <div class="col">
+			    </div>
+			  </div>
 		</div>
-	</c:if>
-	
-	<sec:authorize access ="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-		<div align=left>
-			<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
-		</div>
-	</sec:authorize>
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-			<div> 
-				<br>
-				<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
-					Add author: <a href="${contextPath}/author/add"><button type="button" class="btn btn-dark" >Add new author</button></a> <br>
-					All authors: <a href="${contextPath}/author/all"><button type="button" class="btn btn-dark">All authors</button></a> <br>
-					Add publisher:<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a> <br> 
-					All publishers: <a href="${contextPath}/publ/all"><button type="button" class="btn btn-dark">List of publishers</button></a><br>
-					Add books: <a href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a><br>
-					All books: <a href="${contextPath}/book/all"><button type="button" class="btn btn-dark">List of books</button></a><br>
-					Top 20 books <a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">List of top 20 books</button></a><br>
-				</sec:authorize>
-			<br>
-			<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
-				<form action="/logout" method="post">
-					 <div class="form-group">
-						<input class="btn btn-default" type="submit" value="Sign Out" /> 
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					</div>
-				</form>
-			</sec:authorize>
-			</div>
-		</div>
+	</div>
 </body>
 </html>

@@ -31,31 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private String usersQuery = "select email, password, enabled from users where email=?";
 	private String rolesQuery = "SELECT email, user_role from users INNER JOIN user_roles ON users.user_id=user_roles.user_user_id WHERE email=?";
 
-	// @Bean
-	// public UserDetailsService userDetailsServiice() throws Exception {
-	// InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-	// manager.createUser(User
-	// .withUsername("cezar")
-	// .password(passwordencoder().encode("Rzym"))
-	// .roles("USER").build());
-	// manager.createUser(User
-	// .withUsername("hannibal")
-	// .password(passwordencoder().encode("kanny218"))
-	// .roles("USER", "ADMIN").build());
-	// manager.createUser(User
-	// .withUsername("julek")
-	// .password("$2a$10$CLzluRb1aBb1lLlL68VB5udMDX6LAR3SkyBWpH9ze5rwbbmd3.YFy")
-	// //hasło Rzym
-	// .roles("USER").build());
-	// return manager;
-	// }
-
-	// @Autowired
-	// public void configAuthentication(AuthenticationManagerBuilder auth) throws
-	// Exception {
-	// auth.userDetailsService(userDetailsService).passwordEncoder(passwordencoder());
-	// }
-
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)

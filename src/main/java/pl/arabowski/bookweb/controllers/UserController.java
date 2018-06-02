@@ -77,16 +77,16 @@ public class UserController {
 		return mav;
 	}
 	
-	@GetMapping("/edit/{id}")
-	public ModelAndView editUser(@PathVariable long id) {
+	@GetMapping("/edit")
+	public ModelAndView editUser(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		mav.addObject("user", user);
 		mav.setViewName("user/edit");
 		return mav;
 	}
 
-	@PostMapping("/edit/{id}")
+	@PostMapping("/edit")
 	public ModelAndView editUser(@Valid User user, BindingResult result) {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {
@@ -100,25 +100,21 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/detele-account/{id}")
-	public ModelAndView removeUser(@PathVariable long id) {
+	@GetMapping("/detele-account")
+	public ModelAndView removeUser(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		mav.addObject("user", user);
 		mav.setViewName("user/confirmation");
 		return mav;
 	}
 	
-	@GetMapping("/confirmation/{id}/{decision}")
-	public ModelAndView removeUserConfirmation(@PathVariable long id, @PathVariable boolean decision) {
+	@GetMapping("/confirmation/{id}")
+	public ModelAndView removeUserConfirmation(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findById(id);
-		if(decision) {
-			userRepo.delete(user);
-			mav.setViewName("redirect:http://localhost:8090/home");
-		}
-		mav.addObject("user", user);
-		mav.setViewName("redirect:http://localhost:8090/user/my-page/"+user.getId());
+		userRepo.delete(user);
+		mav.setViewName("redirect:http://localhost:8090/home");
 		return mav;
 	}
 	

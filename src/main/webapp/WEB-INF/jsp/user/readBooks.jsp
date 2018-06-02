@@ -14,9 +14,9 @@
 <body>
 		<div align=center>	
 			<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-			<div  style="background-color: hsl(150, 100%, 65%)">
-				<%@ include file="header.jsp"%>
-			</div>
+
+				<%@ include file="../header.jsp"%>
+
 		<div align=left>
 			<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
 		</div>

@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService{
 				userRepository.saveAndFlush(user);
 				userRoleRepository.saveAndFlush(userRole);
 				mav.addObject("user", user);
-				mav.setViewName("redirect:http://localhost:8090/user/my-page/"+user.getId());
+				mav.setViewName("redirect:http://localhost:8090/user/my-page");
 				return mav;
 			} else {
 				System.out.println("Have errors in form");
