@@ -67,7 +67,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addBookToOwned(User user,Book book) {
 		Set<Book> owned = userRepository.findOwnedByUserId(user.getId());
-		owned.add(book);
+		if(!owned.contains(book)) {
+			owned.add(book);
+		}
+		user.setOwned(owned);
 		userRepository.save(user);
 	}
 
@@ -80,14 +83,17 @@ public class UserServiceImpl implements UserService{
 				iterator.remove();
 			}
 		}
+		user.setOwned(owned);
 		userRepository.save(user);
-		
 	}
 
 	@Override
 	public void addBookToRead(User user,Book book) {
 		Set<Book> read = userRepository.findReadByUserId(user.getId());
-		read.add(book);
+		if(!read.contains(book)) {
+			read.add(book);
+		}
+		user.setRead(read);
 		userRepository.save(user);
 		
 	}
@@ -101,6 +107,7 @@ public class UserServiceImpl implements UserService{
 				iterator.remove();
 			}
 		}
+		user.setRead(read);
 		userRepository.save(user);
 		
 	}
@@ -108,7 +115,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addBookToWannaRead(User user,Book book) {
 		Set<Book> wannaRead = userRepository.findWannaReadByUserId(user.getId());
-		wannaRead.add(book);
+		if(wannaRead.contains(book)) {
+			wannaRead.add(book);
+		}
+		user.setWannaRead(wannaRead);
 		userRepository.save(user);
 		
 	}
@@ -122,6 +132,7 @@ public class UserServiceImpl implements UserService{
 				iterator.remove();
 			}
 		}
+		user.setWannaRead(wannaRead);
 		userRepository.save(user);
 		
 	}
@@ -129,7 +140,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addBookToReading(User user,Book book) {
 		Set<Book> reading = userRepository.findReadingByUserId(user.getId());
-		reading.add(book);
+		if(reading.contains(book)) {
+			reading.add(book);
+		}
+		user.setReading(reading);
 		userRepository.save(user);
 		
 	}
@@ -143,6 +157,7 @@ public class UserServiceImpl implements UserService{
 				iterator.remove();
 			}
 		}
+		user.setReading(reading);
 		userRepository.save(user);
 		
 	}
@@ -163,6 +178,7 @@ public class UserServiceImpl implements UserService{
 	public void addRating(User user,long bookId, int rate) {
 		Map<Long, Integer> ratings = new HashMap<>();
 		ratings.put(bookId, rate);
+		user.setRating(ratings);
 		userRepository.save(user);
 	}
 

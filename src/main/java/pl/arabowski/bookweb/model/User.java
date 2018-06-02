@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -58,15 +60,19 @@ public class User {
 	private UserRole role;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name="users_owned_books", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> owned = new HashSet<>();
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name="users_read_books", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> read = new HashSet<>();
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name="users_reading_books", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> reading = new HashSet<>();
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name="users_wannaread_books", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> wannaRead = new HashSet<>();
 
 	@ElementCollection

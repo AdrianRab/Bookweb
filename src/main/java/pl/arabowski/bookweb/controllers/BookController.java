@@ -114,11 +114,13 @@ public class BookController {
 	}
 
 	@GetMapping("/details/{id}")
-	public ModelAndView bookDetails(@PathVariable long id) {
+	public ModelAndView bookDetails(@PathVariable long id, @AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		// Date createdDate = book.getCreated();
 		// book.setCreated(createdDate);
+		mav.addObject("user", user);
 		mav.addObject("book", book);
 		mav.setViewName("book/details");
 		return mav;

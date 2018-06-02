@@ -33,10 +33,10 @@ public class UserController {
 	@Autowired
 	private BookRepository bookRepo;
 	
-	@GetMapping("/owned/{id}")
-	public ModelAndView userOwnedBooks(@PathVariable long id) {
+	@GetMapping("/owned")
+	public ModelAndView userOwnedBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Set<Book>owned = user.getOwned();
 		mav.addObject("user",user);
 		mav.addObject("ownedBooks", owned);
@@ -44,10 +44,10 @@ public class UserController {
 		return mav;
 	}
 	
-	@GetMapping("/read/{id}")
-	public ModelAndView userReadBooks(@PathVariable long id) {
+	@GetMapping("/read")
+	public ModelAndView userReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Set<Book>read = user.getOwned();
 		mav.addObject("user",user);
 		mav.addObject("readBooks", read);
@@ -55,10 +55,10 @@ public class UserController {
 		return mav;
 	}
 	
-	@GetMapping("/reading/{id}")
-	public ModelAndView userReadingBooks(@PathVariable long id) {
+	@GetMapping("/reading")
+	public ModelAndView userReadingBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Set<Book>reading = user.getOwned();
 		mav.addObject("user",user);
 		mav.addObject("readingBooks", reading);
@@ -66,10 +66,10 @@ public class UserController {
 		return mav;
 	}
 	
-	@GetMapping("/to-read/{id}")
-	public ModelAndView userToReadBooks(@PathVariable long id) {
+	@GetMapping("/to-read")
+	public ModelAndView userToReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		User user = userRepo.findById(id);
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Set<Book>wannaRead = user.getOwned();
 		mav.addObject("user",user);
 		mav.addObject("wannaReadBooks", wannaRead);
@@ -138,6 +138,18 @@ public class UserController {
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToOwned(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
+		return mav;
+	}
+	
+	@GetMapping("/remove-from-owned/{bookId}")
+	public ModelAndView removeFromOwnedBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.removeBookFromOwned(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
 		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());

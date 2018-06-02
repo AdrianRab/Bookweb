@@ -24,15 +24,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findById(long id);
 	
-	@Query("select u.owned from User u where u.id like ?1%")
+	@Query("select u.owned from User u where u.id like ?1")
 	Set<Book> findOwnedByUserId(long id);
 	
-	@Query("select u.read from User u where u.id like ?1%")
+	@Query("select u.read from User u where u.id like ?1")
 	Set<Book> findReadByUserId(long id);
 	
-	@Query("select u.wannaRead from User u where u.id like ?1%")
+	@Query("select u.wannaRead from User u where u.id like ?1")
 	Set<Book> findWannaReadByUserId(long id);
 	
-	@Query("select u.reading from User u where u.id like ?1%")
+	@Query("select u.reading from User u where u.id like ?1")
 	Set<Book> findReadingByUserId(long id);
 }

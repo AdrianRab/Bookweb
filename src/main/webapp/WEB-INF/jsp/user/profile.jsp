@@ -20,8 +20,9 @@
 		
 		<h1>Welcome ${user.username}</h1>
 	 <div class="btn-group btn-group-lg">
-			<a href="${contextPath}/user/edit/${user.id}"><button type="button" class="btn btn-warning">My books</button></a>
-			<a href="${contextPath}/user/detele-account/${user.id}"><button type="button" class="btn btn-warning">Read books</button></a>
+			<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">My books</button></a>
+			<a href="${contextPath}/user/read"><button type="button" class="btn btn-warning">Read books</button></a>
+			<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Wanna read</button></a>
 	</div>
 		<div class="container">
 			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reading">Currently reading books</button>
@@ -40,9 +41,9 @@
 								<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-info">
 									${author.firstName} ${author.lastName}</button></a></td>
 							</c:forEach>
-							<c:forEach items="${book.genre}" var="genre">
-								<td> ${genre} </td>
-							</c:forEach>
+							<td><c:forEach items="${book.genre}" var="genre">
+								 ${genre} 
+							</c:forEach></td>
 							<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
 						</tr>
 					</c:forEach>
@@ -51,9 +52,7 @@
 		</div>
 	<br>
 	 <div class="btn-group btn-group-lg">
-			<a href="${contextPath}/user/owned/${user.id}"><button type="button" class="btn btn-warning">My books</button></a>
-			<a href="${contextPath}/user/read/${user.id}"><button type="button" class="btn btn-warning">Read books</button></a>
-			<a href="${contextPath}/user/to-read/${user.id}"><button type="button" class="btn btn-warning">Books to read</button></a>
+			<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
 			<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
 	</div>
 	<br>

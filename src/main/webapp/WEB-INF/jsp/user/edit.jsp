@@ -40,7 +40,7 @@
 		</table>
 		<br>
 	<div class="btn-group btn-group-lg">
-		<a href="${contextPath}/user/my-page/${user.id}"><button type="button" class="btn btn-warning">My books</button></a>
+		<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-warning">My books</button></a>
 		<a href="${contextPath}/home"><button type="button" class="btn btn-warning">Main page</button></a> 
 	</div>
 		

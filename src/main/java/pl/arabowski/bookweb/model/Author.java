@@ -18,6 +18,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "authors")
@@ -43,6 +45,7 @@ public class Author {
 	private String biography;
 	
 	@CreationTimestamp
+	@DateTimeFormat(iso=ISO.DATE)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date created;
 	
