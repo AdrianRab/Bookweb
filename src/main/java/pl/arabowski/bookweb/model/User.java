@@ -76,7 +76,7 @@ public class User {
 	private Set<Book> wannaRead = new HashSet<>();
 
 	@ElementCollection
-	private Map<Long, Integer> rating = new HashMap<>();
+	private Map<Long, Double> rating = new HashMap<>();
 
 	@CreationTimestamp
 	@DateTimeFormat(iso=ISO.DATE)
@@ -194,11 +194,11 @@ public class User {
 		this.owned = owned;
 	}
 
-	public Map<Long, Integer> getRating() {
+	public Map<Long, Double> getRating() {
 		return rating;
 	}
 
-	public void setRating(Map<Long, Integer> rating) {
+	public void setRating(Map<Long, Double> rating) {
 		this.rating = rating;
 	}
 

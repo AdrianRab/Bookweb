@@ -22,6 +22,7 @@
 			<%@ include file="header.jsp"%>
 		</div>
 	
+	<h1>Welcome on Bookweb!</h1>
 	<c:if test="${pageContext.request.remoteUser == null}">
 		<div>
 			<a href="${contextPath}/login"><button type="button" class="btn btn-success custom">Login</button></a><br>
@@ -36,9 +37,9 @@
 		</div>
 	</sec:authorize>
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-			<h1>Welcome!</h1>
 			<div> 
 				<br>
+				<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
 					Add author: <a href="${contextPath}/author/add"><button type="button" class="btn btn-dark" >Add new author</button></a> <br>
 					All authors: <a href="${contextPath}/author/all"><button type="button" class="btn btn-dark">All authors</button></a> <br>
 					Add publisher:<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a> <br> 
@@ -46,6 +47,7 @@
 					Add books: <a href="${contextPath}/book/add"><button type="button" class="btn btn-dark">Add new book</button></a><br>
 					All books: <a href="${contextPath}/book/all"><button type="button" class="btn btn-dark">List of books</button></a><br>
 					Top 20 books <a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-dark">List of top 20 books</button></a><br>
+				</sec:authorize>
 			<br>
 			<sec:authorize access ="hasAnyRole('ADMIN', 'USER')">
 				<form action="/logout" method="post">

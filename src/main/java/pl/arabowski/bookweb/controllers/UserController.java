@@ -137,6 +137,7 @@ public class UserController {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
+		System.out.println("remove from owned controller entered");
 		userServiceImpl.addBookToOwned(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
@@ -168,6 +169,18 @@ public class UserController {
 		return mav;
 	}
 	
+	@GetMapping("/remove-from-reading/{bookId}")
+	public ModelAndView removeFromReadingBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.removeBookFromReading(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
+		return mav;
+	}
+	
 	@GetMapping("/add-read/{bookId}")
 	public ModelAndView addToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
@@ -180,12 +193,36 @@ public class UserController {
 		return mav;
 	}
 	
+	@GetMapping("/remove-from-read/{bookId}")
+	public ModelAndView removeFromRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.removeBookFromRead(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
+		return mav;
+	}
+	
 	@GetMapping("/add-to-read/{bookId}")
 	public ModelAndView addBookToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Book book = bookRepo.findById(bookId);
 		userServiceImpl.addBookToWannaRead(user, book);
+		mav.addObject("user", user);
+		mav.addObject("book", book);
+		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
+		return mav;
+	}
+	
+	@GetMapping("/remove-from-to-read/{bookId}")
+	public ModelAndView removeFromToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
+		ModelAndView mav = new ModelAndView();
+		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
+		Book book = bookRepo.findById(bookId);
+		userServiceImpl.removeBookFromWannaRead(user, book);
 		mav.addObject("user", user);
 		mav.addObject("book", book);
 		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());

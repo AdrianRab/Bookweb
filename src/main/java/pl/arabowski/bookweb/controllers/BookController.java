@@ -1,8 +1,8 @@
 package pl.arabowski.bookweb.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -29,6 +29,7 @@ import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.service.book.BookServiceImpl;
 import pl.arabowski.bookweb.service.publisher.PublisherServiceImpl;
+import pl.arabowski.bookweb.service.user.UserServiceImpl;
 
 @Controller
 @RequestMapping("/book")
@@ -48,6 +49,9 @@ public class BookController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private UserServiceImpl userService;
 
 	@GetMapping("/add")
 	public ModelAndView addBook() {
@@ -118,8 +122,14 @@ public class BookController {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		// Date createdDate = book.getCreated();
-		// book.setCreated(createdDate);
+		Map<Long, Double> ratings = user.getRating();
+		if(ratings.containsKey(book.getId())) {
+			mav.addObject("myRate", ratings.get(book.getId()));
+		}
+//		mav.addObject("owned", userService.checkIfOwned(user.getOwned(), book));
+//		mav.addObject("read", userService.checkIfRead(user.getRead(), book));
+//		mav.addObject("reading",userService.checkIfReading(user.getReading(), book));
+//		mav.addObject("wannaRead",userService.checkIfWannaRead(user.getWannaRead(), book) );
 		mav.addObject("user", user);
 		mav.addObject("book", book);
 		mav.setViewName("book/details");
@@ -133,10 +143,15 @@ public class BookController {
 		Book book = bookRepo.findById(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		bookService.rateBook(book, Double.valueOf(rateParam));
+		userService.addRating(user, id, Double.valueOf(rateParam));
+		Map<Long, Double> ratings = user.getRating();
+		if(ratings.containsKey(book.getId())) {
+			mav.addObject("myRate", ratings.get(book.getId()));
+		}
 		mav.addObject("confirmation", "Book has been succesfully rated.");
 		mav.addObject("book", book);
 		mav.addObject("user", user);
-		mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId() + "/" + user.getId());
+		mav.setViewName("book/details");
 		return mav;
 	}
 

@@ -1,5 +1,7 @@
 package pl.arabowski.bookweb.service.user;
 
+import java.util.Set;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +28,15 @@ public interface UserService {
 	
 	public void removeBookFromReading(User user,Book book);
 	
-	public void addRating(User user, long bookId, int rate);
+	public void addRating(User user, long bookId, double rate);
 	
-	public int getRating(User user,long bookId);
+	public double getRating(User user,long bookId);
+	
+	public String checkIfOwned(Set<Book> owned, Book book);
+	
+	public String checkIfRead(Set<Book> read,Book book);
+	
+	public String checkIfReading(Set<Book> reading,Book book);
+	
+	public String checkIfWannaRead(Set<Book> owned, Book book);
 }

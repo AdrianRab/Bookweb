@@ -1,6 +1,5 @@
 package pl.arabowski.bookweb.service.user;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -79,7 +78,7 @@ public class UserServiceImpl implements UserService{
 		Set<Book> owned = userRepository.findOwnedByUserId(user.getId());
 		Iterator<Book> iterator = owned.iterator();
 		while(iterator.hasNext()) {
-			if(owned.contains(book)) {
+			if(book.equals(iterator.next())) {
 				iterator.remove();
 			}
 		}
@@ -103,7 +102,7 @@ public class UserServiceImpl implements UserService{
 		Set<Book> read = userRepository.findReadByUserId(user.getId());
 		Iterator<Book> iterator = read.iterator();
 		while(iterator.hasNext()) {
-			if(read.contains(book)) {
+			if(book.equals(iterator.next())) {
 				iterator.remove();
 			}
 		}
@@ -128,7 +127,7 @@ public class UserServiceImpl implements UserService{
 		Set<Book> wannaRead = userRepository.findWannaReadByUserId(user.getId());
 		Iterator<Book> iterator = wannaRead.iterator();
 		while(iterator.hasNext()) {
-			if(wannaRead.contains(book)) {
+			if(book.equals(iterator.next())) {
 				iterator.remove();
 			}
 		}
@@ -153,7 +152,7 @@ public class UserServiceImpl implements UserService{
 		Set<Book> reading = userRepository.findReadingByUserId(user.getId());
 		Iterator<Book> iterator = reading.iterator();
 		while(iterator.hasNext()) {
-			if(reading.contains(book)) {
+			if(book.equals(iterator.next())) {
 				iterator.remove();
 			}
 		}
@@ -163,23 +162,54 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int getRating(User user,long bookId) {
-		Map<Long, Integer> ratings = user.getRating();
+	public double getRating(User user,long bookId) {
+		Map<Long, Double> ratings = user.getRating();
 		if(ratings.containsKey(bookId)) {
-			int rate = ratings.get(bookId);
+			double rate = ratings.get(bookId);
 			return rate;
 		}else {
 			return 0;
 		}
-
 	}
 
 	@Override
-	public void addRating(User user,long bookId, int rate) {
-		Map<Long, Integer> ratings = new HashMap<>();
+	public void addRating(User user,long bookId, double rate) {
+		Map<Long, Double> ratings = user.getRating();
 		ratings.put(bookId, rate);
 		user.setRating(ratings);
 		userRepository.save(user);
+	}
+
+	@Override
+	public String checkIfOwned(Set<Book> owned, Book book) {
+		if(owned.contains(book)) {
+			return "containsOwned";
+		}
+		return "notContainsOwned";
+	}
+
+	@Override
+	public String checkIfRead(Set<Book> read, Book book) {
+		if(read.contains(book)) {
+			return "containsRead";
+		}
+		return "notContainsRead";
+	}	
+
+	@Override
+	public String checkIfReading(Set<Book> reading, Book book) {
+		if(reading.contains(book)) {
+			return "containsReading";
+		}
+		return "notContainsReading";
+	}
+
+	@Override
+	public String checkIfWannaRead(Set<Book> owned, Book book) {
+		if(owned.contains(book)) {
+			return "containsWannaRead";
+		}
+		return "notContainsWannaRead";
 	}
 
 }

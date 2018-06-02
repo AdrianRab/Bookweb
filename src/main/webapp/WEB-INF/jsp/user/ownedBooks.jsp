@@ -36,6 +36,7 @@
 							<th>Genre</th>
 							<th>Cover</th>
 							<th>Details</th>
+							<th>Remove</th>
 						</tr>
 						<c:forEach items="${user.owned}" var="book">
 							<tr class="active">
@@ -55,6 +56,7 @@
 								</c:if>
 								</td>
 								<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+								<td><a href="${contextPath}/user/remove-from-owned/${book.id}"><button type="button" class="btn btn-success">Remove</button></a></td>
 							</tr>
 						</c:forEach>
 					</table>

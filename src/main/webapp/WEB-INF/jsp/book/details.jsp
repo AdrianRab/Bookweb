@@ -4,18 +4,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${book.title}</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-	<div align=center>
+	<div class="jumbotron text-center">
 		<div  style="background-color: hsl(150, 100%, 65%)">
 			<%@ include file="header.jsp"%>
 		</div>
@@ -27,24 +29,44 @@
 			<p><span style="background-color:yellow;font-size:160%">User's rate:
 			 <fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></span></p>
 		</div>
+		
+		<c:if test="${confirmation != null}">
+			<c:out value="${confirmation}"/>
+		</c:if>
+		<c:if test="${myRate>0}">
+			<div align=left>
+				<p><span style="background-color:green;font-size:160%">My rate: ${myRate}</span></p>
+			</div>
+		</c:if>
 		<div align=left>
 			<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
 		</div>
-			<div class="btn-group btn-group-lg" align="left">
-				<c:forEach items="${user.owned}" var="owned">
-					<c:if test="${owned.id != book.id}">
-						<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
-					</c:if>
-				</c:forEach>
-				<c:forEach items="${user.owned}" var="owned">
-					<c:if test="${owned.id == book.id}">
-						<a href="${contextPath}/user/remove-from-owned/${owned.id}"><button type="button" class="btn btn-success">Remove from owned books</button></a>
-					</c:if>
-				</c:forEach>
-				<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
-				<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
-				<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-success">Add to books to read</button></a>
+	<div class="btn-group btn-group-lg" align="left">
+				
+					
+		<div class="container">
+			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addLinks">Expand to add to your shelve</button>
+			  <div id="addLinks" class="collapse">
+			  	<div class="btn-group btn-group-lg">
+					<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
+					<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
+					<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
+					<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-success">Add to books to want to read</button></a>
+				</div>
 			</div>
+		</div>
+		<div class="container">
+			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#removeLinks">Expand to remove from your shelve</button>
+			  <div id="removeLinks" class="collapse">
+			  	<div class="btn-group btn-group-lg">
+			  	  	<a href="${contextPath}/user/remove-from-owned/${book.id}"><button type="button" class="btn btn-success">Remove from owned books</button></a>
+					<a href="${contextPath}/user/remove-from-reading/${book.id}"><button type="button" class="btn btn-success">Remove from currently reading books</button></a>
+					<a href="${contextPath}/user/remove-from-read/${book.id}"><button type="button" class="btn btn-success">Remove from read books</button></a>
+					<a href="${contextPath}/user/remove-from-to-read/${book.id}"><button type="button" class="btn btn-success">Remove books from want to read</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
 			<br>
 			<table class="table table-dark">
 			<tr>
@@ -103,10 +125,6 @@
 				</select>
 				<p>	<input type="submit" value="Add" /></p>
 			</form>	
-		</c:if>
-		
-		<c:if test="${confirmation != null}">
-			<c:out value="${confirmation}"/>
 		</c:if>
 	
 		<hr>

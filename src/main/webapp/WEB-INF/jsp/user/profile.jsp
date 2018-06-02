@@ -12,7 +12,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<div align=center>	
+	<div class="jumbotron text-center">	
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 		<div  style="background-color: hsl(150, 100%, 65%)">
 			<%@ include file="header.jsp"%>
@@ -22,7 +22,7 @@
 	 <div class="btn-group btn-group-lg">
 			<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">My books</button></a>
 			<a href="${contextPath}/user/read"><button type="button" class="btn btn-warning">Read books</button></a>
-			<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Wanna read</button></a>
+			<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Want to read</button></a>
 	</div>
 		<div class="container">
 			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#reading">Currently reading books</button>
