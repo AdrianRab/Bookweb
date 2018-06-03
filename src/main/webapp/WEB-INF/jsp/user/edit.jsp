@@ -71,11 +71,28 @@ span.psw {
        width: 100%;
     }
 }
+.custom {
+    width: 78px !important;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url("link-hoang-31747-unsplash.jpg");
+
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 </style> 
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-	<div class="container-fluid">	
+	<div class="container-fluid bg">	
 		<%@ include file="../header.jsp"%>
 		<div class="container">
 			<p class="h2 text-muted" >Edit profile</p>

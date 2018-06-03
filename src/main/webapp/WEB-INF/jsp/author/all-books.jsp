@@ -8,27 +8,67 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${author.firstName} ${author.lastName}</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
-
-	<div align=center>
+	<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
+	<div class="container-fluid bg">
 		<%@ include file="../header.jsp"%>
-	
-		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-		<h3>Books by ${author.firstName} ${author.lastName}</h3>
-			
-			
-			<table class="table table-dark">
-			<tr>
-				<th>Id</th>
-				<th>Title</th>
-				<th>Genre</th>
-				<th>Publisher</th>
-				<th>ISBN</th>
-				<th>Book details</th>
-			</tr>
+		
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<p class="h2 text-muted" >${author.firstName} ${author.lastName}</p>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+				<div class="container">
+					<button type="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#authorDetails">About</button>
+					  <div id="authorDetails" class="collapse">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th>First name</th>
+									<th>Last name</th>
+									<th>Information</th>
+								</tr>
+							</thead>
+							<tr>
+								<th>${author.firstName}</th>
+								<th>${author.lastName}</th>
+								<th>${author.biography}</th>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<p class="h2 text-muted" >Books by ${author.firstName} ${author.lastName}</p>
+				</div>
+			</div>
+		</div>
+
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Id</th>
+					<th>Title</th>
+					<th>Genre</th>
+					<th>Publisher</th>
+					<th>ISBN</th>
+					<th>Book details</th>
+				</tr>
+			</thead>
 			<c:forEach items="${authorBooks}" var="book">
 				<tr>
 					<td>${book.id}</td>
@@ -42,13 +82,20 @@
 					<td><a href="${contextPath}/book/details/${book.id}"><button type="button" class="btn btn-info">Details</button></a></td>
 				</tr>
 			</c:forEach>
-			</table>
-			
-	<%-- 	<a href="${contextPath}/author/add-new-book/${author.id}"><button>Add new book to author</button></a> --%>
+		</table>
 		<br>
-		<a href="${contextPath}/author/all"><button type="button" class="btn btn-warning">All authors</button></a>
 		<br>
-		<a href="${contextPath}/"><button type="button" class="btn btn-warning">Home</button></a>
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/author/all"><button type="button" class="btn btn-success">All authors</button></a>
+				<%-- 	<a href="${contextPath}/author/add-new-book/${author.id}"><button>Add new book to author</button></a> --%>
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

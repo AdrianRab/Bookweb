@@ -39,15 +39,15 @@ btn-md{
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 		<div class="container-fluid"">	
 			<%@ include file="../header.jsp"%>
-			<div class="container">
-			  <div class="row">
-			    <div class="col">
-			    	<p class="h2 text-muted">Welcome ${user.username}</p>
-			    	<br>
-			    	<br>
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+						<p class="h2 text-muted">Welcome ${user.username}</p>
+					</div>
 			    </div>
-			    </div>
-			 </div>
+			</div>
+		</div>
 	<div class="container">
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto">
@@ -58,16 +58,35 @@ btn-md{
 				</div>
 			</div>
 			<div class="col">
+			</div>
+			<div class="col-md-auto">
+				<div class="btn-group" role="group">
+					<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						My menu
+					</button>
+					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+						<a class="dropdown-item" href="${contextPath}/user/edit"><button type="button" class="btn btn-dark">Edit your data</button></a>
+						<a class="dropdown-item" href="${contextPath}/user/detele-account"><button type="button" class="btn btn-dark">Remove account</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-auto">
 				<div class="container">
 					<button type="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#reading">Currently reading books</button>
 					  <div id="reading" class="collapse">
 						<table class="table">
-							<tr class="info">
-								<th>Title</th>
-								<th>Authors</th>
-								<th>Genre</th>
-								<th>Details</th>
-							</tr>
+							<thead class="thead-dark">
+								<tr class="info">
+									<th>Title</th>
+									<th>Authors</th>
+									<th>Genre</th>
+									<th>Details</th>
+								</tr>
+							</thead>
 							<c:forEach items="${readingBooks}" var="book">
 								<tr class="active">
 									<td>${book.title}</td>
@@ -85,45 +104,27 @@ btn-md{
 					</div>
 				</div>
 			</div>
-			<div class="col col-lg-2">
-				<div class="btn-group" role="group">
-					<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						My menu
-					</button>
-					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-						<a class="dropdown-item" href="${contextPath}/user/edit"><button type="button" class="btn btn-dark">Edit your data</button></a>
-						<a class="dropdown-item" href="${contextPath}/user/detele-account"><button type="button" class="btn btn-dark">Remove account</button></a>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 	<br>
 		<div class="container">
-			<div class="row">
-			    <div class="col">
-			    </div>
-			    <div class="col-6">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
 			      	<div class="btn-group btn-group-lg">
 						<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
 						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
 					</div>
 			    </div>
-			    <div class="col">
-			    </div>
 			</div>
 		</div>
 	<br>
-		<div class="container">
-			<div class="row">
-			    <div class="col">
-			    </div>
-			    <div class="col-6">
+	<br>
+	<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
 			      	<div class="btn-group btn-group-lg">
 						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
 					</div>
-			    </div>
-			    <div class="col">
 			    </div>
 			</div>
 		</div>

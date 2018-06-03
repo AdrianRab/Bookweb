@@ -52,15 +52,32 @@ span.psw {
        float: none;
     }
 }
+.custom {
+    width: 78px !important;
+}
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.bg {
+    background-image: url("link-hoang-31747-unsplash.jpg");
+
+    height: 100%; 
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 </style>
 </head>
 <body>	
-	<div class="container-fluid">
+	<div class="container-fluid bg">
 		<%@ include file="header.jsp"%>
 		
 		 <form action="#" method= post>
 			  <div class="imgcontainer">
-			    <img src="/jsp/login_picture.jpg" alt="Avatar" class="avatar">
+			    <img src="/login_image.jpg" alt="Avatar" class="avatar">
 			  </div>
 	
 		  <div class="container">

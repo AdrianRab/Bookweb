@@ -23,7 +23,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("img_girl.jpg");
+    background-image: url("blur-book-books-176103.jpg");
 
     height: 100%; 
 
@@ -35,25 +35,25 @@ body, html {
 </head>
 <body>
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-	<div class="container-fluid">
+	<div class="container-fluid bg">
 		<%@ include file="header.jsp"%>
 		<div class="container">
 		  <div class="row">
 		    <div class="col">
 		    </div>
 		    <div class="col-6">
-		      <h1 class="text-muted">Welcome on Bookweb!</h1>
+		      <h1 class="bg-dark text-white">Welcome on Bookweb!</h1>
 		      <br>
 		      <br>
 		      <c:if test="${pageContext.request.remoteUser == null}">
 				<div class="container">
 					<table class="table">
 						<tr>
-							<td><p class="h2 text-muted">Login to enjoy all features</p></td>
+							<td><p class="h2 bg-dark text-white">Login to enjoy all features</p></td>
 							<td><a href="${contextPath}/login"><button type="button" class="btn btn-success custom">Login</button></a></td>
 						</tr>
 						<tr>
-							<td><p class="h2 text-muted">Don't have account yet?</p></td>
+							<td><p class="h2 bg-dark text-white">Don't have account yet?</p></td>
 							<td><a href="${contextPath}/register"><button type="button" class="btn btn-danger custom">Register</button></a></td>
 						</tr>
 					</table>

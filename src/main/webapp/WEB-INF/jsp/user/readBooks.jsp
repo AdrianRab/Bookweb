@@ -7,36 +7,53 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My read books</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
-		<div align=center>	
+		<div class="container-fluid bg">	
 			<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
 				<%@ include file="../header.jsp"%>
-
-		<div align=left>
-			<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<p class="h2 text-muted" >${user.username}'s read books</p>
+				</div>
+			</div>
 		</div>
-		<h1>${user.username}'s read books</h1>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col">
+					<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">Back</button></a>
+			    </div>
+				<div class="col-md-auto">
+					 <div class="btn-group btn-group-lg">
+						<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">My books</button></a>
+						<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Books to read</button></a>
+						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
+					</div>
+				</div>
+				<div class="col">
+					
+			    </div>
+			</div>
+		</div>
 		<br>
-		 <div class="btn-group btn-group-lg">
-				<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">Read books</button></a>
-				<a href="${contextPath}/user/to-read"><button type="button" class="btn btn-warning">Books to read</button></a>
-				<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
-		</div>
+		<br>
 			<div class="container">
 				<div id="owned">
 					<table class="table">
-						<tr class="info">
-							<th>Title</th>
-							<th>Authors</th>
-							<th>Genre</th>
-							<th>Cover</th>
-							<th>Details</th>
-						</tr>
+					 <thead class="thead-dark">
+							<tr class="info">
+								<th>Title</th>
+								<th>Authors</th>
+								<th>Genre</th>
+								<th>Cover</th>
+								<th>Details</th>
+							</tr>
+						</thead>
 						<c:forEach items="${user.read}" var="book">
 							<tr class="active">
 								<td>${book.title}</td>
@@ -62,7 +79,15 @@
 			</div>
 		<hr>
 		<br>
-		<a href="${contextPath}/"><button type="button" class="btn btn-primary">Home</button></a>
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

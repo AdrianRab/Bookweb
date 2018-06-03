@@ -9,10 +9,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cover for ${book.title}</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> 
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 form {border: 3px solid #f1f1f1;}
@@ -79,22 +79,17 @@ span.psw {
 <body>
 	<div class="container-fluid">
 	<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		<div>
 			<%@ include file="../header.jsp"%>
-		</div>
+
 		<c:if test="${message !=  null}">
 			<div>	
 				${message}
 			</div>
 		</c:if>
 		<div class="container">
-			<div class="row">
-			    <div class="col">
-			    </div>
-			    <div class="col-6">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
 			      	<h3 class="text-muted">Upload cover for book ${book.title}</h3	>
-			    </div>
-			    <div class="col">
 			    </div>
 			</div>
 		</div>
@@ -113,6 +108,15 @@ span.psw {
 				</div>
 				<div class="col-lg">
 				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
 			</div>
 		</div>
 	</div>

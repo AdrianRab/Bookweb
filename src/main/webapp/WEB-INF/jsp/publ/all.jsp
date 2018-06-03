@@ -7,26 +7,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>All publishers</title>
 </head>
 <body>
-	<div align=center>
-			<%@ include file="../header.jsp"%>
-
-			<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-		<h2>Available publishers</h2>
+	<div class="container-fluid bg">
+		<%@ include file="../header.jsp"%>
+		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<p class="h2 text-muted" >Available publishers</p>
+				</div>
+			</div>
+		</div>
 		<br>
-		<table class="table table-dark">
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<sec:authorize access ="hasRole('ROLE_ADMIN')">
-					<th>Action</th>
-				</sec:authorize>
-			</tr>
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<sec:authorize access ="hasRole('ROLE_ADMIN')">
+						<th>Action</th>
+					</sec:authorize>
+				</tr>
+			</thead>
 			<c:forEach items="${publishersList}" var="publisher">
 				<tr>
 					<td>${publisher.id}</td>
@@ -39,9 +48,17 @@
 			</c:forEach>
 		</table>
 		<br>
-		<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
 		<br>
-		<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a><
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+			      		<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

@@ -9,31 +9,38 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Top 20 books</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
-	 <div align=center>
-	<%@ include file="../header.jsp"%>
-	
-
+	 <div  class="container-fluid bg">
+		<%@ include file="../header.jsp"%>
 		<c:set var="contextPath" value="${pageContext.request.contextPath}"></c:set>
-
-	<h2>20 top rated books</h2>
+		<div class="container">
+			<div class="row justify-content-md-center">
+				<div class="col-md-auto">
+					<p class="h2 text-muted" >20 top rated books</p>
+				</div>
+			</div>
+		</div>
 	<br>
-	<table class="table table-dark">
-		<tr>
-			<th>Id</th>
-			<th>Title</th>
-			<th>Genre</th>
-			<th>Rate</th>
-			<th>Authors</th>
-			<th>Publisher</th>
-			<th>Details</th>
-			<sec:authorize access ="hasRole('ROLE_ADMIN')">
-				<th>Action</th>
-			</sec:authorize>
-		</tr>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th>Id</th>
+				<th>Title</th>
+				<th>Genre</th>
+				<th>Rate</th>
+				<th>Authors</th>
+				<th>Publisher</th>
+				<th>Details</th>
+				<sec:authorize access ="hasRole('ROLE_ADMIN')">
+					<th>Action</th>
+				</sec:authorize>
+			</tr>
+		</thead>
 		<c:forEach items="${topRatedBooks}" var="book">
 			<tr>
 				<td>${book.id}</td>
@@ -51,7 +58,7 @@
 					</c:forEach>
 				</td>
 				<td>${book.publisher.name}</td>
-				<td><a href="${contextPath}/book/details/${book.id}/${user.id}"><button type="button" class="btn btn-info">Details</button></a></td>
+				<td><a href="${contextPath}/book/details/${book.id}/${user.id}"><button type="button" class="btn btn-dark">Details</button></a></td>
 				<sec:authorize access ="hasRole('ROLE_ADMIN')">
 					<td><a href="${contextPath}/admin/edit-book/${book.id}"><button type="button" class="btn btn-warning">Edit</button></a>
 						<a href="${contextPath}/admin/detele-book/${book.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
@@ -60,11 +67,18 @@
 		</c:forEach>
 	</table>
 	<br>
-	 <div class="btn-group btn-group-lg">
-		<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
-		<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
-		<a href="${contextPath}/"><button type="button" class="btn btn-dark">Home</button></a>
-	</div>
+	<br>
+		<div class="container">
+			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
+						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
+						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+					</div>
+			    </div>
+			</div>
+		</div>
  </div>
 </body>
 </html>
