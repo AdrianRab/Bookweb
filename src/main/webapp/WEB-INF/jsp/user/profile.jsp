@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.username} profile</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -21,7 +22,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("img_girl.jpg");
+    background-image: url("blur-book-books-176103.jpg");
 
     height: 100%; 
 
@@ -29,15 +30,11 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
 }
-btn-md{
-	width: 150px !important;
-	
-}
 </style>
 </head>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-		<div class="container-fluid"">	
+		<div class="container-fluid bg">	
 			<%@ include file="../header.jsp"%>
 		<div class="container">
 			<div class="row justify-content-md-center">
@@ -106,6 +103,13 @@ btn-md{
 			</div>
 		</div>
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 	<br>
 		<div class="container">
 			<div class="row justify-content-md-center">

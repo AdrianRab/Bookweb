@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addBookToWannaRead(User user,Book book) {
 		Set<Book> wannaRead = userRepository.findWannaReadByUserId(user.getId());
-		if(wannaRead.contains(book)) {
+		if(!wannaRead.contains(book)) {
 			wannaRead.add(book);
 		}
 		user.setWannaRead(wannaRead);
@@ -139,12 +139,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void addBookToReading(User user,Book book) {
 		Set<Book> reading = userRepository.findReadingByUserId(user.getId());
-		if(reading.contains(book)) {
+		if(!reading.contains(book)) {
 			reading.add(book);
 		}
 		user.setReading(reading);
 		userRepository.save(user);
-		
 	}
 
 	@Override

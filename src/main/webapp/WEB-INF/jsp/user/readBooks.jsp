@@ -57,10 +57,10 @@
 						<c:forEach items="${user.read}" var="book">
 							<tr class="active">
 								<td>${book.title}</td>
-								<c:forEach items="${book.authors}" var="author">
-									<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-info">
-										${author.firstName} ${author.lastName}</button></a></td>
-								</c:forEach>
+								<td><c:forEach items="${book.authors}" var="author">
+									<a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-info">
+										${author.firstName} ${author.lastName}</button></a>
+								</c:forEach></td>
 								<td><c:forEach items="${book.genre}" var="genre">
 									 ${genre} 
 								</c:forEach></td>

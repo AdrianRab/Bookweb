@@ -42,7 +42,7 @@
 					<td>${publisher.name}</td>
 					<sec:authorize access ="hasRole('ROLE_ADMIN')">
 					<td><a href="${contextPath}/admin/edit-publ/${publisher.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-						<a href="${contextPath}/admin/delete-publ/${publisher.id}"><button type="button" class="btn btn-dark">Delete</button></a></td>
+						<a href="${contextPath}/admin/delete-publ/${publisher.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
 					</sec:authorize>
 				</tr>
 			</c:forEach>

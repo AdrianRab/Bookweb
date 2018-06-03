@@ -8,6 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${book.title}</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -48,50 +49,75 @@ body, html {
 			</div>
 		</div>
 		<br>
-			<div class="container">
+		<div class="container">
 			<div class="row justify-content-md-center">
-			    <div class="col">
-					<c:if test="${myRate>0}">
-						<div align=left>
-							<div class="btn-group btn-group-lg">
-								<p><button type="button" class="btn btn-success">My rate: ${myRate}</button></p>
-								<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
-							</div>
-						</div>
-					</c:if>
-			    </div>
-			    <div class="col col-lg-2">
-					
-			    </div>
-			    <div class="col col-lg-2">
-					
-			    </div>
-			    <div class="col col-lg-2">
-					
-			    </div>
-			    <div class="col col-lg-2">
-					
-			    </div>
-			    <div class="col">
-					<p><button type="button" class="btn btn-warning">Users rate:
-					<fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></button></p>
+			    <div class="col-md-auto text-right">
+			      	<div class="btn-group btn-group-lg">
+						<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
+					</div>
 			    </div>
 			</div>
 		</div>
-		
-		
-		
+
+	
+		<div class="container">
+			<div class="row">
+				   <div class="col col-lg-2">
+					<div class="container">
+						<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#removeLinks">Expand to remove from your shelve</button>
+						  <div id="removeLinks" class="collapse">
+						  	<div class="btn-group-vertical">
+						  	  	<a href="${contextPath}/user/remove-from-owned/${book.id}"><button type="button" class="btn btn-dark">Remove from owned books</button></a>
+								<a href="${contextPath}/user/remove-from-reading/${book.id}"><button type="button" class="btn btn-dark">Remove from currently reading books</button></a>
+								<a href="${contextPath}/user/remove-from-read/${book.id}"><button type="button" class="btn btn-dark">Remove from read books</button></a>
+								<a href="${contextPath}/user/remove-from-to-read/${book.id}"><button type="button" class="btn btn-dark">Remove books from want to read</button></a>
+							</div>
+						</div>
+					</div>
+				   </div>
+				   <div class="col col-lg-2">
+					
+				   </div>
+				   <div class="col col-lg-2">
+						
+				   </div>
+				   <div class="col col-lg-2">
+						
+				   </div>
+				   <div class="col col-lg-2">
+						
+				   </div>
+				   <div class="col col-lg-2">
+						<div class="container">
+							<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addLinks">Expand to add to your shelve</button>
+							  <div id="addLinks" class="collapse">
+							  	<div class="btn-group-vertical">
+									<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-dark">Add to owned books</button></a>
+									<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-dark">Add to currently reading books</button></a>
+									<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-dark">Add to read books</button></a>
+									<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-dark">Add to books to want to read</button></a>
+								</div>
+							</div>
+						</div>
+				    </div>
+				</div>
+		</div>
+		<br>
+		<br>
 		<div class="container">
 			<div class="row justify-content-md-center">
 			    <div class="col">
 					<c:if test="${myRate>0}">
-						<div align=left>
-							<div class="btn-group btn-group-lg">
-								<p><button type="button" class="btn btn-success">My rate: ${myRate}</button></p>
-								<a href="${contextPath}/user/my-page"><button type="button" class="btn btn-success">My profile</button></a>
-							</div>
+						<div class="btn-group btn-group-lg">
+							<p><button type="button" class="btn btn-success">My rate: ${myRate}</button></p>	
 						</div>
 					</c:if>
+			    </div>
+			    <div class="col col-lg-2">
+					
+			    </div>
+			    <div class="col col-lg-2">
+					
 			    </div>
 			    <div class="col col-lg-2">
 					
@@ -114,30 +140,6 @@ body, html {
 			
 		</div>
 
-				
-					
-		<div class="container">
-			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addLinks">Expand to add to your shelve</button>
-			  <div id="addLinks" class="collapse">
-			  	<div class="btn-group btn-group-lg">
-					<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-success">Add to owned books</button></a>
-					<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-success">Add to currently reading books</button></a>
-					<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-success">Add to read books</button></a>
-					<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-success">Add to books to want to read</button></a>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#removeLinks">Expand to remove from your shelve</button>
-			  <div id="removeLinks" class="collapse">
-			  	<div class="btn-group btn-group-lg">
-			  	  	<a href="${contextPath}/user/remove-from-owned/${book.id}"><button type="button" class="btn btn-success">Remove from owned books</button></a>
-					<a href="${contextPath}/user/remove-from-reading/${book.id}"><button type="button" class="btn btn-success">Remove from currently reading books</button></a>
-					<a href="${contextPath}/user/remove-from-read/${book.id}"><button type="button" class="btn btn-success">Remove from read books</button></a>
-					<a href="${contextPath}/user/remove-from-to-read/${book.id}"><button type="button" class="btn btn-success">Remove books from want to read</button></a>
-				</div>
-			</div>
-		</div>
 			<br>
 			<table class="table">
 				<thead class="thead-dark">
