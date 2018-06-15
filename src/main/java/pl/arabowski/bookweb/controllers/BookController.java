@@ -126,10 +126,6 @@ public class BookController {
 		if(ratings.containsKey(book.getId())) {
 			mav.addObject("myRate", ratings.get(book.getId()));
 		}
-//		mav.addObject("owned", userService.checkIfOwned(user.getOwned(), book));
-//		mav.addObject("read", userService.checkIfRead(user.getRead(), book));
-//		mav.addObject("reading",userService.checkIfReading(user.getReading(), book));
-//		mav.addObject("wannaRead",userService.checkIfWannaRead(user.getWannaRead(), book) );
 		mav.addObject("user", user);
 		mav.addObject("book", book);
 		mav.setViewName("book/details");

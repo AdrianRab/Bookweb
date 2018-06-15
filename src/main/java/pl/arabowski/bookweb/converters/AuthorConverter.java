@@ -14,7 +14,6 @@ public class AuthorConverter implements Converter<String, Author> {
 	AuthorRepository authorRepo;
 
 	public Author convert(String id) {
-		System.out.println("bylem tu - Author converter");
 		return authorRepo.findById(Long.parseLong(id));
 	}
 

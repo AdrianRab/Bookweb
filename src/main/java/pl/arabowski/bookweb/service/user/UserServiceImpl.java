@@ -31,21 +31,17 @@ public class UserServiceImpl implements UserService{
 		if (!(password.equals(passwordConfirmed))) {
 			mav.addObject("errorMessage", "Provided passwords does not match. Please try again.");
 			mav.setViewName("user/registerForm");
-			System.out.println("wrong password");
 			return mav;
 		} else if (userRepository.findByEmailIgnoreCase(user.getEmail()) != null) {
 			mav.addObject("errorMessage", "Provided e-mail is aleady in use.");
 			mav.setViewName("user/registerForm");
-			System.out.println("email exists");
 			return mav;
 		} else if (userRepository.findFirstByUsername(user.getUsername()) != null) {
 			mav.addObject("errorMessage", "Username is already in use.");
 			mav.setViewName("user/registerForm");
-			System.out.println("username exists");
 			return mav;
 		} else {
 			if (!result.hasErrors()) {
-				System.out.println("entered no errors");
 				UserRole userRole = new UserRole();
 				userRole.setUser(user);
 				userRole.setUserRole(String.valueOf(UserRoles.ROLE_USER));
@@ -56,7 +52,6 @@ public class UserServiceImpl implements UserService{
 				mav.setViewName("redirect:http://localhost:8090/user/my-page");
 				return mav;
 			} else {
-				System.out.println("Have errors in form");
 				mav.setViewName("user/registerForm");
 				return mav;
 			}

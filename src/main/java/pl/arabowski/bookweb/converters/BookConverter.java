@@ -15,7 +15,6 @@ public class BookConverter implements Converter<String, Book> {
 	
 	@Override
 	public Book convert(String id) {
-		System.out.println("been here - book converter");
 		return bookRepo.findById(Long.parseLong(id));
 	}
 
