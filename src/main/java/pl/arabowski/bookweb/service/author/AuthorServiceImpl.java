@@ -51,6 +51,8 @@ public class AuthorServiceImpl implements AuthorService{
 				iterator.remove();
 			}
 		}
+		author.setBooks(books);
+		authorRepo.saveAndFlush(author);
 	}
 
 	public Set<Book> findAuthorBooks(long id) {

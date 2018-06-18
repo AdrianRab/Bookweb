@@ -63,7 +63,7 @@ public class BookServiceImpl implements BookService {
 		book.setRate(0);
 		return 0;
 	}
-
+ 
 	@Override
 	public List<Book> topTwentyBooks() {
 		List<Book> top20Books = bookRepo.findTop20ByOrderByRateDesc();
