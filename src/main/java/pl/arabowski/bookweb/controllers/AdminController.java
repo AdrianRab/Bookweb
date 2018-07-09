@@ -75,6 +75,16 @@ public class AdminController {
 		return adminService.deletePublisher(id);
 	}
 	
+	@GetMapping("/edit-user/{id}")
+	public ModelAndView editUser(@PathVariable long id) {
+		return adminService.editUser(id);
+	}
+	
+	@GetMapping("/delete-user/{id}")
+	public ModelAndView deleteUser(@PathVariable long id) {
+		return adminService.deleteUser(id);
+	}
+	
 	@ModelAttribute("listOfPublishers")
 	List<Publisher> allPublishers() {
 		return (List<Publisher>) publService.listAllPublishers();
