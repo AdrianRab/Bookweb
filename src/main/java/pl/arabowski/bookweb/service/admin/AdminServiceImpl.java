@@ -1,5 +1,6 @@
 package pl.arabowski.bookweb.service.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -7,10 +8,19 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.model.User;
+import pl.arabowski.bookweb.model.UserRole;
+import pl.arabowski.bookweb.repositories.UserRepository;
+import pl.arabowski.bookweb.repositories.UserRoleRepository;
+
 
 @Service
 public class AdminServiceImpl implements AdminService{
 
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired UserRoleRepository userRoleRepository;
+	
 	@Override
 	public ModelAndView deleteBook(long id) {
 		// TODO Auto-generated method stub
@@ -43,13 +53,23 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public void addAdminRights(long id) {
-		// TODO Auto-generated method stub
+		User user = userRepo.findById(id);
+		UserRole role = userRoleRepository.findById(user.getRole().getId());
+		role.setUserRole("ROLE_ADMIN");
+		userRoleRepository.saveAndFlush(role);
+		user.setRole(role);
+		userRepo.saveAndFlush(user);
 		
 	}
 
 	@Override
 	public void removeAdminRights(long id) {
-		// TODO Auto-generated method stub
+		User user = userRepo.findById(id);
+		UserRole role = userRoleRepository.findById(user.getRole().getId());
+		role.setUserRole("ROLE_USER");
+		userRoleRepository.saveAndFlush(role);
+		user.setRole(role);
+		userRepo.saveAndFlush(user);
 		
 	}
 
