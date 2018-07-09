@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,8 +57,9 @@ public class AdminController {
 	}
 	
 	@GetMapping("/panel")
-	public ModelAndView mainAdminPage() {
+	public ModelAndView mainAdminPage(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("user", userRepo.findByEmailIgnoreCase(currentUser.getUsername()));
 		mav.setViewName("adminPanel");
 		return mav;
 	}

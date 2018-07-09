@@ -56,4 +56,6 @@ public class PublisherController {
 		mav.setViewName("publ/all");
 		return mav;
 	}
+	
+	//add page for one publisher with list of its books
 }
