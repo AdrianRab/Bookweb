@@ -59,8 +59,8 @@ public class AdminController {
 	@GetMapping("/panel")
 	public ModelAndView mainAdminPage(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("user", userRepo.findByEmailIgnoreCase(currentUser.getUsername()));
-		mav.setViewName("adminPanel");
+		mav.addObject("admin", userRepo.findByEmailIgnoreCase(currentUser.getUsername()));
+		mav.setViewName("admin/adminPanel");
 		return mav;
 	}
 	
@@ -104,7 +104,7 @@ public class AdminController {
 		return mav;
 	}
 	
-	@PostMapping("edit-piblisher/{id}")
+	@PostMapping("edit-publisher/{id}")
 	public ModelAndView editPublisher(@Valid Publisher publisher, BindingResult result) {
 		return adminService.editPublisher(publisher, result);
 	}
@@ -131,6 +131,15 @@ public class AdminController {
 		return adminService.deleteUser(id);
 	}
 	
+	@GetMapping("/all-users")
+	public ModelAndView allUsersList(@AuthenticationPrincipal UserDetails currentUser) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin/allUsers");
+		mav.addObject("allUsers", userRepo.findAll());
+		mav.addObject("admin", userRepo.findByEmailIgnoreCase(currentUser.getUsername()));
+		return mav;
+	}
+	
 	@ModelAttribute("listOfPublishers")
 	List<Publisher> allPublishers() {
 		return (List<Publisher>) publService.listAllPublishers();
@@ -139,10 +148,5 @@ public class AdminController {
 	@ModelAttribute("listOfAuthors")
 	List<Author> allAuthors() {
 		return authorRepo.findAll();
-	}
-	
-	@ModelAttribute("allUsers")
-	List<User>allUsers(){
-		return userRepo.findAll();
 	}
 }

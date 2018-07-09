@@ -36,11 +36,25 @@ body, html {
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 		<div class="container-fluid bg">	
 			<%@ include file="../header.jsp"%>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<c:if test="${adminMode==true}">
+					<sec:authorize access ="hasRole('ADMIN')">
+						<p class="h2 text-muted">You are logged as admin.</p>
+					</sec:authorize>
+				</c:if>
+			</div>
+		</div>
+	</div>
+
 		<div class="container">
 			<div class="row justify-content-md-center">
 			    <div class="col-md-auto">
 			      	<div class="btn-group btn-group-lg">
-						<p class="h2 text-muted">Welcome ${user.username}</p>
+				      	<c:if test="${adminMode==false || adminMode==null}">
+							<p class="h2 text-muted">Welcome ${user.username}</p>
+						</c:if>
 					</div>
 			    </div>
 			</div>

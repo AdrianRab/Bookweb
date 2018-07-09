@@ -75,6 +75,9 @@
 						<a href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
 						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
 						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+						<sec:authorize access ="hasRole('ADMIN')">
+							<a href="${contextPath}/admin/panel"><button type="button" class="btn btn-success">Back to admin panel</button></a>
+						</sec:authorize>
 					</div>
 			    </div>
 			</div>

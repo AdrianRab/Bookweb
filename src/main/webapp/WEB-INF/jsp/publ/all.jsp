@@ -55,6 +55,9 @@
 			      	<div class="btn-group btn-group-lg">
 			      		<a href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
 						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
+						<sec:authorize access ="hasRole('ADMIN')">
+							<a href="${contextPath}/admin/panel"><button type="button" class="btn btn-success">Back to admin panel</button></a>
+						</sec:authorize>
 					</div>
 			    </div>
 			</div>

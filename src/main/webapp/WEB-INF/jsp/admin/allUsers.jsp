@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>All authors</title>
+<title>Bookweb users</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 		<div class="container">
 			<div class="row justify-content-md-center">
 				<div class="col-md-auto">
-					<p class="h2 text-muted" >Available authors</p>
+					<p class="h2 text-muted" >Registered users</p>
 				</div>
 			</div>
 		</div>
@@ -30,24 +30,39 @@
 			<thead class="thead-dark">
 				<tr>
 					<th>Id</th>
-					<th>Name</th>
-					<th>Biography</th>
-					<th>List of books</th>
-					<sec:authorize access ="hasRole('ROLE_ADMIN')">
-						<th>Action</th>
-					</sec:authorize>
+					<th>Username</th>
+					<th>E-mail address</th>
+					<th>Current role</th>
+					<th>Modify rights</th>
+					<th>Details</th>
+					<th>Action</th>
+
 				</tr>
 			</thead>
-			<c:forEach items="${authorsList}" var="author">
+			<c:forEach items="${allUsers}" var="user">
 				<tr>
-					<td>${author.id}</td>
-					<td>${author.firstName} ${author.lastName}</td>
-					<td>${author.biography}</td>
-					<td><a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-dark">Books</button></a></td>
-					<sec:authorize access ="hasRole('ROLE_ADMIN')">
-					<td><a href="${contextPath}/admin/edit-author/${author.id}"><button type="button" class="btn btn-warning">Edit</button></a>
-						<a href="${contextPath}/admin/delete-author/${author.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
-					</sec:authorize>
+					<td>${user.id}</td>
+					<td>${user.username}</td>
+					<td>${user.email}</td>
+					<td>${user.role.userRole}</td>
+					<c:if test="${admin.id != user.id}">
+						<c:if test="${user.role.userRole == 'ROLE_USER'}">
+							<td><a href="${contextPath}/admin/rights/${user.id}"><button class="btn btn-warning">Add admin rights</button></a></td>
+						</c:if>
+						<c:if test="${user.role.userRole == 'ROLE_ADMIN'}" >
+							<td><a href="${contextPath}/admin/remove-rights/${user.id}"><button class="btn btn-warning">Remove admin rights</button></a></td>
+						</c:if>
+					</c:if>
+					<c:if test="${admin.id == user.id}">
+						<td>You can't modify your own access</td>
+					</c:if>
+					<td><a href="${contextPath}/admin/my-page/${user.id}"><button type="button" class="btn btn-dark">More</button></a></td>
+					<td>
+						<div class="btn-group btn-group-lg">
+							<a href="${contextPath}/admin/edit-user/${user.id}"><button type="button" class="btn btn-warning">Edit</button></a>
+							<a href="${contextPath}/admin/delete-user/${user.id}"><button type="button" class="btn btn-danger">Delete</button></a>
+						</div>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -57,11 +72,8 @@
 			<div class="row justify-content-md-center">
 			    <div class="col-md-auto">
 			      	<div class="btn-group btn-group-lg">
-						<a href="${contextPath}/author/add"><button type="button" class="btn btn-success">Add new author</button></a>
+						<a href="${contextPath}/admin/panel"><button type="button" class="btn btn-success">Back</button></a>
 						<a href="${contextPath}/"><button type="button" class="btn btn-info">Home</button></a>
-						<sec:authorize access ="hasRole('ADMIN')">
-							<a href="${contextPath}/admin/panel"><button type="button" class="btn btn-success">Back to admin panel</button></a>
-						</sec:authorize>
 					</div>
 			    </div>
 			</div>

@@ -28,6 +28,11 @@
 	      <li class="nav-item active">
 	        <a class="nav-link" href="${contextPath}/home">Home <span class="sr-only">(current)</span></a>
 	      </li>
+	       <sec:authorize access ="hasRole('ADMIN')">
+		      <li class="nav-item">
+		        <a class="nav-link" href="${contextPath}/admin/panel">Admin</a>
+		      </li>
+		   </sec:authorize>
 	      <li class="nav-item">
 	      	<c:if test="${pageContext.request.remoteUser == null}">
 	        	<a class="nav-link" href="${contextPath}/login">Login</a>
