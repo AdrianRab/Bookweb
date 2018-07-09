@@ -1,7 +1,12 @@
 package pl.arabowski.bookweb.service.admin;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
+
+import pl.arabowski.bookweb.model.Author;
+import pl.arabowski.bookweb.model.Publisher;
+import pl.arabowski.bookweb.model.User;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -13,7 +18,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public ModelAndView editAuthor(long id) {
+	public ModelAndView editAuthor(Author author, BindingResult result) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,7 +30,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public ModelAndView editPublisher(long id) {
+	public ModelAndView editPublisher(Publisher publisher, BindingResult result) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,7 +54,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public ModelAndView editUser(long id) {
+	public ModelAndView editUser(User user, BindingResult result) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -59,5 +64,5 @@ public class AdminServiceImpl implements AdminService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }
