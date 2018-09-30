@@ -100,12 +100,19 @@ body, html {
 				</div>
 				<div class="form-group row">
 					<label for="lgFormGroupInput" class="col-sm-2 col-form-label col-form-label-lg">Biography</label>
-					 <form:textarea path="biography" rows="20" cols="40"/>
+					 <form:textarea path="biography" rows="10" cols="150"/>
 					<form:errors path="biography" cssClass="error" element="div"/>
 				</div>
+
 				<div class="form-group row">
-					<input type="submit" class="btn btn-success" value="Add" />
-					<input type="reset" class="btn btn-danger" value="Reset the form" />
+					<div class="col-lg">
+			 		</div>
+			 		<div class="col-lg">
+						<input type="submit" class="btn btn-success" value="Add" />
+						<input type="reset" class="btn btn-danger" value="Reset the form" />
+					</div>	
+					<div class="col=lg">
+					</div>
 				</div>
 			</div>
 			</form:form>

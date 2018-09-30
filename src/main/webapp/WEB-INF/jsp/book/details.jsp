@@ -188,6 +188,11 @@ body, html {
 							<img src="http://localhost:8090/cover/image-display/${book.id}"/>
 						</div>
 					</c:if>
+					<c:if test="${book.cover == null}">
+						<div>
+							<a href="${contextPath}/author/add-photo/${author.id}"></a>
+						</div>
+					</c:if>
 			    </div>
 			</div>
 		</div>

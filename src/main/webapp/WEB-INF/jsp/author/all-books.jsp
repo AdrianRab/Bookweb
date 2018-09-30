@@ -27,6 +27,22 @@
 		</div>
 		<div class="container">
 			<div class="row justify-content-md-center">
+			    <div class="col-md-auto">
+					<c:if test="${author.authorPicture != null}">
+						<div>
+							<img src="http://localhost:8090/author/image-display/${author.id}"/>
+						</div>
+					</c:if>
+					<c:if test="${author.authorPicture == null}">
+						<div>
+							<a href="${contextPath}/author/add-photo/${author.id}"><button type="button" class="btn btn-success">Add photography</button></a>
+						</div>
+					</c:if>
+			    </div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row justify-content-md-center">
 				<div class="col-md-auto">
 				<div class="container">
 					<button type="button" class="btn btn-lg btn-info" data-toggle="collapse" data-target="#authorDetails">About</button>
