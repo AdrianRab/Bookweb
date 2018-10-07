@@ -14,6 +14,12 @@ import pl.arabowski.bookweb.repositories.AuthorRepository;
 @Service
 public class AuthorServiceImpl implements AuthorService{
 
+	public AuthorServiceImpl() {}
+	
+	public AuthorServiceImpl(AuthorRepository authorRepo) {
+		this.authorRepo = authorRepo;
+	}
+	
 	@Autowired
 	private AuthorRepository authorRepo;
 	
