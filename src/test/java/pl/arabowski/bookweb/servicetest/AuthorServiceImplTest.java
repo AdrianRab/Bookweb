@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.authortest;
+package pl.arabowski.bookweb.servicetest;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,8 +19,10 @@ public class AuthorServiceImplTest {
 	
 	@Rule public MockitoRule rule = MockitoJUnit.rule();
 	
-//	@BeforeEach
-//	void mockAuthorRepository() {
+	@BeforeEach
+	void mockAuthorRepository() {
+		
+	}
 	
 	@Test
 	@DisplayName("Check if AuthorRepository has been mocked")
@@ -54,5 +56,5 @@ public class AuthorServiceImplTest {
 //		//then
 //		assertFalse(authorsBooks.contains(book2));
 //	}
-
+	
 }

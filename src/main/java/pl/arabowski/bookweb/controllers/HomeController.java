@@ -22,6 +22,14 @@ public class HomeController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	public HomeController() {
+	}
+	
+	@Autowired
+	public HomeController(UserRepository userRepository) {
+		this.userRepo = userRepository;
+	}
 
 	@GetMapping(value = { "/", "/home", "/about" })
 	public String homePage() {

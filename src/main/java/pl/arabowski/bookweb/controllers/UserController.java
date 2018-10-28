@@ -24,14 +24,22 @@ import pl.arabowski.bookweb.service.user.UserServiceImpl;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 
-	@Autowired
 	private UserRepository userRepo;
 	
 	@Autowired
 	private BookRepository bookRepo;
+	
+	public UserController() {
+	}
+	
+	@Autowired
+	public UserController(UserRepository userRepository) {
+		this.userRepo = userRepository;
+	}
 	
 	@GetMapping("/owned")
 	public ModelAndView userOwnedBooks(@AuthenticationPrincipal UserDetails currentUser) {
@@ -48,7 +56,7 @@ public class UserController {
 	public ModelAndView userReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		Set<Book>read = user.getOwned();
+		Set<Book>read = user.getRead();
 		mav.addObject("user",user);
 		mav.addObject("readBooks", read);
 		mav.setViewName("user/readBooks");
@@ -59,7 +67,7 @@ public class UserController {
 	public ModelAndView userReadingBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		Set<Book>reading = user.getOwned();
+		Set<Book>reading = user.getReading();
 		mav.addObject("user",user);
 		mav.addObject("readingBooks", reading);
 		mav.setViewName("user/readingBooks");
@@ -70,7 +78,7 @@ public class UserController {
 	public ModelAndView userToReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		Set<Book>wannaRead = user.getOwned();
+		Set<Book>wannaRead = user.getWannaRead();
 		mav.addObject("user",user);
 		mav.addObject("wannaReadBooks", wannaRead);
 		mav.setViewName("user/toRead");

@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.booktest;
+package pl.arabowski.bookweb.servicetest;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
