@@ -22,7 +22,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("blur-book-books-176103.jpg");
+    background-image: url("../blur-book-books-176103.jpg");
 
     height: 100%; 
 

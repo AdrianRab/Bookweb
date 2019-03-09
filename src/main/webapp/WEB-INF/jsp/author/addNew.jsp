@@ -61,7 +61,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("link-hoang-31747-unsplash.jpg");
+    background-image: url("../link-hoang-31747-unsplash.jpg");
     height: 100%; 
     background-position: center;
     background-repeat: no-repeat;

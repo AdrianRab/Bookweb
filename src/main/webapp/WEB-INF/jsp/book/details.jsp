@@ -25,7 +25,7 @@ body, html {
 }
 
 .bg {
-    background-image: url("alex-loup-440761-unsplash.jpg");
+    background-image: url("../alex-loup-440761-unsplash.jpg");
 
     height: 100%; 
 
