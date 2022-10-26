@@ -23,4 +23,6 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	
 	@Query("select b from Book b where lower(b.title) like lower(concat('%', :searchWord,'%'))")
 	List<Book> findBooksWhichContainsWordInTitle(@Param("searchWord")String searchWord);
+
+	List<Book> findAllByGenre(String genre);
 }

@@ -11,9 +11,13 @@ import pl.arabowski.bookweb.repositories.BookRepository;
 
 @Service
 public class BookServiceImpl implements BookService {
+	private BookRepository bookRepo;
 
 	@Autowired
-	private BookRepository bookRepo;
+	public BookServiceImpl(BookRepository bookRepo) {
+		this.bookRepo = bookRepo;
+	}
+
 
 	@Override
 	public void rateBook(Book book, double rate) {

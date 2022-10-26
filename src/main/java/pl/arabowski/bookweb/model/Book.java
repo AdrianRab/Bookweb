@@ -37,147 +37,147 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Table(name = "books")
 public class Book {
 
-	public Book() {
-	}
+    public Book() {
+    }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="book_id")
-	private long id;
-	
-	@NotBlank
-	@Size(max=100)
-	private String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
+    private long id;
 
-	@NotEmpty
-	@ElementCollection
-	private Set<String> genre  = new HashSet<>();
-	
-	@ElementCollection
-	private List<Double> rating = new ArrayList<>();
+    @NotBlank
+    @Size(max = 100)
+    private String title;
 
-	@Column(scale = 2, precision = 4)
-	private double rate;
-	
-	@NotEmpty
-	@ManyToMany
-	@JoinTable(
-			name = "Author_Book",
-			joinColumns = @JoinColumn(name="book_id"),
-			inverseJoinColumns = @JoinColumn(name="author_id")
-		)
-	private Set<Author> authors = new HashSet<>();
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name="publisher_id", nullable = false)
-	private Publisher publisher;
-	
-	@ISBN
-	private String isbn;
+    @NotEmpty
+    @ElementCollection
+    private Set<String> genre = new HashSet<>();
 
-	@Lob
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "cover_id", unique = true)
-	private CoverImage cover;
+    @ElementCollection
+    private List<Double> rating = new ArrayList<>();
 
-	@CreationTimestamp
-	@DateTimeFormat(iso=ISO.DATE)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
+    @Column(scale = 2, precision = 4)
+    private double rate;
 
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
+    @NotEmpty
+    @ManyToMany
+    @JoinTable(
+            name = "Author_Book",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
 
-	public long getId() {
-		return id;
-	}
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private Publisher publisher;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    @ISBN
+    private String isbn;
 
-	public String getTitle() {
-		return title;
-	}
+    @Lob
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cover_id", unique = true)
+    private CoverImage cover;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    @CreationTimestamp
+    @DateTimeFormat(iso = ISO.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
-	public Set<String> getGenre() {
-		return genre;
-	}
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 
-	public void setGenre(Set<String> genre) {
-		this.genre = genre;
-	}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Set<String> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Set<String> genre) {
+        this.genre = genre;
+    }
 
 
-	public List<Double> getRating() {
-		return rating;
-	}
+    public List<Double> getRating() {
+        return rating;
+    }
 
-	public void setRating(List<Double> rating) {
-		this.rating = rating;
-	}
+    public void setRating(List<Double> rating) {
+        this.rating = rating;
+    }
 
-	public Set<Author> getAuthors() {
-		return authors;
-	}
+    public Set<Author> getAuthors() {
+        return authors;
+    }
 
-	public void setAuthors(Set<Author> authors) {
-		this.authors = authors;
-	}
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 
-	public Publisher getPublisher() {
-		return publisher;
-	}
+    public Publisher getPublisher() {
+        return publisher;
+    }
 
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-	}
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
 
-	public String getIsbn() {
-		return isbn;
-	}
+    public String getIsbn() {
+        return isbn;
+    }
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-	public CoverImage getCover() {
-		return cover;
-	}
+    public CoverImage getCover() {
+        return cover;
+    }
 
-	public void setCover(CoverImage cover) {
-		this.cover = cover;
-	}
+    public void setCover(CoverImage cover) {
+        this.cover = cover;
+    }
 
-	public Date getCreated() {
-		return created;
-	}
+    public Date getCreated() {
+        return created;
+    }
 
-	public void setCreated(Date created) {
-		this.created = created;
-	}
+    public void setCreated(Date created) {
+        this.created = created;
+    }
 
-	public Date getUpdated() {
-		return updated;
-	}
+    public Date getUpdated() {
+        return updated;
+    }
 
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-	
-	
-	public double getRate() {
-		return rate;
-	}
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
 
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
 
 }
