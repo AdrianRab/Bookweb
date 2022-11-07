@@ -1,20 +1,22 @@
 package pl.arabowski.bookweb.service.book;
 
+import java.util.List;
 import pl.arabowski.bookweb.model.Book;
+import pl.arabowski.bookweb.model.enums.Genres;
 
 public interface BookService {
 	
-	public Iterable<Book> topTwentyBooks();
+	Iterable<Book> topTwentyBooks();
 	
-	public void rateBook(Book book, double rate);
+	void rateBook(Book book, double rate);
 	
-	public Iterable<Book> findByGenre(String genre);
+	List<Book> findByGenre(Genres genre);
 	
-	public Iterable<Book> findByAuthor(String authorLastName);
+	Iterable<Book> findByAuthor(String authorLastName);
 	
-	public Iterable<Book> findByTitle(String title);
+	Iterable<Book> findByTitle(String title);
 	
-	public double countRating(Book book);
-;
-	public Iterable<String> bookGenre();
+	double countRating(Book book);
+
+	List<Genres> bookGenre();
 }

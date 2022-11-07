@@ -24,6 +24,7 @@ import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.model.User;
+import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
@@ -138,8 +139,8 @@ public class BookController {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookRepo.findById(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		bookService.rateBook(book, Double.valueOf(rateParam));
-		userService.addRating(user, id, Double.valueOf(rateParam));
+		bookService.rateBook(book, Double.parseDouble(rateParam));
+		userService.addRating(user, id, Double.parseDouble(rateParam));
 		Map<Long, Double> ratings = user.getRating();
 		if(ratings.containsKey(book.getId())) {
 			mav.addObject("myRate", ratings.get(book.getId()));
@@ -152,9 +153,8 @@ public class BookController {
 	}
 
 	@ModelAttribute("listOfGenres")
-	List<String> genres() {
-		List<String> genres = (List<String>) bookService.bookGenre();
-		return genres;
+	List<Genres> getGenres() {
+		return bookService.bookGenre();
 	}
 
 	@ModelAttribute("listOfRates")

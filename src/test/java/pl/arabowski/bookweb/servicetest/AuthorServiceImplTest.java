@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.service.author.AuthorServiceImpl;
 

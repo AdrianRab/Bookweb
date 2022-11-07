@@ -1,6 +1,6 @@
 package pl.arabowski.bookweb.model.enums;
 
-public enum BookGenre {
+public enum Genres {
 	
 	BIOGRAPHY{
 		public String toString() {
@@ -57,7 +57,7 @@ public enum BookGenre {
 		}
 	},
 	
-	HIST_FIC{
+	HISTORICAL_FICTION {
 		public String toString() {
 			return "historical fiction";
 		}

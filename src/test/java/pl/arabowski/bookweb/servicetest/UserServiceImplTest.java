@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Test;
-
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.service.user.UserServiceImpl;
 

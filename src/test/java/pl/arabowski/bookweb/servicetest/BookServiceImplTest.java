@@ -1,22 +1,25 @@
 package pl.arabowski.bookweb.servicetest;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static pl.arabowski.bookweb.model.enums.Genres.HISTORICAL_FICTION;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-
+import org.assertj.core.util.Sets;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.arabowski.bookweb.model.Book;
+import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.service.book.BookServiceImpl;
 
@@ -56,42 +59,29 @@ public class BookServiceImplTest {
         assertEquals(0, result, 0.1);
     }
 
-    //require database connection to test
     @Test
     public void shouldFindByGenre() {
         //given
-        Book book1 = new Book();
-        Book book2 = new Book();
-        Book book3 = new Book();
-        book1.setTitle("Clean code");
-        book2.setTitle("Kanny 216 p.n.e.");
-        book3.setTitle("Under the Eagle");
-        Set<String> genre1 = new HashSet<>();
-        genre1.add("programming");
-        Set<String> genre2 = new HashSet<>();
-        genre2.add("history");
-        Set<String> genre3 = new HashSet<>();
-        genre3.add("historical fiction");
-        book1.setGenre(genre1);
-        book2.setGenre(genre2);
-        book3.setGenre(genre3);
-        String genreToSeachBy = "historical fiction";
-		List<Book> allBooks = Arrays.asList(book1, book2, book3);
+        Book someBook = Book.builder().title("Under the Eagle").genre(Sets.set(HISTORICAL_FICTION)).build();
+        List<Book> resultFromDb = Collections.singletonList(someBook);
         //when
-		when(repository.findAll()).thenReturn(allBooks);
-        List<Book> result = (List<Book>) bookService.findByGenre(genreToSeachBy);
+        when(repository.findAllByGenre(any())).thenReturn(resultFromDb);
+        List<Book> result = bookService.findByGenre(HISTORICAL_FICTION);
         //then
-        assertEquals(book3.getTitle(), result.get(0).getTitle());
+        verify(repository, times(1)).findAllByGenre(any());
+        assertFalse(result.isEmpty());
+        assertEquals(someBook.getTitle(), result.get(0).getTitle());
+        assertEquals(someBook.getGenre(), result.get(0).getGenre());
     }
 
     @Test
-    public void shouldLoadListofGenres() {
+    public void shouldLoadListOfGenres() {
         //given
-        String[] arrayOfGenres = {"biography", "fantasy", "history", "horror", "classic", "programming", "adventure", "crime fiction", "poetry", "historical fiction", "fable", "science fiction"};
+        List<Genres> expectedResult =  Arrays.asList(Genres.values());
         //when
-        List<String> result = (List<String>) bookService.bookGenre();
+        List<Genres> result = bookService.bookGenre();
         //then
-        assertArrayEquals(arrayOfGenres, result.toArray());
+        assertEquals(expectedResult, result);
     }
 
 }

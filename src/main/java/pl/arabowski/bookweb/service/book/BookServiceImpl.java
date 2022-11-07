@@ -1,12 +1,24 @@
 package pl.arabowski.bookweb.service.book;
 
-import java.util.ArrayList;
-import java.util.List;
+import static pl.arabowski.bookweb.model.enums.Genres.ADVENTURE;
+import static pl.arabowski.bookweb.model.enums.Genres.BIOGRAPHY;
+import static pl.arabowski.bookweb.model.enums.Genres.CLASSIC;
+import static pl.arabowski.bookweb.model.enums.Genres.CRIME;
+import static pl.arabowski.bookweb.model.enums.Genres.FABLE;
+import static pl.arabowski.bookweb.model.enums.Genres.FANTASY;
+import static pl.arabowski.bookweb.model.enums.Genres.HISTORICAL_FICTION;
+import static pl.arabowski.bookweb.model.enums.Genres.HISTORY;
+import static pl.arabowski.bookweb.model.enums.Genres.HORROR;
+import static pl.arabowski.bookweb.model.enums.Genres.POETRY;
+import static pl.arabowski.bookweb.model.enums.Genres.PROGRAMMING;
+import static pl.arabowski.bookweb.model.enums.Genres.SCI_FI;
 
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import pl.arabowski.bookweb.model.Book;
+import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
 
 @Service
@@ -28,27 +40,18 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Iterable<Book> findByGenre(String genre) {
-		List<Book> books = bookRepo.findAll();
-		List<Book> foundBooks = new ArrayList<>();
-		for (int i = 0; i < books.size(); i++) {
-			if (books.get(i).getGenre().contains(genre)) {
-				foundBooks.add(books.get(i));
-			}
-		}
-		return foundBooks;
+	public List<Book> findByGenre(Genres genre) {
+		return bookRepo.findAllByGenre(genre.name());
 	}
 
 	@Override
 	public Iterable<Book> findByAuthor(String authorLastName) {
-		List<Book> books = bookRepo.findAllBooksByAuthorLastName(authorLastName);
-		return books;
+		return bookRepo.findAllBooksByAuthorLastName(authorLastName);
 	}
 
 	@Override
 	public Iterable<Book> findByTitle(String title) {
-		List<Book> books = bookRepo.findByTitleOrderByTitleAsc(title);
-		return books;
+		return bookRepo.findByTitleOrderByTitleAsc(title);
 	}
 
 	@Override
@@ -70,26 +73,12 @@ public class BookServiceImpl implements BookService {
  
 	@Override
 	public List<Book> topTwentyBooks() {
-		List<Book> top20Books = bookRepo.findTop20ByOrderByRateDesc();
-		return top20Books;
+		return bookRepo.findTop20ByOrderByRateDesc();
 	}
 
 	@Override
-	public Iterable<String> bookGenre() {
-		List<String> genres = new ArrayList<>();
-		genres.add("biography");
-		genres.add("fantasy");
-		genres.add("history");
-		genres.add("horror");
-		genres.add("classic");
-		genres.add("programming");
-		genres.add("adventure");
-		genres.add("crime fiction");
-		genres.add("poetry");
-		genres.add("historical fiction");
-		genres.add("fable");
-		genres.add("science fiction");
-		return genres;
+	public List<Genres> bookGenre() {
+		return Arrays.asList(Genres.values());
 	}
 
 }

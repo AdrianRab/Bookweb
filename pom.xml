@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<junit.jupiter.version>5.1.1</junit.jupiter.version>
 	</properties>
 
@@ -87,9 +87,14 @@
 			<version>1.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate.validator</groupId>
+			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.13.Final</version>
+			<version>8.0.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
