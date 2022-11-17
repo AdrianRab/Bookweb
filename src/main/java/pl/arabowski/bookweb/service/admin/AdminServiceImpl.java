@@ -15,6 +15,7 @@ import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.PublisherRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.repositories.UserRoleRepository;
+import pl.arabowski.bookweb.service.book.BookService;
 
 
 @Service
@@ -31,16 +32,16 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired 
 	private AuthorRepository authorRepository;
-	
+
 	@Autowired
-	private BookRepository bookRepository;
+	private BookService bookService;
 	
 	@Override
 	public ModelAndView deleteBook(long id) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:http://localhost:8090/admin/panel");
-		Book book = bookRepository.findById(id);
-		bookRepository.delete(book);
+		Book book = bookService.getBook(id);
+		bookService.delete(book.getId());
 		return mav;
 	}
 

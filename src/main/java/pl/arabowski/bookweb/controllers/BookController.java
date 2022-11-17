@@ -99,7 +99,7 @@ public class BookController {
 	@GetMapping("/edit/{id}")
 	public ModelAndView editBook(@PathVariable long id) {
 		ModelAndView mav = new ModelAndView();
-		Book book = bookRepo.findById(id);
+		Book book = bookService.getBook(id);
 		mav.addObject("book", book);
 		mav.setViewName("book/edit");
 		return mav;
@@ -121,7 +121,7 @@ public class BookController {
 	@GetMapping("/details/{id}")
 	public ModelAndView bookDetails(@PathVariable long id, @AuthenticationPrincipal UserDetails currentUser) {
 		ModelAndView mav = new ModelAndView();
-		Book book = bookRepo.findById(id);
+		Book book = bookService.getBook(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		Map<Long, Double> ratings = user.getRating();
 		if(ratings.containsKey(book.getId())) {
@@ -137,7 +137,7 @@ public class BookController {
 	public ModelAndView rateBook(@PathVariable long id, @AuthenticationPrincipal UserDetails currentUser,
 			@RequestParam String rateParam) {
 		ModelAndView mav = new ModelAndView();
-		Book book = bookRepo.findById(id);
+		Book book = bookService.getBook(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
 		bookService.rateBook(book, Double.parseDouble(rateParam));
 		userService.addRating(user, id, Double.parseDouble(rateParam));

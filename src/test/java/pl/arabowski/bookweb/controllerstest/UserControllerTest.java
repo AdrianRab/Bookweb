@@ -41,7 +41,7 @@ class UserControllerTest {
 
 		@BeforeEach
 		void setup() {
-			controller = new UserController(mockUserRepository);
+			controller = new UserController();
 			mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 			mockUserRepository = mock(UserRepository.class);
 			books = getBooksSet();

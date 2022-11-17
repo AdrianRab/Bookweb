@@ -18,15 +18,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
+		return new BCryptPasswordEncoder();
 	}
 
 	@Autowired
 	private DataSource dataSource;
-
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	private String usersQuery = "select email, password, enabled from users where email=?";
 	private String rolesQuery = "SELECT email, user_role from users INNER JOIN user_roles ON users.user_id=user_roles.user_user_id WHERE email=?";
@@ -34,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().usersByUsernameQuery(usersQuery).authoritiesByUsernameQuery(rolesQuery)
-				.dataSource(dataSource).passwordEncoder(bCryptPasswordEncoder);
+				.dataSource(dataSource).passwordEncoder(passwordEncoder());
 	}
 
 	@Override

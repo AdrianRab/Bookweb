@@ -19,4 +19,10 @@ public interface BookService {
 	double countRating(Book book);
 
 	List<Genres> bookGenre();
+
+	Book getBook(long bookId);
+
+	void delete(long id);
+
+	Book save(Book book);
 }

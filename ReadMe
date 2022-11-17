@@ -1,7 +1,0 @@
-Bookweb - application for book lovers, where users can create, modify
-and delete account, add new books, mark which they read, currently
-reading or plan to read, rate books, add books to their private bookcase.
-Add publishers and authors information and upload covers for books.
-Access to application is secured and available only to registered users.
-Technologies used: Java, Spring Boot, Spring Security, Spring MVC,
-Hibernate, JSP, JSTL, CSS and Bootstrap framework.
