@@ -2,6 +2,7 @@ package pl.arabowski.bookweb.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -86,5 +87,29 @@ public class Publisher {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	@Override
+	public String toString() {
+		return "Publisher{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", books=" + books +
+				", created=" + created +
+				", updated=" + updated +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Publisher)) return false;
+		Publisher publisher = (Publisher) o;
+		return getId() == publisher.getId() && getName().equals(publisher.getName()) && Objects.equals(getBooks(), publisher.getBooks()) && Objects.equals(getCreated(), publisher.getCreated()) && Objects.equals(getUpdated(), publisher.getUpdated());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getName(), getBooks(), getCreated(), getUpdated());
 	}
 }

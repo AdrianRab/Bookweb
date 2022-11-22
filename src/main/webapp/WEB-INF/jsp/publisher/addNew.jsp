@@ -45,7 +45,7 @@
 			 <div class="col-lg">
 			 	</div>
 			 	<div class="col-lg">
-					<a href="${contextPath}/publ/all"><button class="btn btn-info">List of publishers</button></a> 
+					<a href="${contextPath}/publisher/all"><button class="btn btn-info">List of publishers</button></a>
 					<a href="${contextPath}/home"><button class="btn btn-info">Main page</button></a> 
 				</div>
 				<div class="col-lg">

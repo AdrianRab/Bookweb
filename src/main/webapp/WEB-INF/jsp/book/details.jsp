@@ -168,7 +168,7 @@ body, html {
 					<td><fmt:formatNumber type="number" maxFractionDigits="2" value="${book.rate}"/></td>
 					<td>
 						<c:forEach items="${book.authors}" var="author">
-							<a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-warning">${author.firstName} ${author.lastName}</button></a>;
+							<a href="${contextPath}/author/all-books/${author.id}"><button type="button" class="btn btn-warning">${author.firstName} ${author.lastName}</button></a>
 						</c:forEach>
 					</td>
 					<td>${book.publisher.name}</td>

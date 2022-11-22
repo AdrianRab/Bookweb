@@ -56,7 +56,7 @@ body, html {
 			      	<div class="btn-group btn-group-lg">
 						<a href="${contextPath}/book/top-rated"><button type="button" class="btn btn-warning">Top 20 books</button></a>
 						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
-						<a href="${contextPath}/publ/all"><button type="button" class="btn btn-warning">All publishers</button></a>
+						<a href="${contextPath}/publisher/all"><button type="button" class="btn btn-warning">All publishers</button></a>
 						<a href="${contextPath}/author/all"><button type="button" class="btn btn-warning">All authors</button></a>
 						<a href="${contextPath}/admin/all-users"><button type="button" class="btn btn-warning">All users</button></a>
 					</div>

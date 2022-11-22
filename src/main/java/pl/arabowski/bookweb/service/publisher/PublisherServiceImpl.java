@@ -1,14 +1,13 @@
 package pl.arabowski.bookweb.service.publisher;
 
-import java.util.List;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.repositories.PublisherRepository;
 
 @Service
+@Slf4j
 public class PublisherServiceImpl implements PublisherService {
 
 	@Autowired
@@ -16,20 +15,23 @@ public class PublisherServiceImpl implements PublisherService {
 
 	@Override
 	public Publisher findByPublisherName(String name) {
-		Publisher publ = publisherRepo.findByName(name);
-		return publ;
+		return publisherRepo.findByName(name);
 	}
 
 	@Override
 	public Iterable<Publisher> listAllPublishers() {
-		List<Publisher> publishers = publisherRepo.findAll();
-		return publishers;
+		return publisherRepo.findAll();
 	}
 
 	@Override
 	public Publisher findById(long id) {
-		Publisher publisher = publisherRepo.findById(id);
-		return publisher;
+		return publisherRepo.findById(id);
+	}
+
+	@Override
+	public void save(Publisher publisher) {
+		log.info("Persisting publisher {}", publisher);
+		publisherRepo.saveAndFlush(publisher);
 	}
 
 }

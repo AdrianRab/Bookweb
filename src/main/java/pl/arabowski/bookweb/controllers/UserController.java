@@ -3,7 +3,6 @@ package pl.arabowski.bookweb.controllers;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -17,6 +16,7 @@ import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.service.book.BookService;
 import pl.arabowski.bookweb.service.user.UserService;
+import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @Controller
 @RequestMapping("/user")
@@ -37,12 +37,7 @@ public class UserController {
     @Autowired
     private BookService bookService;
 
-    @Value("${server.port:8090}")
-    private String port;
-
-    @Value("${server.hostname:localhost}")
-    private String hostname;
-
+    @Autowired RedirectUrlResolver redirectUrlResolver;
     @GetMapping("/owned")
     public ModelAndView userOwnedBooks(@AuthenticationPrincipal UserDetails currentUser) {
         ModelAndView mav = new ModelAndView();
@@ -123,7 +118,7 @@ public class UserController {
     public ModelAndView removeUserConfirmation(@PathVariable long id) {
         ModelAndView mav = new ModelAndView();
         userService.delete(id);
-        mav.setViewName(getRedirectView(HOME_REDIRECT));
+        mav.setViewName(redirectUrlResolver.getRedirectView(HOME_REDIRECT));
         return mav;
     }
 
@@ -145,7 +140,7 @@ public class UserController {
         userService.addBookToOwned(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -157,7 +152,7 @@ public class UserController {
         userService.removeBookFromOwned(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -169,7 +164,7 @@ public class UserController {
         userService.addBookToReading(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -181,7 +176,7 @@ public class UserController {
         userService.removeBookFromReading(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -193,7 +188,7 @@ public class UserController {
         userService.addBookToRead(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -205,7 +200,7 @@ public class UserController {
         userService.removeBookFromRead(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -217,7 +212,7 @@ public class UserController {
         userService.addBookToWannaRead(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
     }
 
@@ -229,12 +224,8 @@ public class UserController {
         userService.removeBookFromWannaRead(user, book);
         mav.addObject("user", user);
         mav.addObject("book", book);
-        mav.setViewName(getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
         return mav;
-    }
-
-    private String getRedirectView(String viewName) {
-        return "redirect:" + "http://" + hostname + ":" + port + viewName;
     }
 
 }

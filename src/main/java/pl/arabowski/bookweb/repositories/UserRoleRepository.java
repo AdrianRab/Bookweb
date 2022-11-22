@@ -8,6 +8,5 @@ import pl.arabowski.bookweb.model.UserRole;
 @Repository
 public interface UserRoleRepository extends JpaRepository<UserRole, Long>{
 	UserRole findById(long id);
-	
-	UserRole findByuserRole(String userRole);
+	UserRole findByUserRole(String userRole);
 }
