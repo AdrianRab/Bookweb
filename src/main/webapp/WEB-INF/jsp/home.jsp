@@ -93,13 +93,14 @@ body, html {
 								<a class="dropdown-item" href="${contextPath}/author/all"><button type="button" class="btn btn-dark">All authors</button></a>
 						    </div>
 						  </div>
-						  <div class="btn-group" role="group">
+						  <div clas
+						  s="btn-group" role="group">
 						    <button id="btnGroupDrop3" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						      Publisher menu
 						    </button>
 						    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-								<a class="dropdown-item" href="${contextPath}/publ/all"><button type="button" class="btn btn-dark">List of publishers</button></a>
-								<a class="dropdown-item" href="${contextPath}/publ/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
+								<a class="dropdown-item" href="${contextPath}/publisher/all"><button type="button" class="btn btn-dark">List of publishers</button></a>
+								<a class="dropdown-item" href="${contextPath}/publisher/add"><button type="button" class="btn btn-dark">Add new publisher</button></a>
 						    </div>
 						  </div>
 						</div>

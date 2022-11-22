@@ -1,91 +1,99 @@
 package pl.arabowski.bookweb.service.book;
 
-import java.util.ArrayList;
+import static pl.arabowski.bookweb.model.enums.Genres.ADVENTURE;
+import static pl.arabowski.bookweb.model.enums.Genres.BIOGRAPHY;
+import static pl.arabowski.bookweb.model.enums.Genres.CLASSIC;
+import static pl.arabowski.bookweb.model.enums.Genres.CRIME;
+import static pl.arabowski.bookweb.model.enums.Genres.FABLE;
+import static pl.arabowski.bookweb.model.enums.Genres.FANTASY;
+import static pl.arabowski.bookweb.model.enums.Genres.HISTORICAL_FICTION;
+import static pl.arabowski.bookweb.model.enums.Genres.HISTORY;
+import static pl.arabowski.bookweb.model.enums.Genres.HORROR;
+import static pl.arabowski.bookweb.model.enums.Genres.POETRY;
+import static pl.arabowski.bookweb.model.enums.Genres.PROGRAMMING;
+import static pl.arabowski.bookweb.model.enums.Genres.SCI_FI;
+
+import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-
 import pl.arabowski.bookweb.model.Book;
+import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
 
 @Service
 public class BookServiceImpl implements BookService {
+    private BookRepository bookRepo;
 
-	@Autowired
-	private BookRepository bookRepo;
+    @Autowired
+    public BookServiceImpl(BookRepository bookRepo) {
+        this.bookRepo = bookRepo;
+    }
 
-	@Override
-	public void rateBook(Book book, double rate) {
-		List<Double> rates = book.getRating();
-		rates.add(rate);
-		countRating(book);
-		bookRepo.saveAndFlush(book);
-	}
 
-	@Override
-	public Iterable<Book> findByGenre(String genre) {
-		List<Book> books = bookRepo.findAll();
-		List<Book> foundBooks = new ArrayList<>();
-		for (int i = 0; i < books.size(); i++) {
-			if (books.get(i).getGenre().contains(genre)) {
-				foundBooks.add(books.get(i));
-			}
-		}
-		return foundBooks;
-	}
+    @Override
+    public void rateBook(Book book, double rate) {
+        List<Double> rates = book.getRating();
+        rates.add(rate);
+        countRating(book);
+        bookRepo.saveAndFlush(book);
+    }
 
-	@Override
-	public Iterable<Book> findByAuthor(String authorLastName) {
-		List<Book> books = bookRepo.findAllBooksByAuthorLastName(authorLastName);
-		return books;
-	}
+    @Override
+    public List<Book> findByGenre(Genres genre) {
+        return bookRepo.findAllByGenre(genre.name());
+    }
 
-	@Override
-	public Iterable<Book> findByTitle(String title) {
-		List<Book> books = bookRepo.findByTitleOrderByTitleAsc(title);
-		return books;
-	}
+    @Override
+    public Iterable<Book> findByAuthor(String authorLastName) {
+        return bookRepo.findAllBooksByAuthorLastName(authorLastName);
+    }
 
-	@Override
-	public double countRating(Book book) {
-		List<Double> ratings = book.getRating();
-		if (ratings.size() > 0) {
-			double rating = 0;
-			double sum = 0;
-			for (int i = 0; i < ratings.size(); i++) {
-				sum += ratings.get(i);
-			}
-			rating = sum/ratings.size();
-			book.setRate(rating);
-			return rating;
-		}
-		book.setRate(0);
-		return 0;
-	}
- 
-	@Override
-	public List<Book> topTwentyBooks() {
-		List<Book> top20Books = bookRepo.findTop20ByOrderByRateDesc();
-		return top20Books;
-	}
+    @Override
+    public Iterable<Book> findByTitle(String title) {
+        return bookRepo.findByTitleOrderByTitleAsc(title);
+    }
 
-	@Override
-	public Iterable<String> bookGenre() {
-		List<String> genres = new ArrayList<>();
-		genres.add("biography");
-		genres.add("fantasy");
-		genres.add("history");
-		genres.add("horror");
-		genres.add("classic");
-		genres.add("programming");
-		genres.add("adventure");
-		genres.add("crime fiction");
-		genres.add("poetry");
-		genres.add("historical fiction");
-		genres.add("fable");
-		genres.add("science fiction");
-		return genres;
-	}
+    @Override
+    public double countRating(Book book) {
+        List<Double> ratings = book.getRating();
+        if (ratings.size() > 0) {
+            double rating = 0;
+            double sum = 0;
+            for (int i = 0; i < ratings.size(); i++) {
+                sum += ratings.get(i);
+            }
+            rating = sum / ratings.size();
+            book.setRate(rating);
+            return rating;
+        }
+        book.setRate(0);
+        return 0;
+    }
 
+    @Override
+    public List<Book> topTwentyBooks() {
+        return bookRepo.findTop20ByOrderByRateDesc();
+    }
+
+    @Override
+    public List<Genres> bookGenre() {
+        return Arrays.asList(Genres.values());
+    }
+
+    @Override
+    public Book getBook(long bookId) {
+        return bookRepo.findById(bookId).orElseThrow(() -> new EmptyResultDataAccessException(String.format("No Book with id %s exists!", bookId), 1));
+    }
+
+    @Override
+    public void delete(long id) {
+        bookRepo.deleteById(id);
+    }
+
+    @Override
+    public Book save(Book book) {
+        return bookRepo.save(book);
+    }
 }

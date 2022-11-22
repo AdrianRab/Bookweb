@@ -27,157 +27,74 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.ISBN;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import pl.arabowski.bookweb.model.enums.Genres;
 
 @Entity
 @Table(name = "books")
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
-	public Book() {
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
+    private long id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="book_id")
-	private long id;
-	
-	@NotBlank
-	@Size(max=100)
-	private String title;
+    @NotBlank
+    @Size(max = 100)
+    private String title;
 
-	@NotEmpty
-	@ElementCollection
-	private Set<String> genre  = new HashSet<>();
-	
-	@ElementCollection
-	private List<Double> rating = new ArrayList<>();
+    @NotEmpty
+    @ElementCollection
+    private Set<Genres> genre = new HashSet<>();
 
-	@Column(scale = 2, precision = 4)
-	private double rate;
-	
-	@NotEmpty
-	@ManyToMany
-	@JoinTable(
-			name = "Author_Book",
-			joinColumns = @JoinColumn(name="book_id"),
-			inverseJoinColumns = @JoinColumn(name="author_id")
-		)
-	private Set<Author> authors = new HashSet<>();
-	
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name="publisher_id", nullable = false)
-	private Publisher publisher;
-	
-	@ISBN
-	private String isbn;
+    @ElementCollection
+    private List<Double> rating = new ArrayList<>();
 
-	@Lob
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "cover_id", unique = true)
-	private CoverImage cover;
+    @Column(scale = 2, precision = 4)
+    private double rate;
 
-	@CreationTimestamp
-	@DateTimeFormat(iso=ISO.DATE)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date created;
+    @NotEmpty
+    @ManyToMany
+    @JoinTable(
+            name = "Author_Book",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private Set<Author> authors = new HashSet<>();
 
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updated;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private Publisher publisher;
 
-	public long getId() {
-		return id;
-	}
+    @ISBN
+    private String isbn;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    @Lob
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cover_id", unique = true)
+    private CoverImage cover;
 
-	public String getTitle() {
-		return title;
-	}
+    @CreationTimestamp
+    @DateTimeFormat(iso = ISO.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Set<String> getGenre() {
-		return genre;
-	}
-
-	public void setGenre(Set<String> genre) {
-		this.genre = genre;
-	}
-
-
-	public List<Double> getRating() {
-		return rating;
-	}
-
-	public void setRating(List<Double> rating) {
-		this.rating = rating;
-	}
-
-	public Set<Author> getAuthors() {
-		return authors;
-	}
-
-	public void setAuthors(Set<Author> authors) {
-		this.authors = authors;
-	}
-
-	public Publisher getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-	public CoverImage getCover() {
-		return cover;
-	}
-
-	public void setCover(CoverImage cover) {
-		this.cover = cover;
-	}
-
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-	
-	
-	public double getRate() {
-		return rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
 }

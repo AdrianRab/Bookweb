@@ -34,8 +34,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Entity
 @Table(name = "users")
 public class User {
-	public User() {
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

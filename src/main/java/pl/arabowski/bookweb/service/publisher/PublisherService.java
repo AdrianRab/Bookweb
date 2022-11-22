@@ -9,5 +9,6 @@ public interface PublisherService {
 	Iterable<Publisher> listAllPublishers();
 	
 	Publisher findById(long id);
-	
+
+	void save(Publisher publisher);
 }

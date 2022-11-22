@@ -15,12 +15,12 @@ public interface BookRepository extends JpaRepository<Book, Long>{
 	@Query("select a.books from Author a where a.lastName = ?1")
 	List<Book> findAllBooksByAuthorLastName(String lastName);
 	
-	Book findById(long id);
-	
 	List<Book> findByTitleOrderByTitleAsc(String title);
 	
 	List<Book> findTop20ByOrderByRateDesc();
 	
 	@Query("select b from Book b where lower(b.title) like lower(concat('%', :searchWord,'%'))")
 	List<Book> findBooksWhichContainsWordInTitle(@Param("searchWord")String searchWord);
+
+	List<Book> findAllByGenre(String genre);
 }

@@ -100,7 +100,7 @@ body, html {
 						<form:options items="${listOfPublishers}" itemLabel="name"/>
 					</form:select>
 					<form:errors path="publisher" cssClass="error" element="div"/>
-					<small class="form-text text-muted">Publisher not available? <a href="${contextPath}/publ/add">Add new</a></small>
+					<small class="form-text text-muted">Publisher not available? <a href="${contextPath}/publisher/add">Add new</a></small>
 				</div>
 				<div class="form-group">
 					Author/s: <form:select path="authors" multiple="true"  class="form-control" >

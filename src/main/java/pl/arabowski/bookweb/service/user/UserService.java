@@ -2,6 +2,7 @@ package pl.arabowski.bookweb.service.user;
 
 import java.util.Set;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,33 +11,38 @@ import pl.arabowski.bookweb.model.User;
 
 public interface UserService {
 
-	public ModelAndView register(String password, String passwordConfirmed, User user, BindingResult result);
+	User getUser(UserDetails userDetails);
+
+	User save (User user);
+
+	void delete(long id);
+	ModelAndView register(String password, String passwordConfirmed, User user, BindingResult result);
 	
-	public void addBookToOwned(User user, Book book);
+	void addBookToOwned(User user, Book book);
 	
-	public void removeBookFromOwned(User user, Book book);
+	void removeBookFromOwned(User user, Book book);
 	
-	public void addBookToRead(User user,Book book);
+	void addBookToRead(User user,Book book);
 	
-	public void removeBookFromRead(User user,Book book);
+	void removeBookFromRead(User user,Book book);
 	
-	public void addBookToWannaRead(User user,Book book);
+	void addBookToWannaRead(User user,Book book);
 	
-	public void removeBookFromWannaRead(User user,Book book);
+	void removeBookFromWannaRead(User user,Book book);
 	
-	public void addBookToReading(User user,Book book);
+	void addBookToReading(User user,Book book);
 	
-	public void removeBookFromReading(User user,Book book);
+	void removeBookFromReading(User user,Book book);
 	
-	public void addRating(User user, long bookId, double rate);
+	void addRating(User user, long bookId, double rate);
 	
-	public double getRating(User user,long bookId);
+	double getRating(User user,long bookId);
 	
-	public String checkIfOwned(Set<Book> owned, Book book);
+	String checkIfOwned(Set<Book> owned, Book book);
 	
-	public String checkIfRead(Set<Book> read,Book book);
+	String checkIfRead(Set<Book> read,Book book);
 	
-	public String checkIfReading(Set<Book> reading,Book book);
+	String checkIfReading(Set<Book> reading,Book book);
 	
-	public String checkIfWannaRead(Set<Book> owned, Book book);
+	String checkIfWannaRead(Set<Book> owned, Book book);
 }

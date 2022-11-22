@@ -1,4 +1,4 @@
-package pl.arabowski.Bookweb;
+package pl.arabowski.bookweb;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

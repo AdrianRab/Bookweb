@@ -77,7 +77,7 @@ body, html {
 					</button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 						<a class="dropdown-item" href="${contextPath}/user/edit"><button type="button" class="btn btn-dark">Edit your data</button></a>
-						<a class="dropdown-item" href="${contextPath}/user/detele-account"><button type="button" class="btn btn-dark">Remove account</button></a>
+						<a class="dropdown-item" href="${contextPath}/user/delete-account"><button type="button" class="btn btn-dark">Remove account</button></a>
 					</div>
 				</div>
 			</div>
