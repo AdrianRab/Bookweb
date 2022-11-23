@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.controllerstest;
+package pl.arabowski.bookweb.controllers;
 
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
@@ -21,20 +21,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import pl.arabowski.bookweb.controllers.HomeController;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.repositories.UserRepository;
+import pl.arabowski.bookweb.services.UserService;
 
 class HomeControllerTest {
 
 	private HomeController controller;
 	private MockMvc mockMvc;
 	private UserRepository mockUserRepository;
+	private UserService mockedUserService;
 	
 	@BeforeEach
 	void setup() {
+		mockedUserService = mock(UserService.class);
 		mockUserRepository = mock(UserRepository.class);
-		controller = new HomeController(mockUserRepository);
+		controller = new HomeController(mockUserRepository, mockedUserService);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 
@@ -105,13 +107,11 @@ class HomeControllerTest {
 			unregistered.setEmail("test@test.pl");
 			unregistered.setUsername("JonnyB");
 			unregistered.setPassword("password");
-			unregistered.setPasswordConfirmed("password");
 			User registered = new User();
 			registered.setId(1);
 			registered.setEmail("test@test.pl");
 			registered.setUsername("JonnyB");
 			registered.setPassword("password");
-			registered.setPasswordConfirmed("password");
 			
 			when(mockUserRepository.saveAndFlush(unregistered)).thenReturn(registered);
 		

@@ -21,8 +21,8 @@ import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
-import pl.arabowski.bookweb.service.admin.AdminServiceImpl;
-import pl.arabowski.bookweb.service.publisher.PublisherServiceImpl;
+import pl.arabowski.bookweb.services.admin.AdminServiceImpl;
+import pl.arabowski.bookweb.services.publisher.PublisherServiceImpl;
 
 @Controller
 @RequestMapping("/admin")

@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.book;
+package pl.arabowski.bookweb.services.book;
 
 import java.util.List;
 import pl.arabowski.bookweb.model.Book;
@@ -8,7 +8,7 @@ public interface BookService {
 	
 	Iterable<Book> topTwentyBooks();
 	
-	void rateBook(Book book, double rate);
+//	void rateBook(Book book, double rate);
 	
 	List<Book> findByGenre(Genres genre);
 	
@@ -16,7 +16,7 @@ public interface BookService {
 	
 	Iterable<Book> findByTitle(String title);
 	
-	double countRating(Book book);
+	double calculateRating(Book book);
 
 	List<Genres> bookGenre();
 

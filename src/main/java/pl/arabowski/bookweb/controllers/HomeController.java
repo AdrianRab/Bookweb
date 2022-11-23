@@ -11,24 +11,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.arabowski.bookweb.model.User;
+import pl.arabowski.bookweb.model.UserDto;
 import pl.arabowski.bookweb.repositories.UserRepository;
-import pl.arabowski.bookweb.service.user.UserServiceImpl;
+import pl.arabowski.bookweb.services.UserService;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	private UserServiceImpl userServiceImpl;
+	private UserService userService;
 
 	@Autowired
-	private UserRepository userRepo;
-	
-	public HomeController() {
-	}
+	private final UserRepository userRepo;
 	
 	@Autowired
-	public HomeController(UserRepository userRepository) {
+	public HomeController(UserRepository userRepository, UserService userService) {
 		this.userRepo = userRepository;
+		this.userService = userService;
 	}
 
 	@GetMapping(value = { "/", "/home", "/about" })
@@ -39,15 +38,14 @@ public class HomeController {
 	@GetMapping("/register")
 	public ModelAndView addUser() {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("user", new User());
+		mav.addObject("userDto", new UserDto());
 		mav.setViewName("user/registerForm");
 		return mav;
 	}
 
 	@PostMapping("/register")
-	public ModelAndView addUser(@RequestParam String password, @RequestParam String passwordConfirmed, @Valid User user,
-			BindingResult result) {
-		return userServiceImpl.register(password, passwordConfirmed, user, result);
+	public ModelAndView addUser(@Valid UserDto user, BindingResult result) {
+		return userService.register(user, result);
 	}
 
 	@GetMapping("/login")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Publisher;
-import pl.arabowski.bookweb.service.publisher.PublisherService;
+import pl.arabowski.bookweb.services.publisher.PublisherService;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @Controller

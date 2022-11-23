@@ -1,17 +1,4 @@
-package pl.arabowski.bookweb.service.book;
-
-import static pl.arabowski.bookweb.model.enums.Genres.ADVENTURE;
-import static pl.arabowski.bookweb.model.enums.Genres.BIOGRAPHY;
-import static pl.arabowski.bookweb.model.enums.Genres.CLASSIC;
-import static pl.arabowski.bookweb.model.enums.Genres.CRIME;
-import static pl.arabowski.bookweb.model.enums.Genres.FABLE;
-import static pl.arabowski.bookweb.model.enums.Genres.FANTASY;
-import static pl.arabowski.bookweb.model.enums.Genres.HISTORICAL_FICTION;
-import static pl.arabowski.bookweb.model.enums.Genres.HISTORY;
-import static pl.arabowski.bookweb.model.enums.Genres.HORROR;
-import static pl.arabowski.bookweb.model.enums.Genres.POETRY;
-import static pl.arabowski.bookweb.model.enums.Genres.PROGRAMMING;
-import static pl.arabowski.bookweb.model.enums.Genres.SCI_FI;
+package pl.arabowski.bookweb.services.book;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,15 +18,6 @@ public class BookServiceImpl implements BookService {
         this.bookRepo = bookRepo;
     }
 
-
-    @Override
-    public void rateBook(Book book, double rate) {
-        List<Double> rates = book.getRating();
-        rates.add(rate);
-        countRating(book);
-        bookRepo.saveAndFlush(book);
-    }
-
     @Override
     public List<Book> findByGenre(Genres genre) {
         return bookRepo.findAllByGenre(genre.name());
@@ -56,13 +34,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public double countRating(Book book) {
+    public double calculateRating(Book book) {
         List<Double> ratings = book.getRating();
-        if (ratings.size() > 0) {
+        if (!ratings.isEmpty()) {
             double rating = 0;
             double sum = 0;
-            for (int i = 0; i < ratings.size(); i++) {
-                sum += ratings.get(i);
+            for (Double aDouble : ratings) {
+                sum += aDouble;
             }
             rating = sum / ratings.size();
             book.setRate(rating);

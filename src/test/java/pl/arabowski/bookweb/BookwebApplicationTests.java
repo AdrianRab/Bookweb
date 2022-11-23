@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import pl.arabowski.bookweb.servicetest.BookServiceImplTest;
+import pl.arabowski.bookweb.services.BookServiceImplTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {BookServiceImplTest.class})

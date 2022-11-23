@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.controllerstest;
+package pl.arabowski.bookweb.controllers;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.mockito.Mockito.mock;
@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceView;
 
-import pl.arabowski.bookweb.controllers.UserController;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.repositories.UserRepository;

@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.servicetest;
+package pl.arabowski.bookweb.services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
-import pl.arabowski.bookweb.service.book.BookServiceImpl;
+import pl.arabowski.bookweb.services.book.BookServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceImplTest {
@@ -44,7 +44,7 @@ public class BookServiceImplTest {
         book.setRating(rating);
         //when
         rating.add(rate);
-        double result = bookService.countRating(book);
+        double result = bookService.calculateRating(book);
         //then
         assertEquals(5.0, result, 0.1);
     }
@@ -54,7 +54,7 @@ public class BookServiceImplTest {
         //given
         Book book = new Book();
         //when
-        double result = bookService.countRating(book);
+        double result = bookService.calculateRating(book);
         //then
         assertEquals(0, result, 0.1);
     }

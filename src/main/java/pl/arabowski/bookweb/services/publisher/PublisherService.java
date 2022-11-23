@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.publisher;
+package pl.arabowski.bookweb.services.publisher;
 
 import pl.arabowski.bookweb.model.Publisher;
 

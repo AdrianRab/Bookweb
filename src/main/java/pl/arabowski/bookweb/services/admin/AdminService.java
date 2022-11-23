@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.admin;
+package pl.arabowski.bookweb.services.admin;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;

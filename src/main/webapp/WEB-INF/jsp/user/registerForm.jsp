@@ -103,7 +103,7 @@ body, html {
 	<div class="container">
 		<p class="h2 text-muted">Register</p>
 	</div>
-		<form:form method="POST" modelAttribute="user">
+		<form:form method="POST" modelAttribute="userDto">
 			<div class="container">
 				Username: <form:input path="username" placeholder="Enter Username"/>
 				<form:errors path="username" cssClass="error" element="div"/>

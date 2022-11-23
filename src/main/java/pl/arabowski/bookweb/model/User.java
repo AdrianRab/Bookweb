@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,11 +20,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +33,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class User {
 
 	@Id
@@ -40,18 +45,10 @@ public class User {
 	@Column(name = "user_id")
 	private long id;
 
-	@Size(min = 2)
 	@Column(name = "username", nullable = false)
 	private String username;
-
 	private boolean enabled;
-
-	@NotNull
-	@Size(min = 2)
 	private String password;
-
-	@Email
-	@NotNull
 	private String email;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -85,119 +82,46 @@ public class User {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updated;
 
-	@Transient
-	private String passwordConfirmed;
-
-	public String getPassword() {
-		return password;
+	public static User fromDto(UserDto userDto) {
+		return User.builder()
+				.username(userDto.getUsername())
+				.email(userDto.getEmail())
+				.password(new BCryptPasswordEncoder().encode(userDto.getPassword()))
+				.build();
 	}
 
 	public void setPassword(String password) {
 		this.password = new BCryptPasswordEncoder().encode(password);
 	}
 
-	public long getId() {
-		return id;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		User user = (User) o;
+		return getId() == user.getId() && isEnabled() == user.isEnabled() && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getRole(), user.getRole()) && Objects.equals(getOwned(), user.getOwned()) && Objects.equals(getRead(), user.getRead()) && Objects.equals(getReading(), user.getReading()) && Objects.equals(getWannaRead(), user.getWannaRead()) && Objects.equals(getRating(), user.getRating()) && Objects.equals(getCreated(), user.getCreated()) && Objects.equals(getUpdated(), user.getUpdated());
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getUsername(), isEnabled(), getPassword(), getEmail(), getRole(), getOwned(), getRead(), getReading(), getWannaRead(), getRating(), getCreated(), getUpdated());
 	}
 
-	public String getUsername() {
-		return username;
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", enabled=" + enabled +
+				", email='" + email + '\'' +
+				", role=" + role +
+				", owned=" + owned +
+				", read=" + read +
+				", reading=" + reading +
+				", wannaRead=" + wannaRead +
+				", rating=" + rating +
+				", created=" + created +
+				", updated=" + updated +
+				'}';
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public UserRole getRole() {
-		return role;
-	}
-
-	public void setRole(UserRole role) {
-		this.role = role;
-	}
-
-	public Set<Book> getRead() {
-		return read;
-	}
-
-	public void setRead(Set<Book> read) {
-		this.read = read;
-	}
-
-	public Set<Book> getReading() {
-		return reading;
-	}
-
-	public void setReading(Set<Book> reading) {
-		this.reading = reading;
-	}
-
-	public Set<Book> getWannaRead() {
-		return wannaRead;
-	}
-
-	public void setWannaRead(Set<Book> wannaRead) {
-		this.wannaRead = wannaRead;
-	}
-
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-
-	public String getPasswordConfirmed() {
-		return passwordConfirmed;
-	}
-
-	public void setPasswordConfirmed(String passwordConfirmed) {
-		this.passwordConfirmed = passwordConfirmed;
-	}
-
-	public Set<Book> getOwned() {
-		return owned;
-	}
-
-	public void setOwned(Set<Book> owned) {
-		this.owned = owned;
-	}
-
-	public Map<Long, Double> getRating() {
-		return rating;
-	}
-
-	public void setRating(Map<Long, Double> rating) {
-		this.rating = rating;
-	}
-
 }

@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.admin;
+package pl.arabowski.bookweb.services.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +11,10 @@ import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.model.UserRole;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
-import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.PublisherRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.repositories.UserRoleRepository;
-import pl.arabowski.bookweb.service.book.BookService;
+import pl.arabowski.bookweb.services.book.BookService;
 
 
 @Service
