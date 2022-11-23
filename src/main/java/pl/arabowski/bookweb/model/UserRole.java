@@ -9,9 +9,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
@@ -31,27 +33,26 @@ public class UserRole {
 	private User user;
 	
 	@NotNull
-	private String userRole;
+	private String role;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof UserRole)) return false;
 		UserRole userRole1 = (UserRole) o;
-		return getId() == userRole1.getId() && Objects.equals(getUser(), userRole1.getUser()) && Objects.equals(getUserRole(), userRole1.getUserRole());
+		return getId() == userRole1.getId() && Objects.equals(getRole(), userRole1.getRole());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getUser(), getUserRole());
+		return Objects.hash(getId(), getRole());
 	}
 
 	@Override
 	public String toString() {
 		return "UserRole{" +
 				"id=" + id +
-				", user=" + user +
-				", userRole='" + userRole + '\'' +
+				", userRole='" + role + '\'' +
 				'}';
 	}
 }

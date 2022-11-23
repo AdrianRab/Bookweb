@@ -23,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.model.UserDto;
 import pl.arabowski.bookweb.repositories.UserRepository;
-import pl.arabowski.bookweb.repositories.UserRoleRepository;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,8 +37,6 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository repository;
     @Mock
-    protected UserRoleRepository userRoleRepository;
-    @Mock
     private UserDetails someUserDetails;
     @Mock
     private BindingResult bindingResult;
@@ -50,7 +47,7 @@ public class UserServiceImplTest {
     @Before
     public void initMocks() {
         MockitoAnnotations.openMocks(this);
-        cut = new UserServiceImpl(repository, userRoleRepository, redirectUrlResolver);
+        cut = new UserServiceImpl(repository, redirectUrlResolver);
     }
 
     @Test
@@ -91,7 +88,6 @@ public class UserServiceImplTest {
         assertThat(result.getViewName()).isEqualTo(expectedViewName);
         assertThat(result.getModel()).containsEntry(ERROR_MESSAGE, expectedErrorMsg);
         verifyNoInteractions(repository);
-        verifyNoInteractions(userRoleRepository);
     }
 
     @Test
@@ -111,7 +107,6 @@ public class UserServiceImplTest {
         verifyNoMoreInteractions(repository);
         assertThat(result.getViewName()).isEqualTo(expectedViewName);
         assertThat(result.getModel()).containsEntry(ERROR_MESSAGE, expectedErrorMsg);
-        verifyNoInteractions(userRoleRepository);
     }
 
     @Test
@@ -133,7 +128,6 @@ public class UserServiceImplTest {
         verifyNoMoreInteractions(repository);
         assertThat(result.getViewName()).isEqualTo(expectedViewName);
         assertThat(result.getModel()).containsEntry(ERROR_MESSAGE, expectedErrorMsg);
-        verifyNoInteractions(userRoleRepository);
     }
 
     @Test
@@ -148,7 +142,6 @@ public class UserServiceImplTest {
         when(repository.findByEmailIgnoreCase(SOME_EMAIL)).thenReturn(null);
         when(repository.findFirstByUsername(SOME_USERNAME)).thenReturn(null);
         when(repository.saveAndFlush(any())).thenReturn(null);
-        when(userRoleRepository.saveAndFlush(any())).thenReturn(null);
         when(redirectUrlResolver.getRedirectView(viewName)).thenReturn(expectedViewName);
         ModelAndView result = cut.register(someUser, bindingResult);
 
@@ -156,10 +149,8 @@ public class UserServiceImplTest {
         verify(repository, times(1)).findByEmailIgnoreCase(SOME_EMAIL);
         verify(repository, times(1)).findFirstByUsername(SOME_USERNAME);
         verify(repository, times(1)).saveAndFlush(any());
-        verify(userRoleRepository, times(1)).saveAndFlush(any());
         verify(redirectUrlResolver, times(1)).getRedirectView(viewName);
         verifyNoMoreInteractions(repository);
-        verifyNoMoreInteractions(userRoleRepository);
         verifyNoMoreInteractions(redirectUrlResolver);
         assertThat(result.getViewName()).isEqualTo(expectedViewName);
         assertThat(result.getModel()).containsKey(expectedResultKey);

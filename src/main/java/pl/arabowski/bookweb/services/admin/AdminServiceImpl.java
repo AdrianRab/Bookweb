@@ -92,7 +92,7 @@ public class AdminServiceImpl implements AdminService{
 	public void addAdminRights(long id) {
 		User user = userRepository.findById(id);
 		UserRole role = userRoleRepository.findById(user.getRole().getId());
-		role.setUserRole("ROLE_ADMIN");
+		role.setRole("ROLE_ADMIN");
 		userRoleRepository.saveAndFlush(role);
 		user.setRole(role);
 		userRepository.saveAndFlush(user);	
@@ -102,7 +102,7 @@ public class AdminServiceImpl implements AdminService{
 	public void removeAdminRights(long id) {
 		User user = userRepository.findById(id);
 		UserRole role = userRoleRepository.findById(user.getRole().getId());
-		role.setUserRole("ROLE_USER");
+		role.setRole("ROLE_USER");
 		userRoleRepository.saveAndFlush(role);
 		user.setRole(role);
 		userRepository.saveAndFlush(user);	

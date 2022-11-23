@@ -11,7 +11,6 @@ import pl.arabowski.bookweb.model.UserDto;
 import pl.arabowski.bookweb.model.UserRole;
 import pl.arabowski.bookweb.model.enums.UserRoles;
 import pl.arabowski.bookweb.repositories.UserRepository;
-import pl.arabowski.bookweb.repositories.UserRoleRepository;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @Service
@@ -22,13 +21,11 @@ public class UserServiceImpl implements UserService {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String USER_MY_PAGE = "user/my-page";
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
     private final RedirectUrlResolver redirectUrlResolver;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, RedirectUrlResolver redirectUrlResolver) {
+    public UserServiceImpl(UserRepository userRepository, RedirectUrlResolver redirectUrlResolver) {
         this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
         this.redirectUrlResolver = redirectUrlResolver;
     }
 
@@ -60,10 +57,10 @@ public class UserServiceImpl implements UserService {
 
     private void processRegistration(UserDto userDto, ModelAndView mav) {
         User user = User.fromDto(userDto);
-        UserRole userRole = UserRole.builder().user(user).userRole(String.valueOf(UserRoles.ROLE_USER)).build();
+        UserRole userRole = UserRole.builder().user(user).role(String.valueOf(UserRoles.ROLE_USER)).build();
         user.setEnabled(true);
+        user.setRole(userRole);
         userRepository.saveAndFlush(user);
-        userRoleRepository.saveAndFlush(userRole);
         log.info("Registered user {} with role {}", user, userRole);
         mav.addObject("user", user);
         mav.setViewName(redirectUrlResolver.getRedirectView("/" + USER_MY_PAGE));
