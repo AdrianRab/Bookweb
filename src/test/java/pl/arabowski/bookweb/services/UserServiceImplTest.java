@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +60,7 @@ public class UserServiceImplTest {
         //when
         when(someUserDetails.getUsername()).thenReturn(SOME_EMAIL);
         when(repository.findByEmailIgnoreCase(SOME_EMAIL)).thenReturn(expected);
-        User result = cut.getUser(someUserDetails);
+        User result = cut.getUser(someUserDetails).orElseThrow(RuntimeException::new);
 
         //then
         verify(someUserDetails, times(1)).getUsername();
@@ -71,6 +72,19 @@ public class UserServiceImplTest {
         assertThat(result.getUsername()).isEqualTo(SOME_USERNAME);
         assertThat(result.getPassword()).isEqualTo(SOME_PASSWORD);
         assertThat(result.getEmail()).isEqualTo(SOME_EMAIL);
+    }
+
+    @Test
+    @DisplayName("Should return empty Optional if UserDetails is null")
+    public void shouldReturnEmptyOptionalWhenUserDetailsIsEmpty() {
+        //given
+        UserDetails userDetails = null;
+
+        //when
+        Optional<User> result = cut.getUser(someUserDetails);
+
+        //then
+        assertThat(result).isEmpty();
     }
 
     @Test

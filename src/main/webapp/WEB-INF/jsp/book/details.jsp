@@ -67,10 +67,10 @@ body, html {
 						<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#removeLinks">Expand to remove from your shelve</button>
 						  <div id="removeLinks" class="collapse">
 						  	<div class="btn-group-vertical">
-						  	  	<a href="${contextPath}/user/remove-from-owned/${book.id}"><button type="button" class="btn btn-dark">Remove from owned books</button></a>
-								<a href="${contextPath}/user/remove-from-reading/${book.id}"><button type="button" class="btn btn-dark">Remove from currently reading books</button></a>
-								<a href="${contextPath}/user/remove-from-read/${book.id}"><button type="button" class="btn btn-dark">Remove from read books</button></a>
-								<a href="${contextPath}/user/remove-from-to-read/${book.id}"><button type="button" class="btn btn-dark">Remove books from want to read</button></a>
+						  	  	<a href="${contextPath}/shelf/${user.id}/remove-from-owned/${book.id}"><button type="button" class="btn btn-dark">Remove from owned books</button></a>
+								<a href="${contextPath}/shelf/${user.id}/remove-from-reading/${book.id}"><button type="button" class="btn btn-dark">Remove from currently reading books</button></a>
+								<a href="${contextPath}/shelf/${user.id}/remove-from-read/${book.id}"><button type="button" class="btn btn-dark">Remove from read books</button></a>
+								<a href="${contextPath}/shelf/${user.id}/remove-from-to-read/${book.id}"><button type="button" class="btn btn-dark">Remove books from want to read</button></a>
 							</div>
 						</div>
 					</div>
@@ -92,10 +92,10 @@ body, html {
 							<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#addLinks">Expand to add to your shelve</button>
 							  <div id="addLinks" class="collapse">
 							  	<div class="btn-group-vertical">
-									<a href="${contextPath}/user/add-to-owned/${book.id}"><button type="button" class="btn btn-dark">Add to owned books</button></a>
-									<a href="${contextPath}/user/add-to-reading/${book.id}"><button type="button" class="btn btn-dark">Add to currently reading books</button></a>
-									<a href="${contextPath}/user/add-read/${book.id}"><button type="button" class="btn btn-dark">Add to read books</button></a>
-									<a href="${contextPath}/user/add-to-read/${book.id}"><button type="button" class="btn btn-dark">Add to books to want to read</button></a>
+									<a href="${contextPath}/shelf/${user.id}/add-to-owned/${book.id}"><button type="button" class="btn btn-dark">Add to owned books</button></a>
+									<a href="${contextPath}/shelf/${user.id}/add-to-reading/${book.id}"><button type="button" class="btn btn-dark">Add to currently reading books</button></a>
+									<a href="${contextPath}/shelf/${user.id}/add-read/${book.id}"><button type="button" class="btn btn-dark">Add to read books</button></a>
+									<a href="${contextPath}/shelf/${user.id}/add-to-read/${book.id}"><button type="button" class="btn btn-dark">Add to books to want to read</button></a>
 								</div>
 							</div>
 						</div>

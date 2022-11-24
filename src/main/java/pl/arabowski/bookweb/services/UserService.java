@@ -1,5 +1,6 @@
 package pl.arabowski.bookweb.services;
 
+import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
@@ -9,7 +10,7 @@ import pl.arabowski.bookweb.model.UserDto;
 
 public interface UserService {
 
-    User getUser(UserDetails userDetails);
+    Optional<User> getUser(UserDetails userDetails);
 
     User save(User user);
 

@@ -1,5 +1,6 @@
 package pl.arabowski.bookweb.services;
 
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,10 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(UserDetails userDetails) {
+    public Optional<User> getUser(UserDetails userDetails) {
+        if (userDetails == null) {
+            return Optional.empty();
+        }
         String username = userDetails.getUsername();
         log.info("Retrieving user with e-mail {}", username );
-        return userRepository.findByEmailIgnoreCase(username);
+        return Optional.ofNullable(userRepository.findByEmailIgnoreCase(username));
     }
 
     @Override

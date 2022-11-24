@@ -1,5 +1,7 @@
 package pl.arabowski.bookweb.controllers;
 
+import java.util.AbstractMap;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
-import pl.arabowski.bookweb.services.ShelfService;
-import pl.arabowski.bookweb.services.book.BookService;
 import pl.arabowski.bookweb.services.UserService;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
@@ -23,76 +23,25 @@ import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 @RequestMapping("/user")
 public class UserController {
 
-    public static final String BOOK_DETAILS_REDIRECT = "/book/details/";
     public static final String HOME_REDIRECT = "/home";
     public static final String USER_PROFILE = "user/profile";
     public static final String USER_EDIT = "user/edit";
     public static final String USER_CONFIRMATION = "user/confirmation";
-    public static final String USER_OWNED_BOOKS = "user/ownedBooks";
-    public static final String USER_READ_BOOKS = "user/readBooks";
-    public static final String USER_READING_BOOKS = "user/readingBooks";
-    public static final String USER_TO_READ = "user/toRead";
+
     @Autowired
     private UserService userService;
 
     @Autowired
-    private ShelfService shelfService;
-
-    @Autowired
-    private BookService bookService;
-
-    @Autowired RedirectUrlResolver redirectUrlResolver;
-    @GetMapping("/owned")
-    public ModelAndView userOwnedBooks(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Set<Book> owned = user.getOwned();
-        mav.addObject("user", user);
-        mav.addObject("ownedBooks", owned);
-        mav.setViewName(USER_OWNED_BOOKS);
-        return mav;
-    }
-
-    @GetMapping("/read")
-    public ModelAndView userReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Set<Book> read = user.getRead();
-        mav.addObject("user", user);
-        mav.addObject("readBooks", read);
-        mav.setViewName(USER_READ_BOOKS);
-        return mav;
-    }
-
-    @GetMapping("/reading")
-    public ModelAndView userReadingBooks(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Set<Book> reading = user.getReading();
-        mav.addObject("user", user);
-        mav.addObject("readingBooks", reading);
-        mav.setViewName(USER_READING_BOOKS);
-        return mav;
-    }
-
-    @GetMapping("/to-read")
-    public ModelAndView userToReadBooks(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Set<Book> wannaRead = user.getWannaRead();
-        mav.addObject("user", user);
-        mav.addObject("wannaReadBooks", wannaRead);
-        mav.setViewName(USER_TO_READ);
-        return mav;
-    }
+    RedirectUrlResolver redirectUrlResolver;
 
     @GetMapping("/edit")
     public ModelAndView editUser(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        mav.addObject("user", user);
-        mav.setViewName(USER_EDIT);
-        return mav;
+        Optional<User> userOptional = userService.getUser(currentUser);
+        if (userOptional.isEmpty()) {
+            return redirectToLoginPage();
+        }
+        User user = userOptional.get();
+        return getModelAndView(user, Optional.empty(), USER_EDIT);
     }
 
     @PostMapping("/edit")
@@ -100,9 +49,7 @@ public class UserController {
         ModelAndView mav = new ModelAndView();
         if (!result.hasErrors()) {
             userService.save(user);
-            mav.addObject("user", user);
-            mav.setViewName(USER_PROFILE);
-            return mav;
+            return getModelAndView(user, Optional.empty(), USER_PROFILE);
         } else {
             mav.setViewName(USER_EDIT);
             return mav;
@@ -111,11 +58,12 @@ public class UserController {
 
     @GetMapping("/delete-account")
     public ModelAndView removeUser(@AuthenticationPrincipal UserDetails currentUser) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        mav.addObject("user", user);
-        mav.setViewName(USER_CONFIRMATION);
-        return mav;
+        Optional<User> userOptional = userService.getUser(currentUser);
+        if (userOptional.isEmpty()) {
+            return redirectToLoginPage();
+        }
+        User user = userOptional.get();
+        return getModelAndView(user, Optional.empty(), USER_CONFIRMATION);
     }
 
     @GetMapping("/confirmation/{id}")
@@ -128,108 +76,31 @@ public class UserController {
 
     @GetMapping("/my-page")
     public ModelAndView userProfile(@AuthenticationPrincipal UserDetails currentUser) {
+        Optional<User> userOptional = userService.getUser(currentUser);
+        if (userOptional.isEmpty()) {
+            return redirectToLoginPage();
+        }
+        User user = userOptional.get();
+        AbstractMap.SimpleEntry<String, Set<Book>> attributes
+                = new AbstractMap.SimpleEntry<>("readingBooks", user.getReading());
+        return getModelAndView(user, Optional.of(attributes), USER_PROFILE);
+    }
+
+    private ModelAndView redirectToLoginPage() {
         ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        mav.addObject("readingBooks", user.getReading());
-        mav.addObject("user", user);
-        mav.setViewName(USER_PROFILE);
+        mav.addObject("errorMessage", "You have to be logged in to view this page");
+        mav.setViewName("loginPage");
         return mav;
     }
 
-    @GetMapping("/add-to-owned/{bookId}")
-    public ModelAndView addToOwnedBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
+    private ModelAndView getModelAndView(User user, Optional<AbstractMap.SimpleEntry<String, Set<Book>>> additionalAttributes, String viewName) {
         ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.addBookToOwned(user, book);
         mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
+        if (additionalAttributes.isPresent()) {
+            AbstractMap.SimpleEntry<String, Set<Book>> attributes = additionalAttributes.get();
+            mav.addObject(attributes.getKey(), attributes.getValue());
+        }
+        mav.setViewName(viewName);
         return mav;
     }
-
-    @GetMapping("/remove-from-owned/{bookId}")
-    public ModelAndView removeFromOwnedBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.removeBookFromOwned(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/add-to-reading/{bookId}")
-    public ModelAndView addToReadingBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.addBookToReading(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/remove-from-reading/{bookId}")
-    public ModelAndView removeFromReadingBooks(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.removeBookFromReading(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/add-read/{bookId}")
-    public ModelAndView addToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.addBookToRead(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/remove-from-read/{bookId}")
-    public ModelAndView removeFromRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.removeBookFromRead(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/add-to-read/{bookId}")
-    public ModelAndView addBookToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.addBookToWannaRead(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
-    @GetMapping("/remove-from-to-read/{bookId}")
-    public ModelAndView removeFromToRead(@AuthenticationPrincipal UserDetails currentUser, @PathVariable long bookId) {
-        ModelAndView mav = new ModelAndView();
-        User user = userService.getUser(currentUser);
-        Book book = bookService.getBook(bookId);
-        shelfService.removeBookFromWannaRead(user, book);
-        mav.addObject("user", user);
-        mav.addObject("book", book);
-        mav.setViewName(redirectUrlResolver.getRedirectView(BOOK_DETAILS_REDIRECT + book.getId()));
-        return mav;
-    }
-
 }

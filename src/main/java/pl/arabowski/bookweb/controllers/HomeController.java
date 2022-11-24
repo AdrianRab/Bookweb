@@ -19,7 +19,7 @@ import pl.arabowski.bookweb.services.UserService;
 public class HomeController {
 
 	@Autowired
-	private UserService userService;
+	private final UserService userService;
 
 	@Autowired
 	private final UserRepository userRepo;

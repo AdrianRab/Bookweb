@@ -14,13 +14,16 @@ import pl.arabowski.bookweb.services.book.BookService;
 @Service
 public class ShelfServiceImpl implements ShelfService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final BookService bookService;
+    private final UserRepository userRepository;
 
     @Autowired
-    private BookService bookService;
+    public ShelfServiceImpl(BookService bookService, BookRepository bookRepository, UserRepository userRepository) {
+        this.bookService = bookService;
+        this.bookRepository = bookRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void addBookToOwned(User user, Book book) {
@@ -44,7 +47,6 @@ public class ShelfServiceImpl implements ShelfService {
         read.add(book);
         user.setRead(read);
         userRepository.save(user);
-
     }
 
     @Override
@@ -53,7 +55,6 @@ public class ShelfServiceImpl implements ShelfService {
         read.removeIf(book::equals);
         user.setRead(read);
         userRepository.save(user);
-
     }
 
     @Override
@@ -62,7 +63,6 @@ public class ShelfServiceImpl implements ShelfService {
         wannaRead.add(book);
         user.setWannaRead(wannaRead);
         userRepository.save(user);
-
     }
 
     @Override
@@ -71,7 +71,6 @@ public class ShelfServiceImpl implements ShelfService {
         wannaRead.removeIf(book::equals);
         user.setWannaRead(wannaRead);
         userRepository.save(user);
-
     }
 
     @Override
@@ -88,7 +87,6 @@ public class ShelfServiceImpl implements ShelfService {
         reading.removeIf(book::equals);
         user.setReading(reading);
         userRepository.save(user);
-
     }
 
     @Override

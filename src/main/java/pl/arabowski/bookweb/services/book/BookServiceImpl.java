@@ -46,6 +46,7 @@ public class BookServiceImpl implements BookService {
             book.setRate(rating);
             return rating;
         }
+        // todo maybe here save instad of ShelfServiceImpl rateBook()line 117
         book.setRate(0);
         return 0;
     }
