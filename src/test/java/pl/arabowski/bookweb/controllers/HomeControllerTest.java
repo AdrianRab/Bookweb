@@ -108,7 +108,7 @@ class HomeControllerTest {
 			unregistered.setUsername("JonnyB");
 			unregistered.setPassword("password");
 			User registered = new User();
-			registered.setId(1);
+			registered.setId(1L);
 			registered.setEmail("test@test.pl");
 			registered.setUsername("JonnyB");
 			registered.setPassword("password");

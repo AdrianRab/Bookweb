@@ -91,7 +91,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void addAdminRights(long id) {
 		User user = userRepository.findById(id);
-		UserRole role = userRoleRepository.findById(user.getRole().getId());
+		UserRole role = userRoleRepository.findById(user.getRole().getId()).get();
 		role.setRole("ROLE_ADMIN");
 		userRoleRepository.saveAndFlush(role);
 		user.setRole(role);
@@ -101,7 +101,7 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void removeAdminRights(long id) {
 		User user = userRepository.findById(id);
-		UserRole role = userRoleRepository.findById(user.getRole().getId());
+		UserRole role = userRoleRepository.findById(user.getRole().getId()).get();
 		role.setRole("ROLE_USER");
 		userRoleRepository.saveAndFlush(role);
 		user.setRole(role);

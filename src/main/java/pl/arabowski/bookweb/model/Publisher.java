@@ -31,8 +31,7 @@ public class Publisher {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="publisher_id")
-	private long id;
+	private Long id;
 	
 	@Size(min=1, max = 50)
 	@NotNull

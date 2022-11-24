@@ -1,7 +1,9 @@
 package pl.arabowski.bookweb.model;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -17,6 +19,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,14 +31,16 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "authors")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Author {
-	public Author() {
-	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "author_id")
-	private long id;
+	private Long id;
 	
 	@Size(min=1, max=30)
 	private String firstName;
@@ -43,6 +52,7 @@ public class Author {
 	private Set<Book> books = new HashSet<>();
 	
 	@Size(max= 2000)
+	@Column(columnDefinition = "VARCHAR(2000)")
 	private String biography;
 	
 	@CreationTimestamp
@@ -57,67 +67,32 @@ public class Author {
 	@Lob
 	private byte[] authorPicture;
 
-	public byte[] getAuthorPicture() {
-		return authorPicture;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Author)) return false;
+		Author author = (Author) o;
+		return Objects.equals(getId(), author.getId()) && Objects.equals(getFirstName(), author.getFirstName()) && Objects.equals(getLastName(), author.getLastName()) && Objects.equals(getBooks(), author.getBooks()) && Objects.equals(getBiography(), author.getBiography()) && Objects.equals(getCreated(), author.getCreated()) && Objects.equals(getUpdated(), author.getUpdated()) && Arrays.equals(getAuthorPicture(), author.getAuthorPicture());
 	}
 
-	public void setAuthorPicture(byte[] authorPicture) {
-		this.authorPicture = authorPicture;
+	@Override
+	public int hashCode() {
+		int result = Objects.hash(getId(), getFirstName(), getLastName(), getBooks(), getBiography(), getCreated(), getUpdated());
+		result = 31 * result + Arrays.hashCode(getAuthorPicture());
+		return result;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public Set<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(Set<Book> books) {
-		this.books = books;
-	}
-
-	public String getBiography() {
-		return biography;
-	}
-
-	public void setBiography(String biography) {
-		this.biography = biography;
-	}
-
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
+	@Override
+	public String toString() {
+		return "Author{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", books=" + books +
+				", biography='" + biography + '\'' +
+				", created=" + created +
+				", updated=" + updated +
+				", authorPicture=" + Arrays.toString(authorPicture) +
+				'}';
 	}
 }

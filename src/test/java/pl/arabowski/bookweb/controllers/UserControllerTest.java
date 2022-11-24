@@ -84,8 +84,8 @@ class UserControllerTest {
 		publisher2.setName("Helion");
 
 		
-		book1.setId(1);
-		book2.setId(2);
+		book1.setId(1L);
+		book2.setId(2L);
 		book1.setPublisher(publisher1);
 		book2.setPublisher(publisher2);
 		book1.setTitle("Magnezja 190 p.n.e.");

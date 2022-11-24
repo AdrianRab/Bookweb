@@ -25,7 +25,7 @@ import lombok.Setter;
 public class UserRole {
 	
 	@Id
-	private long id;
+	private Long id;
 	
 	@OneToOne
 	@MapsId

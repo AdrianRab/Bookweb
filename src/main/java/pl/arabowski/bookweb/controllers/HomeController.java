@@ -64,6 +64,7 @@ public class HomeController {
 			mav.setViewName("home");
 			return mav;
 		}
+		mav.addObject("errorMessage", "Incorrect e-mail or password");
 		mav.setViewName("loginPage");
 		return mav;
 	}

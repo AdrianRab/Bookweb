@@ -1,0 +1,10 @@
+INSERT INTO BOOKWEB.USERS(USER_ID, CREATED, EMAIL, ENABLED, PASSWORD, UPDATED, USERNAME) VALUES (1, NOW(), 'adi8912@poczta.fm', true ,'$2a$10$sSwAhcmIrZ63ozFxPAkZouj0SBtvjtNU7VVNkIwX4mnSvYQf1y3Hi', NOW(), 'Adi');
+INSERT INTO BOOKWEB.USERS(USER_ID, CREATED, EMAIL, ENABLED, PASSWORD, UPDATED, USERNAME) VALUES (2, NOW(), 'adi8912@wp.pl', true, '$2a$10$2iKuyNd.sSDyxrCEjioU..ztSWTS53TdE1c8IbMIsL7/.cDgXoRVO', NOW(), 'Adi_Admin');
+INSERT INTO BOOKWEB.USER_ROLES (user_role, user_user_id) VALUES ('ROLE_USER', 1);
+INSERT INTO BOOKWEB.USER_ROLES (user_role, user_user_id) VALUES ('ROLE_ADMIN', 2);
+INSERT INTO BOOKWEB.PUBLISHERS (ID, CREATED, NAME, UPDATED) VALUES (1, NOW(), 'Helion', NOW());
+INSERT INTO BOOKWEB.PUBLISHERS (ID, CREATED, NAME, UPDATED) VALUES (2, NOW(), 'Bellona', NOW());
+INSERT INTO BOOKWEB.PUBLISHERS (ID, CREATED, NAME, UPDATED) VALUES (3, NOW(), 'Fabryka snów', NOW());
+INSERT INTO BOOKWEB.AUTHORS (ID, AUTHOR_PICTURE, BIOGRAPHY, CREATED, FIRST_NAME, LAST_NAME, UPDATED) VALUES (1, NULL, 'Joshua J. Bloch (born August 28, 1961) is an American software engineer and a technology author, formerly employed at Sun Microsystems and Google.', NOW(), 'Joshua', 'Bloch', NOW());
+INSERT INTO BOOKWEB.AUTHORS (ID, AUTHOR_PICTURE, BIOGRAPHY, CREATED, FIRST_NAME, LAST_NAME, UPDATED) VALUES (2, NULL, 'Jacek Lech Komuda (ur. 23 czerwca 1972) – polski pisarz, z wykształcenia historyk. Autor powieści i opowiadań historycznych osadzonych głównie w realiach Polski sarmackiej.', NOW(), 'Jacek', 'Komuda', NOW());
+INSERT INTO BOOKWEB.AUTHORS (ID, AUTHOR_PICTURE, BIOGRAPHY, CREATED, FIRST_NAME, LAST_NAME, UPDATED) VALUES (3, NULL, 'Paweł Andrzej Rochala (ur. 1968) – polski pisarz i historyk wojskowości z zamiłowania, zawodowy oficer Państwowej Straży Pożarnej. Autor wielu artykułów i felietonów do branżowej prasy strażackiej.', NOW(), 'Paweł', 'Rochala', NOW());
