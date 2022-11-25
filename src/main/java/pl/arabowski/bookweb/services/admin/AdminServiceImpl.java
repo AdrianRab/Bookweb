@@ -14,7 +14,7 @@ import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.PublisherRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.repositories.UserRoleRepository;
-import pl.arabowski.bookweb.services.book.BookService;
+import pl.arabowski.bookweb.services.BookService;
 
 
 @Service

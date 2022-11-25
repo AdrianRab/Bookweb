@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
-import pl.arabowski.bookweb.services.book.BookService;
 
 @Service
 @Slf4j

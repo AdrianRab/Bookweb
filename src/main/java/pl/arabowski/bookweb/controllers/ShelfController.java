@@ -14,7 +14,7 @@ import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.services.ShelfService;
 import pl.arabowski.bookweb.services.UserService;
-import pl.arabowski.bookweb.services.book.BookService;
+import pl.arabowski.bookweb.services.BookService;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @Controller

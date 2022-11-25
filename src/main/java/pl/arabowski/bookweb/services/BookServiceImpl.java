@@ -1,6 +1,5 @@
-package pl.arabowski.bookweb.services.book;
+package pl.arabowski.bookweb.services;
 
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,7 +10,7 @@ import pl.arabowski.bookweb.repositories.BookRepository;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private BookRepository bookRepo;
+    private final BookRepository bookRepo;
 
     @Autowired
     public BookServiceImpl(BookRepository bookRepo) {
@@ -24,37 +23,32 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Iterable<Book> findByAuthor(String authorLastName) {
-        return bookRepo.findAllBooksByAuthorLastName(authorLastName);
+    public List<Book> findByAuthorLastName(String authorLastName) {
+        return bookRepo.findAllBooksByAuthorLastNameOrderByTitleAsc(authorLastName);
     }
 
     @Override
-    public Iterable<Book> findByTitle(String title) {
+    public List<Book> findByTitle(String title) {
         return bookRepo.findByTitleOrderByTitleAsc(title);
     }
 
     @Override
-    public double calculateRating(Book book, double rate) {
+    public double calculateRating(Book book, double rating) {
         List<Double> ratings = book.getRating();
-        ratings.add(rate);
+        ratings.add(rating);
         double sum = 0;
-        for (Double aDouble : ratings) {
-            sum += aDouble;
+        for (Double rate : ratings) {
+            sum += rate;
         }
-        double rating = sum / ratings.size();
-        book.setRate(rating);
+        double averageRating = sum / ratings.size();
+        book.setRate(averageRating);
         bookRepo.saveAndFlush(book);
-        return rating;
+        return averageRating;
     }
 
     @Override
-    public List<Book> topTwentyBooks() {
+    public List<Book> getTopTwentyBooks() {
         return bookRepo.findTop20ByOrderByRateDesc();
-    }
-
-    @Override
-    public List<Genres> bookGenre() {
-        return Arrays.asList(Genres.values());
     }
 
     @Override

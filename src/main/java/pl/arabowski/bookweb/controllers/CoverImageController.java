@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.CoverImage;
 import pl.arabowski.bookweb.repositories.CoverImageRepository;
-import pl.arabowski.bookweb.services.book.BookService;
+import pl.arabowski.bookweb.services.BookService;
 
 @Controller
 @RequestMapping("/cover/")

@@ -29,7 +29,7 @@ import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.services.ShelfService;
-import pl.arabowski.bookweb.services.book.BookServiceImpl;
+import pl.arabowski.bookweb.services.BookServiceImpl;
 import pl.arabowski.bookweb.services.publisher.PublisherServiceImpl;
 import pl.arabowski.bookweb.services.UserServiceImpl;
 
@@ -92,7 +92,7 @@ public class BookController {
 	@GetMapping("/top-rated")
 	public ModelAndView topRatedBooks() {
 		ModelAndView mav = new ModelAndView();
-		List<Book> topBooks = bookService.topTwentyBooks();
+		List<Book> topBooks = bookService.getTopTwentyBooks();
 		mav.setViewName("book/topRated");
 		mav.addObject("topRatedBooks", topBooks);
 		return mav;
@@ -155,7 +155,7 @@ public class BookController {
 
 	@ModelAttribute("listOfGenres")
 	List<Genres> getGenres() {
-		return bookService.bookGenre();
+		return List.of(Genres.values());
 	}
 
 	@ModelAttribute("listOfRates")

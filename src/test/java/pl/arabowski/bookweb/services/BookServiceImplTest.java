@@ -1,85 +1,196 @@
 package pl.arabowski.bookweb.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static pl.arabowski.bookweb.model.enums.Genres.HISTORICAL_FICTION;
+import static pl.arabowski.bookweb.model.enums.Genres.PROGRAMMING;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.assertj.core.util.Sets;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import java.util.Optional;
+import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
+import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;
-import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
-import pl.arabowski.bookweb.services.book.BookService;
-import pl.arabowski.bookweb.services.book.BookServiceImpl;
 
-@RunWith(MockitoJUnitRunner.class)
-public class BookServiceImplTest {
+@ExtendWith(MockitoExtension.class)
+class BookServiceImplTest {
 
 
+    public static final String SOME_TITLE = "Java Effective Programming";
+    private static final Long SOME_ID = 1L;
+    public static final Book SOME_BOOK = Book.builder()
+            .id(SOME_ID)
+            .title(SOME_TITLE)
+            .genre(Set.of(PROGRAMMING))
+            .build();
     @Mock
     private BookRepository repository;
 
-    @InjectMocks
-    private BookService bookService = new BookServiceImpl(repository);
+    private BookService cut;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+        cut = new BookServiceImpl(repository);
+    }
 
     @Test
-    public void shouldCalculateRatingWhenNewRateHasBeenAdded() {
+    void shouldCalculateRatingWhenNewRateHasBeenAdded() {
         //given
-        Book book = new Book();
         List<Double> rating = new ArrayList<>(List.of(5.0, 4.0));
+        Book book = Book.builder().rating(rating).build();
         double rate = 6.0;
-        book.setRating(rating);
+
         //when
-        double result = bookService.calculateRating(book, rate);
+        when(repository.saveAndFlush(book)).thenReturn(book);
+        double result = cut.calculateRating(book, rate);
+
         //then
-        assertEquals(5.0, result, 0.1);
+        assertThat(result).isEqualTo(5.0);
+        verify(repository, times(1)).saveAndFlush(book);
+        verifyNoMoreInteractions(repository);
     }
 
     @Test
-    public void shouldNotCountRating() {
+    void shouldFindByGenre() {
         //given
-        Book book = new Book();
-        //when
-        double result = bookService.calculateRating(book, 0.0);
-        //then
-        assertEquals(0, result, 0.1);
-    }
-
-    @Test
-    public void shouldFindByGenre() {
-        //given
-        Book someBook = Book.builder().title("Under the Eagle").genre(Sets.set(HISTORICAL_FICTION)).build();
+        Book someBook = Book.builder()
+                .title("Under the Eagle")
+                .genre(Set.of((HISTORICAL_FICTION)))
+                .build();
         List<Book> resultFromDb = Collections.singletonList(someBook);
+
         //when
         when(repository.findAllByGenre(any())).thenReturn(resultFromDb);
-        List<Book> result = bookService.findByGenre(HISTORICAL_FICTION);
+        List<Book> result = cut.findByGenre(HISTORICAL_FICTION);
+
         //then
         verify(repository, times(1)).findAllByGenre(any());
-        assertFalse(result.isEmpty());
-        assertEquals(someBook.getTitle(), result.get(0).getTitle());
-        assertEquals(someBook.getGenre(), result.get(0).getGenre());
+        verifyNoMoreInteractions(repository);
+        assertThat(result)
+                .isNotEmpty()
+                .containsExactlyInAnyOrder(someBook);
     }
 
     @Test
-    public void shouldLoadListOfGenres() {
+    void shouldFindByAuthorLastName() {
         //given
-        List<Genres> expectedResult =  Arrays.asList(Genres.values());
+        Author author = Author.builder()
+                .firstName("Joshua")
+                .lastName("Bloch")
+                .id(SOME_ID).build();
+        Book book = Book.builder()
+                .id(SOME_ID)
+                .title(SOME_TITLE)
+                .genre(Set.of(PROGRAMMING))
+                .authors(Set.of(author))
+                .build();
+
         //when
-        List<Genres> result = bookService.bookGenre();
+        when(repository.findAllBooksByAuthorLastNameOrderByTitleAsc(author.getLastName())).thenReturn(List.of(book));
+        List<Book> result = cut.findByAuthorLastName(author.getLastName());
+
         //then
-        assertEquals(expectedResult, result);
+        assertThat(result).isNotNull()
+                .isNotEmpty()
+                .containsExactly(book);
+        verify(repository, times(1)).findAllBooksByAuthorLastNameOrderByTitleAsc(author.getLastName());
+        verifyNoMoreInteractions(repository);
     }
 
+
+    @Test
+    void shouldFindByTitle() {
+        //given
+        //when
+        when(repository.findByTitleOrderByTitleAsc(SOME_TITLE)).thenReturn(List.of(SOME_BOOK));
+        List<Book> result = cut.findByTitle(SOME_TITLE);
+
+        //then
+        assertThat(result).isNotNull()
+                .isNotEmpty()
+                .containsExactly(SOME_BOOK);
+        verify(repository, times(1)).findByTitleOrderByTitleAsc(SOME_TITLE);
+        verifyNoMoreInteractions(repository);
+    }
+
+
+    @Test
+    void shouldFindBookById() {
+        //given
+        //when
+        when(repository.findById(SOME_ID)).thenReturn(Optional.of(SOME_BOOK));
+        Book result = cut.getBook(SOME_ID);
+
+        //then
+        assertThat(result).isNotNull().isEqualTo(SOME_BOOK);
+        verify(repository, times(1)).findById(SOME_ID);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenBookIdNotFound() {
+        //given
+        String msg = "No Book with id 1 exists!";
+
+        //when
+        when(repository.findById(SOME_ID)).thenReturn(Optional.empty());
+
+        //then
+        assertThatExceptionOfType(EmptyResultDataAccessException.class)
+                .isThrownBy(() -> cut.getBook(SOME_ID)).withMessage(msg);
+        verify(repository, times(1)).findById(SOME_ID);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void shouldDeleteBookById() {
+        //given
+        //when
+        doNothing().when(repository).deleteById(SOME_ID);
+        cut.delete(SOME_ID);
+
+        //then
+        verify(repository, times(1)).deleteById(SOME_ID);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void shouldUpdateBook(){
+        //given
+        //when
+        when(repository.save(SOME_BOOK)).thenReturn(SOME_BOOK);
+        Book result = cut.save(SOME_BOOK);
+        //then
+        verify(repository, times(1)).save(SOME_BOOK);
+        verifyNoMoreInteractions(repository);
+        assertThat(result)
+                .isNotNull()
+                .isEqualTo(SOME_BOOK);
+    }
+
+    @Test
+    void shouldListTop20Books() {
+        //TODO
+        //given
+
+        //when
+
+        //then
+    }
 }

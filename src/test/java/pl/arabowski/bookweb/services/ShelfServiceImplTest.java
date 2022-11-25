@@ -18,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
-import pl.arabowski.bookweb.services.book.BookService;
 
 @ExtendWith(MockitoExtension.class)
 class ShelfServiceImplTest {
