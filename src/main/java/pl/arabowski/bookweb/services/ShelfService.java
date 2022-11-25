@@ -22,5 +22,5 @@ public interface ShelfService {
 
     void rateBook(User user, Book book, double rate);
 
-    double getRating(User user, long bookId);
+    double getUserRating(User user, long bookId);
 }

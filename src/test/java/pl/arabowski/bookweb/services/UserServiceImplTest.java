@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -27,7 +27,7 @@ import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.utils.RedirectUrlResolver;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceImplTest {
+class UserServiceImplTest {
 
     public static final String SOME_EMAIL = "some@email.com";
     public static final long SOME_ID = 1;
@@ -45,7 +45,7 @@ public class UserServiceImplTest {
     private RedirectUrlResolver redirectUrlResolver;
     private UserService cut;
 
-    @Before
+    @BeforeEach
     public void initMocks() {
         MockitoAnnotations.openMocks(this);
         cut = new UserServiceImpl(repository, redirectUrlResolver);
@@ -53,7 +53,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should return registered user by e-mail")
-    public void shouldReturnUserIfRegistered() {
+    void shouldReturnUserIfRegistered() {
         //given
         User expected = User.builder().id(SOME_ID).enabled(true).email(SOME_EMAIL).username(SOME_USERNAME).password(SOME_PASSWORD).build();
 
@@ -76,7 +76,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should return empty Optional if UserDetails is null")
-    public void shouldReturnEmptyOptionalWhenUserDetailsIsEmpty() {
+    void shouldReturnEmptyOptionalWhenUserDetailsIsEmpty() {
         //given
         UserDetails userDetails = null;
 
@@ -89,7 +89,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should return error message and registerForm view when passwords do not match")
-    public void shouldNotRegisterUserWhenPasswordsDoNotMatch() {
+    void shouldNotRegisterUserWhenPasswordsDoNotMatch() {
         //given
         UserDto someUser = UserDto.builder().email(SOME_EMAIL).username(SOME_USERNAME).password(SOME_PASSWORD).passwordConfirmed(SOME_OTHER_PASSWORD).build();
         String expectedViewName = "user/registerForm";
@@ -106,7 +106,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should return error message and registerForm view when e-mail already registered")
-    public void shouldNotRegisterUserWhenEmailAlreadyInUse() {
+    void shouldNotRegisterUserWhenEmailAlreadyInUse() {
         //given
         UserDto someUser = UserDto.builder().email(SOME_EMAIL).username(SOME_USERNAME).password(SOME_PASSWORD).passwordConfirmed(SOME_PASSWORD).build();
         String expectedViewName = "user/registerForm";
@@ -125,7 +125,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should return error message and registerForm view when username already registered")
-    public void shouldNotRegisterUserWhenUsernameAlreadyInUse() {
+    void shouldNotRegisterUserWhenUsernameAlreadyInUse() {
         //given
         UserDto someUser = UserDto.builder().email(SOME_EMAIL).username(SOME_USERNAME).password(SOME_PASSWORD).passwordConfirmed(SOME_PASSWORD).build();
         String expectedViewName = "user/registerForm";
@@ -146,7 +146,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should register new user")
-    public void shouldRegisterNewUser() {
+    void shouldRegisterNewUser() {
         UserDto someUser = UserDto.builder().email(SOME_EMAIL).username(SOME_USERNAME).password(SOME_PASSWORD).passwordConfirmed(SOME_PASSWORD).build();
         String viewName = "/user/my-page";
         String expectedViewName = String.format("redirect:http://localhost:8090%s", viewName);
@@ -177,7 +177,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should edit user")
-    public void shouldEditUser() {
+    void shouldEditUser() {
         //given
         User someUser = User.builder()
                 .username(SOME_USERNAME)
@@ -201,7 +201,7 @@ public class UserServiceImplTest {
 
     @Test
     @DisplayName("Should delete user by id")
-    public void shouldDeleteUser() {
+    void shouldDeleteUser() {
         //given
 
         //when

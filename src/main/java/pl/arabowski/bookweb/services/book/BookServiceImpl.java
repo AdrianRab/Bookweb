@@ -34,21 +34,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public double calculateRating(Book book) {
+    public double calculateRating(Book book, double rate) {
         List<Double> ratings = book.getRating();
-        if (!ratings.isEmpty()) {
-            double rating = 0;
-            double sum = 0;
-            for (Double aDouble : ratings) {
-                sum += aDouble;
-            }
-            rating = sum / ratings.size();
-            book.setRate(rating);
-            return rating;
+        ratings.add(rate);
+        double sum = 0;
+        for (Double aDouble : ratings) {
+            sum += aDouble;
         }
-        // todo maybe here save instad of ShelfServiceImpl rateBook()line 117
-        book.setRate(0);
-        return 0;
+        double rating = sum / ratings.size();
+        book.setRate(rating);
+        bookRepo.saveAndFlush(book);
+        return rating;
     }
 
     @Override
@@ -62,12 +58,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBook(long bookId) {
+    public Book getBook(Long bookId) {
         return bookRepo.findById(bookId).orElseThrow(() -> new EmptyResultDataAccessException(String.format("No Book with id %s exists!", bookId), 1));
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         bookRepo.deleteById(id);
     }
 

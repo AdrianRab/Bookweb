@@ -21,6 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.BookRepository;
+import pl.arabowski.bookweb.services.book.BookService;
 import pl.arabowski.bookweb.services.book.BookServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,20 +32,17 @@ public class BookServiceImplTest {
     private BookRepository repository;
 
     @InjectMocks
-    private BookServiceImpl bookService = new BookServiceImpl(repository);
+    private BookService bookService = new BookServiceImpl(repository);
 
     @Test
-    public void shouldCountRating() {
+    public void shouldCalculateRatingWhenNewRateHasBeenAdded() {
         //given
         Book book = new Book();
-        List<Double> rating = new ArrayList<>();
-        rating.add(5.0);
-        rating.add(4.0);
+        List<Double> rating = new ArrayList<>(List.of(5.0, 4.0));
         double rate = 6.0;
         book.setRating(rating);
         //when
-        rating.add(rate);
-        double result = bookService.calculateRating(book);
+        double result = bookService.calculateRating(book, rate);
         //then
         assertEquals(5.0, result, 0.1);
     }
@@ -54,7 +52,7 @@ public class BookServiceImplTest {
         //given
         Book book = new Book();
         //when
-        double result = bookService.calculateRating(book);
+        double result = bookService.calculateRating(book, 0.0);
         //then
         assertEquals(0, result, 0.1);
     }

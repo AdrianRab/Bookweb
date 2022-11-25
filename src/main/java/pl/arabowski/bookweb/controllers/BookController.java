@@ -70,8 +70,6 @@ public class BookController {
 	public ModelAndView addBook(@Valid Book book, BindingResult result, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {
-			bookService.calculateRating(book);
-			bookRepo.saveAndFlush(book);
 			session.setAttribute("book", book);
 			mav.addObject("book", book);
 			mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());

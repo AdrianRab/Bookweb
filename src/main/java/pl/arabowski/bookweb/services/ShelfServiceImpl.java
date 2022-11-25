@@ -1,100 +1,98 @@
 package pl.arabowski.bookweb.services;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.User;
-import pl.arabowski.bookweb.repositories.BookRepository;
-import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.services.book.BookService;
 
 @Service
+@Slf4j
 public class ShelfServiceImpl implements ShelfService {
 
-    private final BookRepository bookRepository;
     private final BookService bookService;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public ShelfServiceImpl(BookService bookService, BookRepository bookRepository, UserRepository userRepository) {
+    public ShelfServiceImpl(BookService bookService, UserService userService) {
         this.bookService = bookService;
-        this.bookRepository = bookRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
     public void addBookToOwned(User user, Book book) {
-        Set<Book> owned = userRepository.findOwnedByUserId(user.getId());
+        Set<Book> owned = user.getOwned();
         owned.add(book);
         user.setOwned(owned);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void removeBookFromOwned(User user, Book book) {
-        Set<Book> owned = userRepository.findOwnedByUserId(user.getId());
+        Set<Book> owned = user.getOwned();
         owned.removeIf(book::equals);
         user.setOwned(owned);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void addBookToRead(User user, Book book) {
-        Set<Book> read = userRepository.findReadByUserId(user.getId());
+        Set<Book> read = user.getRead();
         read.add(book);
         user.setRead(read);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void removeBookFromRead(User user, Book book) {
-        Set<Book> read = userRepository.findReadByUserId(user.getId());
+        Set<Book> read = user.getRead();
         read.removeIf(book::equals);
         user.setRead(read);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void addBookToWannaRead(User user, Book book) {
-        Set<Book> wannaRead = userRepository.findWannaReadByUserId(user.getId());
+        Set<Book> wannaRead = user.getWannaRead();
         wannaRead.add(book);
         user.setWannaRead(wannaRead);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void removeBookFromWannaRead(User user, Book book) {
-        Set<Book> wannaRead = userRepository.findWannaReadByUserId(user.getId());
+        Set<Book> wannaRead = user.getWannaRead();
         wannaRead.removeIf(book::equals);
         user.setWannaRead(wannaRead);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void addBookToReading(User user, Book book) {
-        Set<Book> reading = userRepository.findReadingByUserId(user.getId());
+        Set<Book> reading = user.getReading();
         reading.add(book);
         user.setReading(reading);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
     public void removeBookFromReading(User user, Book book) {
-        Set<Book> reading = userRepository.findReadingByUserId(user.getId());
+        Set<Book> reading = user.getReading();
         reading.removeIf(book::equals);
         user.setReading(reading);
-        userRepository.save(user);
+        userService.save(user);
     }
 
     @Override
-    public double getRating(User user, long bookId) {
+    public double getUserRating(User user, long bookId) {
         Map<Long, Double> ratings = user.getRating();
         if (ratings.containsKey(bookId)) {
             return ratings.get(bookId);
         } else {
+            log.info("Book with id {} has not been rated yet", bookId);
             return 0;
         }
     }
@@ -104,10 +102,8 @@ public class ShelfServiceImpl implements ShelfService {
         Map<Long, Double> ratings = user.getRating();
         ratings.put(book.getId(), rate);
         user.setRating(ratings);
-        List<Double> rates = book.getRating();
-        rates.add(rate);
-        bookService.calculateRating(book);
-        bookRepository.saveAndFlush(book);
-        userRepository.save(user);
+        log.info("User {} rate for book {}. {} is {}", user.getUsername(), book.getId(), book.getTitle(), rate);
+        bookService.calculateRating(book, rate);
+        userService.save(user);
     }
 }

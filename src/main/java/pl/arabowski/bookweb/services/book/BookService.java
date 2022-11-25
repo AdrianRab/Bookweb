@@ -16,13 +16,13 @@ public interface BookService {
 	
 	Iterable<Book> findByTitle(String title);
 	
-	double calculateRating(Book book);
+	double calculateRating(Book book, double rate);
 
 	List<Genres> bookGenre();
 
-	Book getBook(long bookId);
+	Book getBook(Long bookId);
 
-	void delete(long id);
+	void delete(Long id);
 
 	Book save(Book book);
 }

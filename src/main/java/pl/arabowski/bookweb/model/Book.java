@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,7 +58,8 @@ public class Book {
     private String title;
 
     @NotEmpty
-    @ElementCollection
+    @ElementCollection(targetClass = Genres.class)
+    @Enumerated(EnumType.STRING)
     private Set<Genres> genre = new HashSet<>();
 
     @ElementCollection
@@ -96,4 +98,32 @@ public class Book {
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return Double.compare(book.getRate(), getRate()) == 0 && Objects.equals(getId(), book.getId()) && Objects.equals(getTitle(), book.getTitle()) && Objects.equals(getGenre(), book.getGenre()) && Objects.equals(getRating(), book.getRating()) && Objects.equals(getIsbn(), book.getIsbn()) && Objects.equals(getCreated(), book.getCreated()) && Objects.equals(getUpdated(), book.getUpdated());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getGenre(), getRating(), getRate(), getIsbn(), getCreated(), getUpdated());
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", genre=" + genre +
+                ", rating=" + rating +
+                ", rate=" + rate +
+                ", publisher=" + publisher +
+                ", isbn='" + isbn + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                '}';
+    }
 }
