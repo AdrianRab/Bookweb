@@ -186,11 +186,31 @@ class BookServiceImplTest {
 
     @Test
     void shouldListTop20Books() {
-        //TODO
         //given
+        List<Book> top20Books = prepareBooks(20);
 
         //when
+        when(repository.findTop20ByOrderByRateDesc()).thenReturn(top20Books);
+        List<Book> result = cut.getTopTwentyBooks();
 
         //then
+        assertThat(result).isNotEmpty()
+                .hasSize(20)
+                .containsAll(top20Books);
+        verify(repository, times(1)).findTop20ByOrderByRateDesc();
+        verifyNoMoreInteractions(repository);
+    }
+
+    private List<Book> prepareBooks(int countBooks) {
+        List<Book> books = new ArrayList<>(countBooks);
+        for (int i = 0; i < countBooks; i++) {
+            Book book = Book.builder()
+                    .title(SOME_TITLE + i)
+                    .id((long) i)
+                    .rating(List.of((double) i))
+                    .build();
+            books.add(book);
+        }
+        return books;
     }
 }
