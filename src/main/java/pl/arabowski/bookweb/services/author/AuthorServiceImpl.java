@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.author;
+package pl.arabowski.bookweb.services.author;
 
 import java.util.Iterator;
 import java.util.List;

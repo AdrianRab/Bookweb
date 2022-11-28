@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
-import pl.arabowski.bookweb.service.author.AuthorServiceImpl;
+import pl.arabowski.bookweb.services.author.AuthorServiceImpl;
 
 @Controller
 @RequestMapping("/author")

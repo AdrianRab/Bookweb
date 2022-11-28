@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.cover;
+package pl.arabowski.bookweb.services.cover;
 
 import org.springframework.core.io.ClassPathResource;
 

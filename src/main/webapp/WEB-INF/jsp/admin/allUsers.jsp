@@ -44,12 +44,12 @@
 					<td>${user.id}</td>
 					<td>${user.username}</td>
 					<td>${user.email}</td>
-					<td>${user.role.userRole}</td>
+					<td>${user.role.role}</td>
 					<c:if test="${admin.id != user.id}">
-						<c:if test="${user.role.userRole == 'ROLE_USER'}">
+						<c:if test="${user.role.role == 'ROLE_USER'}">
 							<td><a href="${contextPath}/admin/rights/${user.id}"><button class="btn btn-warning">Add admin rights</button></a></td>
 						</c:if>
-						<c:if test="${user.role.userRole == 'ROLE_ADMIN'}" >
+						<c:if test="${user.role.role == 'ROLE_ADMIN'}" >
 							<td><a href="${contextPath}/admin/remove-rights/${user.id}"><button class="btn btn-warning">Remove admin rights</button></a></td>
 						</c:if>
 					</c:if>

@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.author;
+package pl.arabowski.bookweb.services.author;
 
 import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;

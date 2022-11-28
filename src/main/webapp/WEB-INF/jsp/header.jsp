@@ -50,9 +50,9 @@
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		          <a class="dropdown-item" href="${contextPath}/user/my-page"><button type="button" class="btn btn-dark">My profile</button></a>
-		          <a class="dropdown-item" href="${contextPath}/user/owned"><button type="button" class="btn btn-dark">My books</button></a>
-		          <a class="dropdown-item" href="${contextPath}/user/read"><button type="button" class="btn btn-dark">Read books</button></a>
-		          <a class="dropdown-item" href="${contextPath}/user/to-read"><button type="button" class="btn btn-dark">Want to read</button></a>
+		          <a class="dropdown-item" href="${contextPath}/shelf/${user.id}/owned"><button type="button" class="btn btn-dark">My books</button></a>
+		          <a class="dropdown-item" href="${contextPath}/shelf/${user.id}/read"><button type="button" class="btn btn-dark">Read books</button></a>
+		          <a class="dropdown-item" href="${contextPath}/shelf/${user.id}/to-read"><button type="button" class="btn btn-dark">Want to read</button></a>
 		          <div class="dropdown-divider"></div>
 		          <a class="dropdown-item" href="${contextPath}/book/add"><button type="button" class="btn btn-warning">Add new book</button></a>
 		        </div>

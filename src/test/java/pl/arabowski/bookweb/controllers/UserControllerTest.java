@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.controllerstest;
+package pl.arabowski.bookweb.controllers;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.mockito.Mockito.mock;
@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.InternalResourceView;
 
-import pl.arabowski.bookweb.controllers.UserController;
 import pl.arabowski.bookweb.model.Book;
 import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.repositories.UserRepository;
@@ -85,8 +84,8 @@ class UserControllerTest {
 		publisher2.setName("Helion");
 
 		
-		book1.setId(1);
-		book2.setId(2);
+		book1.setId(1L);
+		book2.setId(2L);
 		book1.setPublisher(publisher1);
 		book2.setPublisher(publisher2);
 		book1.setTitle("Magnezja 190 p.n.e.");

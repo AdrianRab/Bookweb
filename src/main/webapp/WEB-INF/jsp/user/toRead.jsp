@@ -31,8 +31,8 @@
 			    </div>
 				<div class="col-md-auto">
 					 <div class="btn-group btn-group-lg">
-						<a href="${contextPath}/user/owned"><button type="button" class="btn btn-warning">My books</button></a>
-						<a href="${contextPath}/user/read"><button type="button" class="btn btn-warning">Read books</button></a>
+						<a href="${contextPath}/shelf/${user.id}/owned"><button type="button" class="btn btn-warning">My books</button></a>
+						<a href="${contextPath}/shelf/${user.id}/read"><button type="button" class="btn btn-warning">Read books</button></a>
 						<a href="${contextPath}/book/all"><button type="button" class="btn btn-warning">All books</button></a>
 					</div>
 				</div>

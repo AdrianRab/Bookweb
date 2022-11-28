@@ -63,9 +63,9 @@ body, html {
 		<div class="row justify-content-md-center">
 			<div class="col-md-auto">
 				<div  class="btn-group-vertical">
-					<p align="left"><a href="${contextPath}/user/owned"><button type="button" class="btn btn-md btn-warning">My books</button></a></p>				
-					<p align="left"><a href="${contextPath}/user/read"><button type="button" class="btn btn-md btn-warning">Read books</button></a></p>
-					<p align="left"><a href="${contextPath}/user/to-read"><button type="button" class="btn btn-md btn-warning">Want to read</button></a></p>
+					<p align="left"><a href="${contextPath}/shelf/${user.id}/owned"><button type="button" class="btn btn-md btn-warning">My books</button></a></p>
+					<p align="left"><a href="${contextPath}/shelf/${user.id}/read"><button type="button" class="btn btn-md btn-warning">Read books</button></a></p>
+					<p align="left"><a href="${contextPath}/shelf/${user.id}/to-read"><button type="button" class="btn btn-md btn-warning">Want to read</button></a></p>
 				</div>
 			</div>
 			<div class="col">

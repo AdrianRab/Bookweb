@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.servicetest;
+package pl.arabowski.bookweb.services;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
-import pl.arabowski.bookweb.service.author.AuthorServiceImpl;
+import pl.arabowski.bookweb.services.author.AuthorServiceImpl;
 
 public class AuthorServiceImplTest {
 	

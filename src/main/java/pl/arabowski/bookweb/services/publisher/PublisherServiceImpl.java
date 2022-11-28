@@ -1,4 +1,4 @@
-package pl.arabowski.bookweb.service.publisher;
+package pl.arabowski.bookweb.services.publisher;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

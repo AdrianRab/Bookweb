@@ -28,9 +28,10 @@ import pl.arabowski.bookweb.model.enums.Genres;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
-import pl.arabowski.bookweb.service.book.BookServiceImpl;
-import pl.arabowski.bookweb.service.publisher.PublisherServiceImpl;
-import pl.arabowski.bookweb.service.user.UserServiceImpl;
+import pl.arabowski.bookweb.services.ShelfService;
+import pl.arabowski.bookweb.services.BookServiceImpl;
+import pl.arabowski.bookweb.services.publisher.PublisherServiceImpl;
+import pl.arabowski.bookweb.services.UserServiceImpl;
 
 @Controller
 @RequestMapping("/book")
@@ -54,6 +55,9 @@ public class BookController {
 	@Autowired
 	private UserServiceImpl userService;
 
+	@Autowired
+	ShelfService shelfService;
+
 	@GetMapping("/add")
 	public ModelAndView addBook() {
 		ModelAndView mav = new ModelAndView();
@@ -66,8 +70,6 @@ public class BookController {
 	public ModelAndView addBook(@Valid Book book, BindingResult result, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {
-			bookService.countRating(book);
-			bookRepo.saveAndFlush(book);
 			session.setAttribute("book", book);
 			mav.addObject("book", book);
 			mav.setViewName("redirect:http://localhost:8090/book/details/" + book.getId());
@@ -90,7 +92,7 @@ public class BookController {
 	@GetMapping("/top-rated")
 	public ModelAndView topRatedBooks() {
 		ModelAndView mav = new ModelAndView();
-		List<Book> topBooks = bookService.topTwentyBooks();
+		List<Book> topBooks = bookService.getTopTwentyBooks();
 		mav.setViewName("book/topRated");
 		mav.addObject("topRatedBooks", topBooks);
 		return mav;
@@ -139,8 +141,7 @@ public class BookController {
 		ModelAndView mav = new ModelAndView();
 		Book book = bookService.getBook(id);
 		User user = userRepo.findByEmailIgnoreCase(currentUser.getUsername());
-		bookService.rateBook(book, Double.parseDouble(rateParam));
-		userService.addRating(user, id, Double.parseDouble(rateParam));
+		shelfService.rateBook(user, book, Double.parseDouble(rateParam));
 		Map<Long, Double> ratings = user.getRating();
 		if(ratings.containsKey(book.getId())) {
 			mav.addObject("myRate", ratings.get(book.getId()));
@@ -154,7 +155,7 @@ public class BookController {
 
 	@ModelAttribute("listOfGenres")
 	List<Genres> getGenres() {
-		return bookService.bookGenre();
+		return List.of(Genres.values());
 	}
 
 	@ModelAttribute("listOfRates")
