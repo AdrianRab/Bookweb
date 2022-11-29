@@ -146,7 +146,7 @@ class BookServiceImplTest {
     @Test
     void shouldThrowExceptionWhenBookIdNotFound() {
         //given
-        String msg = "No Book with id 1 exists!";
+        String msg = String.format("No Book with id %s exists!", SOME_ID);
 
         //when
         when(repository.findById(SOME_ID)).thenReturn(Optional.empty());

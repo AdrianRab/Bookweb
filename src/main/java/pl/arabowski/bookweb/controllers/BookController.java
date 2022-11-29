@@ -30,7 +30,7 @@ import pl.arabowski.bookweb.repositories.BookRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.services.ShelfService;
 import pl.arabowski.bookweb.services.BookServiceImpl;
-import pl.arabowski.bookweb.services.publisher.PublisherServiceImpl;
+import pl.arabowski.bookweb.services.PublisherServiceImpl;
 import pl.arabowski.bookweb.services.UserServiceImpl;
 
 @Controller

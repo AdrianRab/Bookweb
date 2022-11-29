@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.servlet.ModelAndView;
-
 import pl.arabowski.bookweb.model.Author;
 import pl.arabowski.bookweb.model.Book;
-import pl.arabowski.bookweb.model.Publisher;
 import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.model.UserRole;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
-import pl.arabowski.bookweb.repositories.PublisherRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.repositories.UserRoleRepository;
 import pl.arabowski.bookweb.services.BookService;
@@ -25,9 +22,6 @@ public class AdminServiceImpl implements AdminService{
 	
 	@Autowired 
 	private UserRoleRepository userRoleRepository;
-	
-	@Autowired
-	private PublisherRepository publisherRepository;
 	
 	@Autowired 
 	private AuthorRepository authorRepository;
@@ -67,28 +61,6 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public ModelAndView editPublisher(Publisher publisher, BindingResult result) {
-		ModelAndView mav = new ModelAndView();
-		if (!result.hasErrors()) {
-			publisherRepository.saveAndFlush(publisher);
-			mav.setViewName("redirect:http://localhost:8090/publisher/details/"+publisher.getId());
-			return mav;
-		} else {
-			mav.setViewName("/admin/editPublisher");
-			return mav;
-		}
-	}
-
-	@Override
-	public ModelAndView deletePublisher(long id) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:http://localhost:8090/admin/panel");
-		Publisher  publisher = publisherRepository.findById(id);
-		publisherRepository.delete(publisher);
-		return mav;
-	}
-
-	@Override
 	public void addAdminRights(long id) {
 		User user = userRepository.findById(id);
 		UserRole role = userRoleRepository.findById(user.getRole().getId()).get();
@@ -109,6 +81,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
+	//todo move this to user.
 	public ModelAndView editUser(User user, BindingResult result) {
 		ModelAndView mav = new ModelAndView();
 		if (!result.hasErrors()) {

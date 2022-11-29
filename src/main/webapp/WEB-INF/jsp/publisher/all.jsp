@@ -41,8 +41,8 @@
 					<td>${publisher.id}</td>
 					<td>${publisher.name}</td>
 					<sec:authorize access ="hasRole('ROLE_ADMIN')">
-					<td><a href="${contextPath}/admin/edit-publ/${publisher.id}"><button type="button" class="btn btn-dark">Edit</button></a>
-						<a href="${contextPath}/admin/delete-publ/${publisher.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
+					<td><a href="${contextPath}/admin/edit-publisher/${publisher.id}"><button type="button" class="btn btn-dark">Edit</button></a>
+						<a href="${contextPath}/admin/delete-publisher/${publisher.id}"><button type="button" class="btn btn-danger">Delete</button></a></td>
 					</sec:authorize>
 				</tr>
 			</c:forEach>

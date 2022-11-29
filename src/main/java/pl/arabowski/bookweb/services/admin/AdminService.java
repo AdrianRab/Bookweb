@@ -9,14 +9,14 @@ import pl.arabowski.bookweb.model.User;
 
 public interface AdminService {
 	
-	public ModelAndView deleteBook(long id);
-	public ModelAndView editAuthor(Author author, BindingResult result);
-	public ModelAndView deleteAuthor(long id);
-	public ModelAndView editPublisher(Publisher publisher, BindingResult result);
-	public ModelAndView deletePublisher(long id);
-	public void addAdminRights(long id);
-	public void removeAdminRights(long id);
-	public ModelAndView editUser(User user, BindingResult result);
-	public ModelAndView deleteUser(long id);
+	ModelAndView deleteBook(long id);
+	ModelAndView editAuthor(Author author, BindingResult result);
+	ModelAndView deleteAuthor(long id);
+//	ModelAndView editPublisher(Publisher publisher, BindingResult result);
+//	ModelAndView deletePublisher(long id);
+	void addAdminRights(long id);
+	void removeAdminRights(long id);
+	ModelAndView editUser(User user, BindingResult result);
+	ModelAndView deleteUser(long id);
 	
 }

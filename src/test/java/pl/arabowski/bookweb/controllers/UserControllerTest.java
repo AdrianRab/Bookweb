@@ -78,8 +78,8 @@ class UserControllerTest {
 		Publisher publisher1 = new Publisher();
 		Publisher publisher2 = new Publisher();
 		
-		publisher1.setId(1);
-		publisher2.setId(2);
+		publisher1.setId(1L);
+		publisher2.setId(2L);
 		publisher1.setName("Bellona");
 		publisher2.setName("Helion");
 

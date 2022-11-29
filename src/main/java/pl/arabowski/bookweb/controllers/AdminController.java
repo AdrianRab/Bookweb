@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -22,10 +24,11 @@ import pl.arabowski.bookweb.model.User;
 import pl.arabowski.bookweb.repositories.AuthorRepository;
 import pl.arabowski.bookweb.repositories.UserRepository;
 import pl.arabowski.bookweb.services.admin.AdminServiceImpl;
-import pl.arabowski.bookweb.services.publisher.PublisherServiceImpl;
+import pl.arabowski.bookweb.services.PublisherServiceImpl;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
 	
 	@Autowired
@@ -38,7 +41,7 @@ public class AdminController {
 	private AuthorRepository authorRepo;
 	
 	@Autowired
-	private PublisherServiceImpl publService;
+	private PublisherServiceImpl publisherService;
 	
 	@GetMapping("/add-admin/{id}")
 	public ModelAndView addAdminRights(@PathVariable long id) {
@@ -96,22 +99,16 @@ public class AdminController {
 	public ModelAndView deleteAuthor(@PathVariable long id) {
 		return adminService.deleteAuthor(id);
 	}
-	
-	@GetMapping("/edit-publisher/{id}")
-	public ModelAndView editPublisher(@PathVariable long id) {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/admin/editPublisher");
-		return mav;
-	}
-	
-	@PostMapping("edit-publisher/{id}")
+
+
+	@PostMapping("edit-publisher")
 	public ModelAndView editPublisher(@Valid Publisher publisher, BindingResult result) {
-		return adminService.editPublisher(publisher, result);
+		return publisherService.editPublisher(publisher, result);
 	}
-	
+
 	@GetMapping("/delete-publisher/{id}")
 	public ModelAndView deletePublisher(@PathVariable long id) {
-		return adminService.deletePublisher(id);
+		return publisherService.deletePublisher(id);
 	}
 	
 	@GetMapping("/edit-user/{id}")
@@ -142,7 +139,7 @@ public class AdminController {
 	
 	@ModelAttribute("listOfPublishers")
 	List<Publisher> allPublishers() {
-		return (List<Publisher>) publService.listAllPublishers();
+		return publisherService.listAllPublishers();
 	}
 
 	@ModelAttribute("listOfAuthors")
